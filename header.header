@@ -1,9 +1,9 @@
 {
-  "Authors": "FTD-JP BMP",
+  "Authors": "FTD-JP BMP, Anemone",
   "Version": "00000000-0000-0000-0000-000000000000",
   "ComponentId": {
-    "Guid": "a734e71f-5056-43a5-a850-fdd6edf7ef8a",
-    "Name": "BM_EffectUpdate"
+    "Guid": "b734e71f-5056-43a5-a850-fdd6edf7ef8a",
+    "Name": "BMEffects_Remaster"
   },
-  "Description": "EffectUpdate!"
+  "Description": "Remaster of BMEffectUpdate"
 }

@@ -1,0 +1,12 @@
+C:\Users\NoOne\Documents\From The Depths\Mods\BMEffects Remaster\src\obj\Debug\netstandard2.1\BMEffects_Remaster.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\NoOne\Documents\From The Depths\Mods\BMEffects Remaster\src\obj\Debug\netstandard2.1\BMEffects_Remaster.AssemblyInfoInputs.cache
+C:\Users\NoOne\Documents\From The Depths\Mods\BMEffects Remaster\src\obj\Debug\netstandard2.1\BMEffects_Remaster.AssemblyInfo.cs
+C:\Users\NoOne\Documents\From The Depths\Mods\BMEffects Remaster\src\obj\Debug\netstandard2.1\BMEffects_Remaster.csproj.CoreCompileInputs.cache
+C:\Users\NoOne\Documents\From The Depths\Mods\BMEffects Remaster\src\obj\Debug\netstandard2.1\BMEffects_Remaster.sourcelink.json
+C:\Users\NoOne\Documents\From The Depths\Mods\BMEffects Remaster\src\obj\Debug\netstandard2.1\BMEffects_Remaster.csproj.AssemblyReference.cache
+C:\Users\NoOne\Documents\From The Depths\Mods\MTMT VFX Core\MTMT VFX Unity\obj\Debug\netstandard2.1\BMEffects_Remaster.csproj.AssemblyReference.cache
+C:\Users\NoOne\Documents\From The Depths\Mods\MTMT VFX Core\MTMT VFX Unity\obj\Debug\netstandard2.1\BMEffects_Remaster.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\NoOne\Documents\From The Depths\Mods\MTMT VFX Core\MTMT VFX Unity\obj\Debug\netstandard2.1\BMEffects_Remaster.AssemblyInfoInputs.cache
+C:\Users\NoOne\Documents\From The Depths\Mods\MTMT VFX Core\MTMT VFX Unity\obj\Debug\netstandard2.1\BMEffects_Remaster.AssemblyInfo.cs
+C:\Users\NoOne\Documents\From The Depths\Mods\MTMT VFX Core\MTMT VFX Unity\obj\Debug\netstandard2.1\BMEffects_Remaster.csproj.CoreCompileInputs.cache
+C:\Users\NoOne\Documents\From The Depths\Mods\MTMT VFX Core\MTMT VFX Unity\obj\Debug\netstandard2.1\BMEffects_Remaster.sourcelink.json

@@ -1,10 +1,9 @@
 fileFormatVersion: 2
 guid: 977df8a1b5a7de34c88ee956a68450c5
-timeCreated: 1763982288
-licenseType: Free
 ShaderImporter:
-  name:
+  externalObjects: {}
   defaultTextures: []
-  userData:
-  assetBundleName: sm1
-  assetBundleVariant:
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

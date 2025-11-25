@@ -3,7 +3,7 @@
   "Version": "00000000-0000-0000-0000-000000000000",
   "ComponentId": {
     "Guid": "b734e71f-5056-43a5-a850-fdd6edf7ef8a",
-    "Name": "BMEffects_Remaster"
+    "Name": "MTMT_VFXCore"
   },
   "Description": "Remaster of BMEffectUpdate"
 }

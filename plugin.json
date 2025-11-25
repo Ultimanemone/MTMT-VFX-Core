@@ -1,9 +1,9 @@
 {
   "_comments": "",
-  "name": "BMEffects Remaster",
-  "version": "2.0.0",
+  "name": "MTMT VFX Core",
+  "version": "1.0.0",
   "gameversion": "4.2.8",
   "depends": [],
   "conflicts": [],
-  "filename": "0Harmony.dll,BMEffects_Remaster.dll"
+  "filename": "0Harmony.dll,MTMT_VFXCore.dll"
 }

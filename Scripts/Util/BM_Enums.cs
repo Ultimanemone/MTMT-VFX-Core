@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BM_EffectUpdate
+namespace MTMTVFX
 {
     internal enum BM_ExplosionsName
     {

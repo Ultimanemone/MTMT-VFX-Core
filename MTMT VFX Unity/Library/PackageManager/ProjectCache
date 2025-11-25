@@ -6,7 +6,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638995505977726647
+      ticks: 638996441916482733
     m_Hash: 1766784304
   m_LockFileStatus:
     m_FilePath: C:/Users/NoOne/Documents/From The Depths/Mods/MTMT VFX Core/MTMT
@@ -15,8 +15,8 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638995506290656351
-    m_Hash: 4250786937
+      ticks: 638996441916560647
+    m_Hash: 81638092
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BMEffects_Remaster")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3df3e9e7e03e84e641fd9e5a5832b51868a0cc73")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88288fa5645adf685f2decb86004e8938195ab6d")]
 [assembly: System.Reflection.AssemblyProductAttribute("BMEffects_Remaster")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BMEffects_Remaster")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

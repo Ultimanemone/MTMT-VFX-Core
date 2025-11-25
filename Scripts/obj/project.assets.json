@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\NoOne\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Scripts\\BMEffects_Remaster.csproj",
-      "projectName": "BMEffects_Remaster",
-      "projectPath": "C:\\Users\\NoOne\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Scripts\\BMEffects_Remaster.csproj",
+      "projectUniqueName": "C:\\Users\\NoOne\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Scripts\\MTMTVFX.csproj",
+      "projectName": "MTMTVFX",
+      "projectPath": "C:\\Users\\NoOne\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Scripts\\MTMTVFX.csproj",
       "packagesPath": "C:\\Users\\NoOne\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\NoOne\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Scripts\\obj\\",
       "projectStyle": "PackageReference",

@@ -8748,7 +8748,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1394138767756162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c98d952bee5436670f016825cb6d8de2, type: 3}
+  m_Script: {fileID: 11500000, guid: d97871f1c66acfc4c8dc0fddade3697b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1449998060281451
@@ -11630,7 +11630,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4474344758921396}
   - component: {fileID: 108539920854039240}
-  - component: {fileID: 114102219291209847}
   m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
@@ -11718,18 +11717,6 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &114102219291209847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1457708620911582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1af496337f4f3d68b0b159f6acbc9ddd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1627680251569943
 GameObject:
   m_ObjectHideFlags: 0

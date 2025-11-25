@@ -128,7 +128,14 @@
 -define:TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
+-r:"Assets/Plugins/0Harmony.dll"
+-r:"Assets/Plugins/Core.dll"
+-r:"Assets/Plugins/DataManagement.dll"
+-r:"Assets/Plugins/Effects.dll"
 -r:"Assets/Plugins/Ftd.dll"
+-r:"Assets/Plugins/GridCasts.dll"
+-r:"Assets/Plugins/Modding.dll"
+-r:"Assets/Plugins/MTMTVFX.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/Managed/UnityEngine/UnityEditor.AccessibilityModule.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/Managed/UnityEngine/UnityEditor.AdaptivePerformanceModule.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/Managed/UnityEngine/UnityEditor.BuildProfileModule.dll"
@@ -414,21 +421,9 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.60f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
-"Assets/Scripts/EffectCode/SingleThunder.cs"
-"Assets/Scripts/EffectCode/SM_AutoKill.cs"
-"Assets/Scripts/EffectCode/SM_LightController.cs"
-"Assets/Scripts/Effects/Muzzle/BM_AdvExtend.cs"
-"Assets/Scripts/Properties/AssemblyInfo.cs"
-"Assets/Scripts/Util/BM_EffectCreator.cs"
-"Assets/Scripts/Util/BM_Enums.cs"
-"Assets/Scripts/Util/BM_Trail.cs"
-"Assets/Scripts/Util/ColorChange.cs"
-"Assets/Scripts/Util/ComponentExtensions.cs"
-"Assets/Scripts/Util/GameObjectExtensions.cs"
-"Assets/Scripts/Util/MovementLocusCalculator.cs"
-"Assets/Scripts/Util/RndThunder.cs"
-"Assets/Scripts/Util/TransformExtension.cs"
-"Assets/Scripts/Util/UpdateLine.cs"
+"Assets/Scripts/EffectAutokill.cs"
+"Assets/Scripts/SingleThunder.cs"
+"Assets/Scripts/SM_LightController.cs"
 -langversion:9.0
 /deterministic
 /optimize-

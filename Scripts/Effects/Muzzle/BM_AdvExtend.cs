@@ -1,4 +1,4 @@
-﻿using BM_EffectUpdate.EffectCode;
+﻿using MTMTVFX.Core;
 using BrilliantSkies.Core;
 using BrilliantSkies.Effects.GunSounds;
 using BrilliantSkies.Effects.SoundSystem;
@@ -7,7 +7,7 @@ using HarmonyLib;
 using UnityEngine;
 
 
-namespace BM_EffectUpdate.Effects.Muzzle
+namespace MTMTVFX.Effects.Muzzle
 {
     [HarmonyPatch(typeof(AdvCannonFiringPiece), "Flash", new Type[] { typeof(bool) })]
     internal class BM_AdvExtend
@@ -16,19 +16,19 @@ namespace BM_EffectUpdate.Effects.Muzzle
         {
             try
             {
-                int num = 0;
-                int num2 = 0;
+                int gpCount = 0;
+                int rcCount = 0;
                 float num3 = 0f;
                 ShellModel nextShell = __instance.Node.ShellRacks.GetNextShell(false);
                 foreach (ShellModule shellModule in nextShell.PartsAndMesh.AllParts)
                 {
                     if (shellModule.Name == "Gunpowder casing")
                     {
-                        num++;
+                        gpCount++;
                     }
                     if (shellModule.Name == "Railgun casing")
                     {
-                        num2++;
+                        rcCount++;
                     }
                 }
                 BM_MuzzleFlashName type;
@@ -68,14 +68,9 @@ namespace BM_EffectUpdate.Effects.Muzzle
                     radius = 20f;
                     num3 = 15f;
                 }
-                if (num > 0)
+                if (gpCount > 0)
                 {
-                    GameObject gameObject = BM_EffectCreator.Creator.CreateMuzzle(type);
-                    if (gameObject != null)
-                    {
-                        gameObject.transform.position = __instance.GetFirePoint(0f);
-                        gameObject.transform.forward = __instance.GetFireDirection();
-                    }
+                    GameObject gameObject = VFXManager.Instance.Create(type.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
                 }
 
                 var RailgunDraw = AccessTools.Method(typeof(AdvCannonFiringPiece), "RailgunDraw");
@@ -83,7 +78,7 @@ namespace BM_EffectUpdate.Effects.Muzzle
                 if (flag)
                 {
                     BM_MuzzleFlashName type2 = BM_MuzzleFlashName.Rail_Small;
-                    if (num2 > 0)
+                    if (rcCount > 0)
                     {
                         if (__instance.BarrelSystem.ShellDiameter < 0.12)
                         {
@@ -98,16 +93,11 @@ namespace BM_EffectUpdate.Effects.Muzzle
                             type2 = BM_MuzzleFlashName.Rail_Big;
                         }
                     }
-                    GameObject gameObject2 = BM_EffectCreator.Creator.CreateMuzzle(type2);
-                    if (gameObject2 != null)
-                    {
-                        gameObject2.transform.position = __instance.GetFirePoint(0f);
-                        gameObject2.transform.forward = __instance.GetFireDirection();
-                    }
+                    GameObject gameObject2 = VFXManager.Instance.Create(type2.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
                 }
-                Vector3 vector = __instance.GetFirePoint(0f);
-                vector += __instance.GetFireDirection() * num3;
-                BM_EffectCreator.Creator.CreateImpactSplash(vector, radius);
+                //Vector3 vector = __instance.GetFirePoint(0f);
+                //vector += __instance.GetFireDirection() * num3;
+                //VFXManager.Instance.CreateImpactSplash(vector, radius);
             }
             catch
             {

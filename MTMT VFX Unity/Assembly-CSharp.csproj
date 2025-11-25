@@ -61,21 +61,9 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.60f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Util\ColorChange.cs" />
-    <Compile Include="Assets\Scripts\Util\MovementLocusCalculator.cs" />
-    <Compile Include="Assets\Scripts\Util\GameObjectExtensions.cs" />
-    <Compile Include="Assets\Scripts\EffectCode\SM_AutoKill.cs" />
-    <Compile Include="Assets\Scripts\Properties\AssemblyInfo.cs" />
-    <Compile Include="Assets\Scripts\Util\ComponentExtensions.cs" />
-    <Compile Include="Assets\Scripts\EffectCode\SingleThunder.cs" />
-    <Compile Include="Assets\Scripts\Util\UpdateLine.cs" />
-    <Compile Include="Assets\Scripts\Util\BM_EffectCreator.cs" />
-    <Compile Include="Assets\Scripts\Util\BM_Enums.cs" />
-    <Compile Include="Assets\Scripts\Util\RndThunder.cs" />
-    <Compile Include="Assets\Scripts\Effects\Muzzle\BM_AdvExtend.cs" />
-    <Compile Include="Assets\Scripts\Util\TransformExtension.cs" />
-    <Compile Include="Assets\Scripts\EffectCode\SM_LightController.cs" />
-    <Compile Include="Assets\Scripts\Util\BM_Trail.cs" />
+    <Compile Include="Assets\Scripts\SM_LightController.cs" />
+    <Compile Include="Assets\Scripts\SingleThunder.cs" />
+    <Compile Include="Assets\Scripts\EffectAutokill.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\VFX\BM Effects\Shaders\sm_add_uvscroll.shader" />
@@ -90,7 +78,6 @@
     <None Include="Assets\VFX\BM Effects\Shaders\sm_add_uvdist.shader" />
     <None Include="Assets\VFX\BM Effects\Shaders\sm_add_uvdist__firebeam.shader" />
     <None Include="Assets\VFX\BM Effects\Shaders\normalparticle_alpha.shader" />
-    <None Include="Assets\Scripts\MTMT VFX Core.asmref" />
     <None Include="Assets\VFX\BM Effects\Shaders\sm_add_thunder.shader" />
     <None Include="Assets\VFX\BM Effects\Shaders\sm_add_front.shader" />
     <None Include="Assets\VFX\BM Effects\Shaders\sm_add_shockwave.shader" />
@@ -574,8 +561,16 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.60f1\Editor\Data\Managed\UnityEngine\UnityEditor.XRModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DataManagement">
+      <HintPath>Assets\Plugins\DataManagement.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@031a54704bff\net40\unity-custom\nunit.framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Core">
+      <HintPath>Assets\Plugins\Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
@@ -586,16 +581,36 @@
       <HintPath>Library\PackageCache\com.unity.analytics@6cc66d58ac08\Unity.Analytics.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0\Runtime\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="GridCasts">
+      <HintPath>Assets\Plugins\GridCasts.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>Library\PackageCache\com.unity.analytics@6cc66d58ac08\AnalyticsStandardEvents\Unity.Analytics.StandardEvents.dll</HintPath>
+    <Reference Include="Modding">
+      <HintPath>Assets\Plugins\Modding.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MTMTVFX">
+      <HintPath>Assets\Plugins\MTMTVFX.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Effects">
+      <HintPath>Assets\Plugins\Effects.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Ftd">
       <HintPath>Assets\Plugins\Ftd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0\Runtime\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>Assets\Plugins\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>Library\PackageCache\com.unity.analytics@6cc66d58ac08\AnalyticsStandardEvents\Unity.Analytics.StandardEvents.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

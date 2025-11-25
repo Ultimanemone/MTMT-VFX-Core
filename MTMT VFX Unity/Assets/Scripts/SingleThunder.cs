@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace MTMTVFX.Internal
@@ -20,7 +19,7 @@ namespace MTMTVFX.Internal
             SetThunder();
         }
 
-        public void SetThunder()
+        private void SetThunder()
         {
             for (int i = 0; i < 8; i++)
             {

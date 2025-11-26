@@ -24,7 +24,7 @@ namespace MTMTVFX.Core
             [CallerLineNumber] int line = 0)
         {
             string ns = typeof(T).Namespace ?? "";
-            AdvLogger.LogInfo($"[{ns}.{System.IO.Path.GetFileName(file)}:\n\t{line} in {member}] {message}", option);
+            AdvLogger.LogInfo($"[{ns}.{System.IO.Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace MTMTVFX.Core
             [CallerLineNumber] int line = 0)
         {
             string ns = typeof(T).Namespace ?? "";
-            AdvLogger.LogError($"[{ns}.{System.IO.Path.GetFileName(file)}:\n\t{line} in {member}] {message}", option);
+            AdvLogger.LogError($"[{ns}.{System.IO.Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
         }
     }
 }

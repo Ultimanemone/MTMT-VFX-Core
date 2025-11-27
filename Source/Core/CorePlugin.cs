@@ -19,14 +19,15 @@ namespace MTMTVFX.Core
         public string name { get { return "MTMT_VFXCore"; } }
         public Version version { get { return new Version(CorePlugin.ver); } }
 
-        //public static BM_EffectUpdater updater = null;
-        public const string guid = "a2c90d0a-ce1a-4788-a691-8085c5c202ab"; // temporary solution
-        public static Dictionary<string, GameObject> Assets;
+        public const string guid = "a2c90d0a-ce1a-4788-a691-8085c5c202ab"; // temporary guid solution
+        private static Dictionary<string, GameObject> assets;
+        private static List<Guid> loadedBundles;
         public static string ver = "1.0.0";
 
         public void OnLoad()
         {
-            Assets = new Dictionary<string, GameObject>();
+            assets = new Dictionary<string, GameObject>();
+            loadedBundles = new List<Guid>();
             new Harmony("MTMT_VFX_CORE").PatchAll();
             ModProblems.AddModProblem($"{name} v{ver} active!", Assembly.GetExecutingAssembly().Location, string.Empty, false);
         }
@@ -35,14 +36,34 @@ namespace MTMTVFX.Core
 
         public bool AfterAllPluginsLoaded() => true;
 
-        public static Dictionary<string, GameObject> GetAllAssets()
+        public static Dictionary<string, GameObject> GetDefaultAssets()
         {
-            AssetBundleDefinition? bundle = Configured.i.AssetBundles.Find(new Guid(guid));
+            return GetAllAssets(new Guid(guid));
+        }
+
+        /// <summary>
+        /// Load all VFX assets from your mod
+        /// </summary>
+        /// <param name="guid"></param>
+        public static void LoadAllAssetsExternal(Guid guid)
+        {
+            VFXRegistry.Register(GetAllAssets(guid));
+        }
+
+        private static Dictionary<string, GameObject> GetAllAssets(Guid guid)
+        {
+            if (loadedBundles.Contains(guid))
+            {
+                Util.LogError<CorePlugin>($"AssetBundle [{guid}] already loaded!");
+                return assets;
+            }
+
+            AssetBundleDefinition? bundle = Configured.i.AssetBundles.Find(guid);
 
             bool flag = bundle == null;
             if (flag)
             {
-                Util.LogError<CorePlugin>($"AssetBundle [{guid}] not found", LogOptions.Popup);
+                Util.LogError<CorePlugin>($"AssetBundle [{guid}] not found...", LogOptions.Popup);
                 return null;
             }
 
@@ -54,7 +75,14 @@ namespace MTMTVFX.Core
                 .Select(name => Path.GetFileNameWithoutExtension(name))
                 .ToArray();
 
-            Dictionary<string, GameObject> assets = new Dictionary<string, GameObject>();
+            if (prefabNames.Length < 1)
+            {
+                Util.LogError<CorePlugin>($"AssetBundle [{guid}] is empty!", LogOptions.Popup);
+                return null;
+            }
+
+            loadedBundles.Add(guid);
+            Dictionary<string, GameObject> assetsReturn = new Dictionary<string, GameObject>();
 
             foreach (string name in prefabNames)
             {
@@ -62,7 +90,7 @@ namespace MTMTVFX.Core
                 bool flag1 = GetAsset(name, bundle, out asset);
                 if (flag1)
                 {
-                    assets.Add(name, asset);
+                    assetsReturn.Add(name, asset);
                     Util.LogInfo<CorePlugin>($"Asset [{name}] loaded!");
                 }
                 else
@@ -71,10 +99,10 @@ namespace MTMTVFX.Core
                 }
             }
 
-            return assets;
+            return assetsReturn;
         }
 
-        public static bool GetAsset(string name, AssetBundleDefinition assetBundleDef, out GameObject asset)
+        private static bool GetAsset(string name, AssetBundleDefinition assetBundleDef, out GameObject asset)
         {
             if (assetBundleDef == null)
             {
@@ -85,9 +113,9 @@ namespace MTMTVFX.Core
             return assetBundleDef.Loader.GetThing(name, out asset);
         }
 
-        public static bool GetAsset(string name, out GameObject asset)
+        private static bool GetAsset(string name, Guid guid, out GameObject asset)
         {
-            AssetBundleDefinition? bundle = Configured.i.AssetBundles.Find(new Guid(guid));
+            AssetBundleDefinition? bundle = Configured.i.AssetBundles.Find(guid);
 
             bool flag = bundle == null;
             if (flag)

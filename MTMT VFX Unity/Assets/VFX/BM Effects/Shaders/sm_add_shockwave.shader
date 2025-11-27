@@ -1,61 +1,72 @@
-Shader "SM/SM_Add_ShockWave" {
-	Properties {
-		_TintColor ("Tint Color", Vector) = (0.5,0.5,0.5,0.5)
-		_MainTex ("Particle Texture", 2D) = "white" {}
-		_InvFade ("Soft Particles Factor", Range(0.01, 3)) = 1
-		_LightBoostPow ("Light Boost Pow", Float) = 2
-		_LightBoostScale ("Light Boost Scale", Float) = 1
-		_Wiggle ("Wiggle", Float) = 0
-	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
+Shader "SM/SM_Add_ShockWave"
+{
+    Properties
+    {
+        _MainTex("Main Texture", 2D) = "white" {}
+        _Color("Tint Color", Color) = (1,1,1,1)
+        _Emission("Emission Strength", Range(0,5)) = 1
+    }
 
-		Pass
-		{
-			HLSLPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
+    SubShader
+    {
+        Tags { "Queue"="Transparent" "RenderType"="Transparent" }
+        Cull Off
+        ZWrite Off
+        Blend SrcAlpha OneMinusSrcAlpha
 
-			float4x4 unity_ObjectToWorld;
-			float4x4 unity_MatrixVP;
-			float4 _MainTex_ST;
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include "UnityCG.cginc"
 
-			struct Vertex_Stage_Input
-			{
-				float4 pos : POSITION;
-				float2 uv : TEXCOORD0;
-			};
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
 
-			struct Vertex_Stage_Output
-			{
-				float2 uv : TEXCOORD0;
-				float4 pos : SV_POSITION;
-			};
+            float4 _Color;
+            float _Emission;
 
-			Vertex_Stage_Output vert(Vertex_Stage_Input input)
-			{
-				Vertex_Stage_Output output;
-				output.uv = (input.uv.xy * _MainTex_ST.xy) + _MainTex_ST.zw;
-				output.pos = mul(unity_MatrixVP, mul(unity_ObjectToWorld, input.pos));
-				return output;
-			}
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+                float4 color : COLOR; // particle color & alpha from ParticleSystem
+            };
 
-			Texture2D<float4> _MainTex;
-			SamplerState sampler_MainTex;
+            struct v2f
+            {
+                float4 pos : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                float4 particleColor : COLOR;
+            };
 
-			struct Fragment_Stage_Input
-			{
-				float2 uv : TEXCOORD0;
-			};
+            v2f vert(appdata v)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(v.vertex);
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.particleColor = v.color;
+                return o;
+            }
 
-			float4 frag(Fragment_Stage_Input input) : SV_TARGET
-			{
-				return _MainTex.Sample(sampler_MainTex, input.uv.xy);
-			}
+            fixed4 frag(v2f i) : SV_Target
+            {
+                fixed4 tex = tex2D(_MainTex, i.uv);
+                
+                // multiply particle color over time (from ParticleSystem)
+                tex.rgb *= i.particleColor.rgb * _Color.rgb;
 
-			ENDHLSL
-		}
-	}
+                // apply emission
+                tex.rgb += i.particleColor.rgb * _Color.rgb * _Emission;
+
+                // apply particle alpha to texture
+                tex.a *= i.particleColor.a * _Color.a;
+
+                return tex;
+            }
+            ENDCG
+        }
+    }
+    FallBack "Unlit/Texture"
 }

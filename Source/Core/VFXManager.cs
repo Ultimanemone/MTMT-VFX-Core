@@ -7,34 +7,35 @@ using Object = UnityEngine.Object;
 
 namespace MTMTVFX.Core
 {
-    internal class VFXManager
+    public class VFXManager
     {
         public static VFXManager Instance { get; private set; } = new VFXManager();
 
-        public IReadOnlyDictionary<string, GameObject> VFXAssets => _VFXAssets;
-        private Dictionary<string, GameObject> _VFXAssets = new Dictionary<string, GameObject>();
         private Queue<GameObject> _rendered = new Queue<GameObject>();
         private GameObject _vfxRoot;
 
         private VFXManager()
         {
             _vfxRoot = new GameObject("MTMTVFX_Root");
-            _VFXAssets = CorePlugin.GetAllAssets();
+            VFXRegistry.Init();
         }
 
         private void AddToQueue(GameObject obj)
         {
             _rendered.Enqueue(obj);
 
-            bool flag = _rendered.Count > Configurables.maxVFX;
-            while (flag)
+            while (_rendered.Count > Configurables.maxVFX)
             {
-                if (_rendered.Peek() == null) _rendered.Dequeue();
+                GameObject old = _rendered.Dequeue();
+                if (old != null)
+                {
+                    Object.Destroy(old);
+                }
             }
         }
 
         /// <summary>
-        /// Create VFX by name
+        /// Create VFX by name, requires at least one live particle
         /// </summary>
         /// <param name="name"></param>
         /// <param name="pos"></param>
@@ -43,21 +44,33 @@ namespace MTMTVFX.Core
         public GameObject Create(string name, Vector3 pos, Vector3 forward)
         {
             GameObject prefab;
-            bool flag = _VFXAssets.TryGetValue(name, out prefab);
+            bool flag = VFXRegistry.TryGetEffect(name, out prefab);
             if (flag)
             {
                 GameObject obj = Object.Instantiate<GameObject>(prefab, _vfxRoot.transform);
                 obj.transform.position = pos;
                 obj.transform.forward = forward;
                 obj.AddComponent<EffectAutokill>();
-                Util.LogInfo<VFXManager>($"MTMTVFX : Effect {name} created!");
+
+                AddToQueue(obj);
+
+                Util.LogInfo<VFXManager>($"Effect {name} created!");
+
+                string o = "";
+                foreach (GameObject go in _rendered)
+                {
+                    o += go.name;
+                    o += '\n';
+                }
+                Util.LogInfo<VFXManager>("Current rendered effects:\n" + o);
                 return obj;
             }
             else
             {
-                Util.LogError<VFXManager>($"MTMTVFX : Effect {name} not found!");
+                Util.LogError<VFXManager>($"Effect {name} not found!");
                 return null;
             }
+
         }
     }
 }

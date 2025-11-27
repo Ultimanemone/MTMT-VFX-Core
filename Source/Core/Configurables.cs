@@ -6,7 +6,7 @@ namespace MTMTVFX.Core
 {
     public class Configurables
     {
-        public static float maxLifetime = 5f;
-        public static int maxVFX = 128;
+        public const float maxLifetime = 5f;
+        public const int maxVFX = int.MaxValue;
     }
 }

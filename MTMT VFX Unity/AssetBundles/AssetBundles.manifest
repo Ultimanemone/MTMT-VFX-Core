@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.0.60f1
-CRC: 3849064150
+CRC: 3297358266
 HashAppended: 0
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: sm1
+      Name: bmeffects
       Dependencies: {}

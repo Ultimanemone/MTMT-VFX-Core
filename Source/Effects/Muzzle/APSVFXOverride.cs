@@ -146,7 +146,7 @@ namespace MTMTVFX.Effects.Muzzle
 
                 if (gpCount > 0 && type != MuzzleFlashName.none)
                 {
-                    //GameObject gameObject = VFXManager.Instance.Create(type.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                    GameObject gameObject = VFXManager.Instance.Create(type.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
                 }
 
                 MethodInfo RailgunDraw = AccessTools.Method(typeof(AdvCannonFiringPiece), "RailgunDraw");
@@ -169,7 +169,7 @@ namespace MTMTVFX.Effects.Muzzle
                             type2 = MuzzleFlashName.muzzleflashrail_big;
                         }
                     }
-                    //GameObject gameObject2 = VFXManager.Instance.Create(type2.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                    GameObject gameObject2 = VFXManager.Instance.Create(type2.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
                 }
                 //Vector3 vector = __instance.GetFirePoint(0f);
                 //vector += __instance.GetFireDirection() * num3;
@@ -207,15 +207,11 @@ namespace MTMTVFX.Effects.Muzzle
                 float radius;
                 float gauge = __instance.BarrelSystem.ShellDiameter;
                 MuzzleFlashName type = Enums.GetMuzzleEnum(gauge);
+                Util.LogInfo<APSVFXOverride>($"shell fire: {gauge} with {type.ToString()}");
 
                 if (num > 0)
                 {
-                    GameObject gameObject = VFXManager.Instance.Create(type.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
-                    if (gameObject != null)
-                    {
-                        gameObject.transform.position = __instance.GetFirePoint(0f);
-                        gameObject.transform.forward = __instance.GetFireDirection();
-                    }
+                    // GameObject gameObject = VFXManager.Instance.Create(type.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
                 }
 
                 var RailgunDraw = AccessTools.Method(typeof(AdvCannonFiringPiece), "RailgunDraw");
@@ -238,12 +234,7 @@ namespace MTMTVFX.Effects.Muzzle
                             type2 = MuzzleFlashName.muzzleflashrail_big;
                         }
                     }
-                    GameObject gameObject2 = VFXManager.Instance.Create(type2.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
-                    if (gameObject2 != null)
-                    {
-                        gameObject2.transform.position = __instance.GetFirePoint(0f);
-                        gameObject2.transform.forward = __instance.GetFireDirection();
-                    }
+                    // GameObject gameObject2 = VFXManager.Instance.Create(type2.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
                 }
                 //Vector3 vector = __instance.GetFirePoint(0f);
                 //vector += __instance.GetFireDirection() * num3;

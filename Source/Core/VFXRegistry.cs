@@ -15,7 +15,7 @@ namespace MTMTVFX.Core
         {
             if (!_init)
             {
-                registry = CorePlugin.GetDefaultAssets();
+                registry = AssetLoader.GetDefault();
                 _init = true;
             }
         }

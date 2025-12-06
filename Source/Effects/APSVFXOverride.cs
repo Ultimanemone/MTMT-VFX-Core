@@ -1,19 +1,19 @@
 ﻿using MTMTVFX.Core;
 using BrilliantSkies.Core;
+using BrilliantSkies.Core.Widgets;
 using BrilliantSkies.Effects.GunSounds;
 using BrilliantSkies.Effects.SoundSystem;
-using System;
 using HarmonyLib;
 using UnityEngine;
-using BrilliantSkies.Core.Widgets;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection.Emit;
+using System;
 using System.Reflection;
-using BrilliantSkies.Blocks.Decorative.Display;
+using System.Reflection.Emit;
+using System.Collections.Generic;
+using Frankfort.Threading.Internal;
+using BrilliantSkies.Core.Threading;
 
 
-namespace MTMTVFX.Effects.Muzzle
+namespace MTMTVFX.Effects
 {
     // Code for gun venting heat after shots
     //[HarmonyPatch(typeof(AdvCannonFiringPiece), "Vent")]
@@ -27,7 +27,7 @@ namespace MTMTVFX.Effects.Muzzle
 
     // Not sure if its needed but visually its not needed
     //[HarmonyPatch(typeof(AdvCannonFiringPiece), "LateVisuals")]
-    public class APSVFXRemove
+    public class APSVFXRemoveLateVisuals
     {
         private static bool Prefix(AdvCannonFiringPiece __instance, ref ParticleSystem ____particleSmoke, ref ITicker ____barrelColorTicker)
         {
@@ -66,7 +66,7 @@ namespace MTMTVFX.Effects.Muzzle
             }
             __instance.BarrelSystem.LateUpdate(__instance.GameWorldUp);
             ///////////////////////////////////////// BASE CODE
-            
+
             return false;
         }
     }
@@ -75,19 +75,24 @@ namespace MTMTVFX.Effects.Muzzle
     [HarmonyPatch(typeof(AdvCannonFiringPiece), "WeaponFire")]
     public class APSVFXOverride
     {
-        private class State
+        private struct State
         {
             public FiredMunitionReturn FMR;
             public ShellModel shell;
+            public float railDraw;
         }
 
         // Grab shell data before firing
         private static void Prefix(AdvCannonFiringPiece __instance, FiredMunitionReturn FMR, out State __state)
         {
+            MethodInfo RailgunDraw = AccessTools.Method(typeof(AdvCannonFiringPiece), "RailgunDraw");
+            ShellModel shell = __instance.Node.ShellRacks.PeekNextShell();
+            float railDraw = (float)RailgunDraw.Invoke(__instance, new object[] { shell });
             __state = new State
             {
                 FMR = FMR,
-                shell = __instance.Node.ShellRacks.PeekNextShell()
+                shell = shell,
+                railDraw = railDraw
             };
         }
 
@@ -122,12 +127,11 @@ namespace MTMTVFX.Effects.Muzzle
                 bool fired = (bool)AccessTools.Field(typeof(FiredMunitionReturn), "_fired").GetValue(__state.FMR);
                 if (!fired) { return; }
 
-                ShellModel nextShell = __state.shell;
+                ShellModel firedShell = __state.shell;
                 int gpCount = 0;
                 int rcCount = 0;
-                float num3 = 0f;
-                if (nextShell == null) return;
-                foreach (ShellModule shellModule in nextShell.PartsAndMesh.AllParts)
+                if (firedShell == null) return;
+                foreach (ShellModule shellModule in firedShell.PartsAndMesh.AllParts)
                 {
                     if (gpCount > 0 && rcCount > 0) break;
                     if (shellModule.Name == "Gunpowder casing")
@@ -142,109 +146,54 @@ namespace MTMTVFX.Effects.Muzzle
 
                 float gauge = __instance.BarrelSystem.ShellDiameter;
                 MuzzleFlashName type = Enums.GetMuzzleEnum(gauge);
-                float radius;
+                // Core.Util.LogInfo<APSVFXOverride>($"shell fire: {gauge} with {type.ToString()}");
 
                 if (gpCount > 0 && type != MuzzleFlashName.none)
                 {
-                    GameObject gameObject = VFXManager.Instance.Create(type.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                    MainThreadDispatcher.Enqueue(() =>
+                    {
+                        VFXManager.Create<MuzzleFlashName>(type.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                    });
                 }
 
-                MethodInfo RailgunDraw = AccessTools.Method(typeof(AdvCannonFiringPiece), "RailgunDraw");
-                bool flag1 = (float)RailgunDraw.Invoke(__instance, new object[] { null }) > 0f;
-                if (flag1)
+
+                MuzzleFlashName type2 = MuzzleFlashName.none;
+                if (__state.railDraw < 5000)
                 {
-                    MuzzleFlashName type2 = MuzzleFlashName.muzzleflashrail_small;
-                    if (rcCount > 0)
-                    {
-                        if (gauge < 0.12)
-                        {
-                            type2 = MuzzleFlashName.muzzleflashrail_small;
-                        }
-                        else if (gauge < 0.38)
-                        {
-                            type2 = MuzzleFlashName.muzzleflashrail_medium;
-                        }
-                        else
-                        {
-                            type2 = MuzzleFlashName.muzzleflashrail_big;
-                        }
-                    }
-                    GameObject gameObject2 = VFXManager.Instance.Create(type2.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                    return;
                 }
-                //Vector3 vector = __instance.GetFirePoint(0f);
-                //vector += __instance.GetFireDirection() * num3;
-                //VFXManager.Instance.CreateImpactSplash(vector, radius);
+                else if (__state.railDraw < 15000)
+                {
+                    type2 = MuzzleFlashName.muzzlerail_small;
+                }
+                else if (__state.railDraw < 50000)
+                {
+                    type2 = MuzzleFlashName.muzzlerail_medium;
+                }
+                else
+                {
+                    type2 = MuzzleFlashName.muzzlerail_big;
+                }
+
+
+                MainThreadDispatcher.Enqueue(() =>
+                {
+                    VFXManager.Create<MuzzleFlashName>(type2.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                });
             }
-            catch
+            catch (Exception e)
             {
+                Core.Util.LogError<APSVFXOverride>(e.Message, BrilliantSkies.Core.Logger.LogOptions.Popup);
             }
         }
     }
 
+    // Removes the railgun vfx
     [HarmonyPatch(typeof(AdvCannonFiringPiece), "Flash", new Type[] { typeof(bool) })]
-    internal class BM_AdvExtend
+    public class APSVFXRemoveRail
     {
         private static bool Prefix(AdvCannonFiringPiece __instance, bool localSource, ref SoundEventRegulator ____firingSoundRegulator)
         {
-            try
-            {
-                int num = 0;
-                int num2 = 0;
-                float num3 = 0f;
-                ShellModel nextShell = __instance.Node.ShellRacks.GetNextShell(false);
-                foreach (ShellModule shellModule in nextShell.PartsAndMesh.AllParts)
-                {
-                    if (shellModule.Name == "Gunpowder casing")
-                    {
-                        num++;
-                    }
-                    if (shellModule.Name == "Railgun casing")
-                    {
-                        num2++;
-                    }
-                }
-                
-                float radius;
-                float gauge = __instance.BarrelSystem.ShellDiameter;
-                MuzzleFlashName type = Enums.GetMuzzleEnum(gauge);
-                Util.LogInfo<APSVFXOverride>($"shell fire: {gauge} with {type.ToString()}");
-
-                if (num > 0)
-                {
-                    // GameObject gameObject = VFXManager.Instance.Create(type.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
-                }
-
-                var RailgunDraw = AccessTools.Method(typeof(AdvCannonFiringPiece), "RailgunDraw");
-                bool flag = (float)RailgunDraw.Invoke(__instance, new object[] { null }) > 0f;
-                if (flag)
-                {
-                    MuzzleFlashName type2 = MuzzleFlashName.muzzleflashrail_small;
-                    if (num2 > 0)
-                    {
-                        if (__instance.BarrelSystem.ShellDiameter < 0.12)
-                        {
-                            type2 = MuzzleFlashName.muzzleflashrail_small;
-                        }
-                        else if (__instance.BarrelSystem.ShellDiameter < 0.38)
-                        {
-                            type2 = MuzzleFlashName.muzzleflashrail_medium;
-                        }
-                        else
-                        {
-                            type2 = MuzzleFlashName.muzzleflashrail_big;
-                        }
-                    }
-                    // GameObject gameObject2 = VFXManager.Instance.Create(type2.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
-                }
-                //Vector3 vector = __instance.GetFirePoint(0f);
-                //vector += __instance.GetFireDirection() * num3;
-                //VFXManager.Instance.CreateImpactSplash(vector, radius);
-            }
-            catch
-            {
-            }
-
-            /////////////////////////////////////// BASE CODE
             GunSoundSystem.PlaySound(__instance.GameWorldPosition, __instance.BarrelSystem.ShellDiameter, ____firingSoundRegulator, localSource);
             bool isClient = Net.IsClient;
             if (isClient)
@@ -263,8 +212,6 @@ namespace MTMTVFX.Effects.Muzzle
                     // __instance.BarrelSystem.Fire(20f, ShellConstants.ModuleVolume(__instance.BarrelSystem.ShellDiameter) * 4f, nextBarrelReady, __instance.Data.DisableBarrelReciprocation);
                 }
             }
-            /////////////////////////////////////// BASE CODE
-            ///
             return false;
         }
     }

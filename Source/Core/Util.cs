@@ -1,11 +1,18 @@
 ﻿using BrilliantSkies.Core.Logger;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace MTMTVFX.Core
 {
+    public static class Constants
+    {
+        public static int maxMuzzleFlash = 64;
+        public static int maxLaser = 64;
+    }
+
     public class Util
     {
         /// <summary>
@@ -44,6 +51,21 @@ namespace MTMTVFX.Core
         {
             string ns = typeof(T).Namespace ?? "";
             AdvLogger.LogError($"[{ns}.{System.IO.Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assetName"></param>
+        /// <returns></returns>
+        public static string GetAssetbundleGUID(string assetName)
+        {
+            string dllDir = Assembly.GetExecutingAssembly().Location;
+            string modFolder = Path.Combine(Path.GetDirectoryName(dllDir), "Asset Bundles");
+            string[] files = Directory.GetFiles(modFolder, assetName);
+            string json = File.ReadAllText(files[0]);
+            var obj = JObject.Parse(json);
+            return (string)obj["ComponentId"]["Guid"];
         }
     }
 }

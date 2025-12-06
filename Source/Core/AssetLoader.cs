@@ -20,10 +20,16 @@ namespace MTMTVFX.Core
         /// <returns></returns>
         public static Dictionary<string, GameObject> GetDefault()
         {
+            return new Dictionary<string, GameObject>();
             return GetAllAssets(new Guid(CorePlugin.guid));
         }
 
-        private static Dictionary<string, GameObject> GetAllAssets(Guid guid)
+        /// <summary>
+        /// Load all assets from the provided guid of the assetbundle
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public static Dictionary<string, GameObject> GetAllAssets(Guid guid)
         {
             if (guid == loadedBundle)
             {

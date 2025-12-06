@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace MTMTVFX.Internal
+namespace MTMTVFX.Util
 {
     internal class SM_LightController : MonoBehaviour
     {
@@ -21,7 +21,7 @@ namespace MTMTVFX.Internal
         {
             MyLight = GetComponent<Light>();
             BaseRange = MyLight.range;
-            child = Instantiate<GameObject>(lightPrefab);
+            child = Instantiate(lightPrefab);
             WaterLight = child.GetComponent<Light>();
             WaterLight.cullingMask = 1 << LayerMask.NameToLayer("Water");
             SMLC_LightList.Add(MyLight);

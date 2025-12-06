@@ -3,28 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\effects\\muzzle\\apsvfxoverride.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:effects\\muzzle\\apsvfxoverride.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\internal\\effectautokill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:internal\\effectautokill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\assetregistry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\assetregistry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\effects\\apsvfxoverride.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:effects\\apsvfxoverride.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\vfxregistry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxregistry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\vfxpool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxpool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\util.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\util.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\coreplugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\coreplugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\effects\\explosionvfxoverride.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:effects\\explosionvfxoverride.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|c:\\users\\lotte\\documents\\from the depths\\mods\\mtmt vfx core\\source\\core\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -37,83 +53,137 @@
           "SelectedChildIndex": 5,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Enums.cs",
-              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\Enums.cs",
-              "RelativeDocumentMoniker": "Core\\Enums.cs",
-              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\Enums.cs",
-              "RelativeToolTip": "Core\\Enums.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-28T05:48:01.708Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "VFXManager.cs",
-              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
-              "RelativeDocumentMoniker": "Core\\VFXManager.cs",
-              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
-              "RelativeToolTip": "Core\\VFXManager.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAYwCUAAAAWAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "VFXPool.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\VFXPool.cs",
+              "RelativeDocumentMoniker": "Core\\VFXPool.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\VFXPool.cs",
+              "RelativeToolTip": "Core\\VFXPool.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T05:28:46.369Z"
+              "WhenOpened": "2025-12-05T03:15:08.329Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Util.cs",
-              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\Util.cs",
-              "RelativeDocumentMoniker": "Core\\Util.cs",
-              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\Util.cs",
-              "RelativeToolTip": "Core\\Util.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAABEAAAAAAAAAA==",
+              "Title": "VFXRegistry.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\VFXRegistry.cs",
+              "RelativeDocumentMoniker": "Core\\VFXRegistry.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\VFXRegistry.cs",
+              "RelativeToolTip": "Core\\VFXRegistry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T05:28:46.51Z"
+              "WhenOpened": "2025-12-05T02:55:01.263Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EffectAutokill.cs",
-              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Internal\\EffectAutokill.cs",
-              "RelativeDocumentMoniker": "Internal\\EffectAutokill.cs",
-              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Internal\\EffectAutokill.cs",
-              "RelativeToolTip": "Internal\\EffectAutokill.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAowDAAAAAoAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "AssetLoader.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\AssetLoader.cs",
+              "RelativeDocumentMoniker": "Core\\AssetLoader.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\AssetLoader.cs",
+              "RelativeToolTip": "Core\\AssetLoader.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAYwBUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T05:28:46.513Z",
+              "WhenOpened": "2025-12-03T06:24:29.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "APSVFXOverride.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Effects\\APSVFXOverride.cs",
+              "RelativeDocumentMoniker": "Effects\\APSVFXOverride.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Effects\\APSVFXOverride.cs",
+              "RelativeToolTip": "Effects\\APSVFXOverride.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAgwCEAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T06:02:57.934Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "APSVFXOverride.cs",
-              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Effects\\Muzzle\\APSVFXOverride.cs",
-              "RelativeDocumentMoniker": "Effects\\Muzzle\\APSVFXOverride.cs",
-              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Effects\\Muzzle\\APSVFXOverride.cs",
-              "RelativeToolTip": "Effects\\Muzzle\\APSVFXOverride.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAANwAAABSAAAAAAAAAA==",
+              "Title": "VFXManager.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
+              "RelativeDocumentMoniker": "Core\\VFXManager.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
+              "RelativeToolTip": "Core\\VFXManager.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAIwE0AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T05:28:46.518Z",
+              "WhenOpened": "2025-11-26T05:28:46.369Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
+              "Title": "Util.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\Util.cs",
+              "RelativeDocumentMoniker": "Core\\Util.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\Util.cs",
+              "RelativeToolTip": "Core\\Util.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T05:28:46.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ExplosionVFXOverride.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Effects\\ExplosionVFXOverride.cs",
+              "RelativeDocumentMoniker": "Effects\\ExplosionVFXOverride.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Effects\\ExplosionVFXOverride.cs",
+              "RelativeToolTip": "Effects\\ExplosionVFXOverride.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T02:15:19.062Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AssetRegistry.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\AssetRegistry.cs",
+              "RelativeDocumentMoniker": "Core\\AssetRegistry.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\AssetRegistry.cs",
+              "RelativeToolTip": "Core\\AssetRegistry.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T06:23:48.489Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "CorePlugin.cs",
               "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\CorePlugin.cs",
               "RelativeDocumentMoniker": "Core\\CorePlugin.cs",
               "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\CorePlugin.cs",
               "RelativeToolTip": "Core\\CorePlugin.cs",
-              "ViewState": "AQIAAEgAAAAAAAAAAAArwF4AAAApAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T05:28:46.524Z"
+              "WhenOpened": "2025-11-26T05:28:46.524Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Enums.cs",
+              "DocumentMoniker": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\Enums.cs",
+              "RelativeDocumentMoniker": "Core\\Enums.cs",
+              "ToolTip": "C:\\Users\\LOTTE\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\Core\\Enums.cs",
+              "RelativeToolTip": "Core\\Enums.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-28T05:48:01.708Z"
             }
           ]
         }

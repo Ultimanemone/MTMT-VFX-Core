@@ -3,7 +3,7 @@
 
 namespace MTMTVFX.Internal
 {
-    public class SingleThunder : MonoBehaviour
+    public class Lightning : MonoBehaviour
     {
         private LineRenderer Line;
         public float Width = 1f;
@@ -15,7 +15,7 @@ namespace MTMTVFX.Internal
         private void Start()
         {
             Line = GetComponent<LineRenderer>();
-            GetComponent<Renderer>().material.SetTextureOffset("_MaskTex", new Vector2(0f, UnityEngine.Random.value));
+            GetComponent<Renderer>().material.SetTextureOffset("_MaskTex", new Vector2(0f, Random.value));
             SetThunder();
         }
 
@@ -24,12 +24,12 @@ namespace MTMTVFX.Internal
             for (int i = 0; i < 8; i++)
             {
                 float num = i / 8f;
-                PosBuf[i].x = UnityEngine.Random.Range(-Width, Width) * num;
-                PosBuf[i].z = UnityEngine.Random.Range(-Width, Width) * num;
+                PosBuf[i].x = Random.Range(-Width, Width) * num;
+                PosBuf[i].z = Random.Range(-Width, Width) * num;
                 PosBuf[i].y = num * Height;
                 Line.SetPositions(PosBuf);
                 Line.widthMultiplier = 10f;
-                MoveVec[i] = new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1)) * num * MoveLength * 100f;
+                MoveVec[i] = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)) * num * MoveLength * 100f;
             }
         }
 

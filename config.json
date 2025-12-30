@@ -1,0 +1,35 @@
+{
+  "config": {
+    "muzzle": {
+        "enabled": true,
+        "maxCount": 100
+    },
+    "railgun": {
+        "enabled": true,
+        "maxCount": 100
+    },
+    "explosion": {
+        "enabled": true,
+        "maxCount": 100
+    },
+    "laser_pulse": {
+        "enabled": true,
+        "maxCount": 100
+    },
+    "laser_continuous": {
+        "enabled": true
+    },
+    "pac": {
+        "enabled": false,
+        "maxCount": 100
+    },
+    "plasma": {
+        "enabled": false,
+        "maxCount": 100
+    },
+    "flamer": {
+        "enabled": false,
+        "maxCount": 100
+    }
+  }
+}

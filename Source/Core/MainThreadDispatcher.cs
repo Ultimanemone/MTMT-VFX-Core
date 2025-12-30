@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MTMTVFX.Core;
+using MTMTVFX.Effects;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,5 +41,12 @@ public class MainThreadDispatcher : MonoBehaviour
                 _actions.Dequeue()?.Invoke();
             }
         }
+
+        OnFixedUpdate();
+    }
+
+    private void OnFixedUpdate()
+    {
+        if (Util.E_CONTINUOUS) LaserPatchMod.UpdateContBeams();
     }
 }

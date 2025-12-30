@@ -20,6 +20,7 @@ namespace MTMTVFX.Core
         public string name { get { return "MTMT_VFXCore"; } }
         public Version version { get { return new Version(CorePlugin.ver); } }
         public static string guid = Util.GetAssetbundleGUID("bmeffects_*.assetbundle");
+        public static JObject config = Util.GetConfig();
         public static string ver = "1.0.0";
 
         public void OnLoad()

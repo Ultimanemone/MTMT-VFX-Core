@@ -21,10 +21,19 @@ namespace MTMTVFX.Internal
         private void OnEnable()
         {
             GetComponent<ParticleSystem>().Play(true);
+            if (GetComponentInChildren<LineRenderer>() != null)
+            {
+                Debug.Log("flag");
+            }
         }
 
         private void LateUpdate()
         {
+            if (GetComponentInChildren<LineRenderer>() != null && gameObject.activeSelf)
+            {
+                Debug.Log("flag");
+            }
+
             bool flag = (psList[0] == null || maxLifetime < psList[0].time) && psList[0].time > Time.deltaTime;
             if (flag)
             {
@@ -33,7 +42,7 @@ namespace MTMTVFX.Internal
 
             foreach (ParticleSystem ps in psList)
             {
-                if (ps.particleCount > 0) goto B1;
+                if (ps.particleCount > 0 || ps.isEmitting) goto B1;
             }
 
             Core.Util.LogInfo<EffectAutokill>($"Effect {gameObject.name} killed");

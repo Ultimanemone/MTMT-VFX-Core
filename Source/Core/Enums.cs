@@ -67,6 +67,11 @@
         muzzleflash_biggest,
         muzzleflash_huge,
         muzzleflash_gigant,
+    }
+
+    public enum RailgunName
+    {
+        none,
         muzzlerail_small,
         muzzlerail_medium,
         muzzlerail_big,
@@ -75,10 +80,13 @@
     public enum BeamName
     {
         none,
-        pulselaser,
-        paceffect,
-        laserflash,
-        laserhit,
-        shockwave
+        laser_pulse,
+        //pac
+    }
+
+    public enum SpecialName
+    {
+        none,
+        laser_cont
     }
 }

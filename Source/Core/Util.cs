@@ -2,9 +2,11 @@
 using BrilliantSkies.FromTheDepths.Game;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 
 namespace MTMTVFX.Core
@@ -125,6 +127,14 @@ namespace MTMTVFX.Core
 
             return obj;
         }
+
+        /// <summary>
+        /// Dummy method, patch this to add or run custom scripts on the objects
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="type"></param>
+        /// <param name="modName"></param>
+        public static void AddScript(GameObject obj, Enum type, string modName) { }
     }
 
     [HarmonyPatch(typeof(AutoBattle), "Start")]

@@ -20,7 +20,7 @@
         "enabled": true
     },
     "pac": {
-        "enabled": false,
+        "enabled": true,
         "maxCount": 100
     },
     "plasma": {

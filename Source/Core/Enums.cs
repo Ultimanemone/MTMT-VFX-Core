@@ -81,7 +81,7 @@
     {
         none,
         laser_pulse,
-        //pac
+        pac_beam
     }
 
     public enum SpecialName

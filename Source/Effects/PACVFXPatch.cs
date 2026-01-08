@@ -2,87 +2,72 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using System.Reflection;
+using MTMTVFX.Core;
+using BrilliantSkies.GridCasts;
 
 namespace MTMTVFX.Effects
 {
     [HarmonyPatch(typeof(ParticleCannonEffect), "RenderAndRun")]
     public class PACVFXPatch
     {
-        private static bool Prefix(ParticleCannonEffect __instance)
+        private static void Prefix(ParticleCannonEffect __instance)
         {
-            if (!Core.Util.E_PAC) return true;
+            if (!Core.Util.E_PAC) return;
 
-            Color col = new Color(1f, 0.5f, 0.5f, 2f) * __instance.m_BaseColor;
-            Gradient gradient = new Gradient();
-            GradientColorKey[] colorKeys = { new GradientColorKey(col, 0f) };
-
+            // We keep the main obj since it is used for damage checks
             GameObject[] children = __instance.gameObject.GetChildren();
-            ParticleSystem[] psList = __instance.gameObject.GetComponentsInChildren<ParticleSystem>();
-
-            foreach (ParticleSystem ps in psList)
-            {
-                if (ps.name == "shockwave2") continue;
-
-                ParticleSystem.ColorOverLifetimeModule psColor = ps.colorOverLifetime;
-                GradientAlphaKey[] alphaKeys = psColor.color.gradient.alphaKeys;
-                gradient.SetKeys(colorKeys, alphaKeys);
-
-                psColor.color = gradient;
-            }
 
             foreach (GameObject child in children)
             {
-                if (child.name == "shockwave2")
-                {
-                    child.SetActive(false);
-                }
-
-                if (child.name == "SecondaryEffect")
-                {
-                    child.SetActive(false);
-                }
-
-                if (child.name == "Light")
-                {
-                    Light light = child.GetComponent<Light>();
-                    Color lc = __instance.m_BaseColor;
-                    lc.a = light.color.a;
-                    light.color = lc;
-                }
+                //if (child.name != "SecondaryEffect") child.SetActive(false);
+                child.SetActive(false);
             }
-            return false;
         }
     }
 
-    //[HarmonyPatch(typeof(ParticleCannon), "MainThreadClientAndServerFire")]
+    [HarmonyPatch(typeof(ParticleCannonEffect), "ApplyDamage")]
     public class PACVFXPatch2
     {
-        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        private static void Postfix(ParticleCannonEffect __instance, Vector3[] worldPositions)
         {
-            if (!Core.Util.E_PAC)
+            if (__instance.HasHit) return;
+            MainThreadDispatcher.Enqueue(() =>
             {
-                foreach (var instruction in instructions)
-                    yield return instruction;
-
-                yield break;
-            }
-
-            foreach (var ins in instructions)
-            {
-                // Just before storing effectScale, the value is on the stack
-                if (ins.opcode == OpCodes.Stfld &&
-                    ins.operand is System.Reflection.FieldInfo fi &&
-                    fi.Name == "effectScale")
-                {
-                    // Replace computed value with 0f
-                    yield return new CodeInstruction(OpCodes.Pop);        // pop computed value
-                    yield return new CodeInstruction(OpCodes.Ldc_R4, 0f); // push 0
-                }
-
-                yield return ins;
-            }
-
-
+                GameObject obj = VFXManager.Create(BeamName.pac_beam, worldPositions[0], __instance.transform.forward);
+                PacPatchMod.PacMethod(worldPositions, obj, __instance.Range0Damage, __instance.ParticleType, __instance.m_BaseColor);
+            });
         }
+    }
+
+    [HarmonyPatch(typeof(ParticleCannonEffect), "TerminateAtPoint")]
+    public class PACVFXPatch3
+    {
+        private static void Prefix(ParticleCannonEffect __instance, LineRenderer ____lineRenderer, Vector3 gameWorldPosition, int indexOfTermination)
+        {
+            Vector3[] worldPositions = new Vector3[indexOfTermination];
+
+            for (int i = 0; i < indexOfTermination - 1; i++)
+            {
+                Vector3 localPos = ____lineRenderer.GetPosition(i);
+                worldPositions[i] = ____lineRenderer.transform.TransformPoint(localPos);
+            }
+            worldPositions[indexOfTermination - 1] = gameWorldPosition;
+
+            MainThreadDispatcher.Enqueue(() =>
+            {
+                GameObject obj = VFXManager.Create(BeamName.pac_beam, worldPositions[0], __instance.transform.forward);
+                PacPatchMod.PacMethod(worldPositions, obj, __instance.Range0Damage, __instance.ParticleType, __instance.m_BaseColor);
+            });
+        }
+    }
+
+    public class PacPatchMod
+    {
+        /// <summary>
+        /// Dummy method, patch this to get coordinates array <paramref name="pointArray"/> of the PAC beam 
+        /// </summary>
+        /// <param name="pointArray">This is the array of every point on the PAC beam</param>
+        public static void PacMethod(Vector3[] pointArray, GameObject pacBeam, float damage, ParticleType type, Color color) { }
     }
 }

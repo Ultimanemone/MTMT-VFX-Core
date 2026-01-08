@@ -53,7 +53,7 @@ namespace MTMTVFX.Effects
 
             MainThreadDispatcher.Enqueue(() =>
             {
-                GameObject obj = VFXManager.InstantiateCopy<SpecialName>(SpecialName.laser_cont.ToString(), Vector3.zero, Vector3.zero);
+                GameObject obj = VFXManager.InstantiateCopy(SpecialName.laser_cont, Vector3.zero, Vector3.zero);
                 LaserPatchMod.laserBeams.Add(__instance, obj);
             });
         }
@@ -104,9 +104,10 @@ namespace MTMTVFX.Effects
             __result = __instance.PoolArray[___Indexor.CycleIndex()];
             MainThreadDispatcher.Enqueue(() =>
             {
-                GameObject obj = VFXManager.Create<BeamName>(BeamName.laser_pulse.ToString(), spec.StartPosition, spec.StartPosition - spec.EndPosition);
+                GameObject obj = VFXManager.Create(BeamName.laser_pulse, spec.StartPosition, spec.StartPosition - spec.EndPosition);
                 LaserPatchMod.PulseMethod(spec, obj);
             });
+
             return false;
         }
     }

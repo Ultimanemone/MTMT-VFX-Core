@@ -171,7 +171,7 @@ namespace MTMTVFX.Effects
                     {
                         MainThreadDispatcher.Enqueue(() =>
                         {
-                            VFXManager.Create<MuzzleFlashName>(muzzleType.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                            VFXManager.Create(muzzleType, __instance.GetFirePoint(0f), __instance.GetFireDirection());
                         });
                     }
                 }
@@ -201,7 +201,7 @@ namespace MTMTVFX.Effects
 
                     MainThreadDispatcher.Enqueue(() =>
                     {
-                        VFXManager.Create<RailgunName>(railType.ToString(), __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                        VFXManager.Create(railType, __instance.GetFirePoint(0f), __instance.GetFireDirection());
                     });
                 }
             }

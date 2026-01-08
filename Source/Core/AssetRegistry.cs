@@ -76,14 +76,23 @@ namespace MTMTVFX.Core
         /// <summary>
         /// Get a VFX from the registry
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="effect"></param>
+        /// <param name="type">Type of VFX</param>
+        /// <param name="effect">Name of the VFX</param>
+        /// <param name="modName">Name of the mod this asset is from</param>
         /// <returns></returns>
-        public static bool TryGetAsset(string type, out GameObject effect)
+        public static bool TryGetAsset(string type, out GameObject effect, out string modName)
         {
             bool flag = registry.TryGetValue(type, out AssetContainer container);
-            if (flag) effect = container.prefab;
-            else effect = null;
+            if (flag)
+            {
+                effect = container.prefab;
+                modName = container.source;
+            }
+            else
+            {
+                effect = null;
+                modName = "";
+            }
             return flag;
         }
     }

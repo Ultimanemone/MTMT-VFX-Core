@@ -14,6 +14,7 @@
           "DataManagement": "1.0.0.0",
           "Effects": "1.0.0.0",
           "Ftd": "1.0.0.0",
+          "GridCasts": "1.0.0.0",
           "Modding": "1.0.0.0",
           "NetInfrastructure": "1.0.0.0",
           "Newtonsoft.Json": "13.0.0.0",
@@ -64,6 +65,14 @@
           }
         }
       },
+      "GridCasts/1.0.0.0": {
+        "runtime": {
+          "GridCasts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Modding/1.0.0.0": {
         "runtime": {
           "Modding.dll": {
@@ -101,14 +110,6 @@
           "UnityEngine.ParticleSystemModule.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "GridCasts/1.0.0.0": {
-        "runtime": {
-          "GridCasts.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -153,6 +154,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "GridCasts/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Modding/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
@@ -174,11 +180,6 @@
       "sha512": ""
     },
     "UnityEngine.ParticleSystemModule/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "GridCasts/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

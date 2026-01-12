@@ -1,6 +1,6 @@
 ﻿namespace MTMTVFX.Core
 {
-    public class Enums
+    public static class Enums
     {
         public static MuzzleFlashName GetMuzzleEnum(float gauge)
         {
@@ -82,6 +82,15 @@
         none,
         laser_pulse,
         pac_beam
+    }
+
+    public enum TrailName
+    {
+        aps,
+        railgun,
+        cram,
+        missile,
+        plasma
     }
 
     public enum SpecialName

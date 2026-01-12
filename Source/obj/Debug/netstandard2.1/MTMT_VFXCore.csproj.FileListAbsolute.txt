@@ -38,7 +38,6 @@ C:\Users\LOTTE\Documents\From The Depths\Mods\MTMT VFX Core\Source\bin\Debug\net
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMT VFX Core\Source\bin\Debug\netstandard2.1\GridCasts.dll
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMT VFX Core\Source\bin\Debug\netstandard2.1\Modding.dll
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.CoreModule.dll
-C:\Users\LOTTE\Documents\From The Depths\Mods\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.dll
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.ParticleSystemModule.dll
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFX.92C8B7D5.Up2Date
 C:\Users\NoOne\Documents\From The Depths\Mods\MTMT VFX Core\Source\bin\Debug\netstandard2.1\Environments.dll

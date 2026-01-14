@@ -1,15 +1,8 @@
 ﻿using BrilliantSkies.Effects.Explosions;
 using BrilliantSkies.Effects.SoundSystem;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Text;
-using BrilliantSkies.Core;
-using BrilliantSkies.Core.Help;
-using BrilliantSkies.Core.Constants;
 using BrilliantSkies.Core.Logger;
-using BrilliantSkies.Core.Widgets;
 using MTMTVFX.Core;
 
 namespace MTMTVFX.Effects
@@ -19,6 +12,8 @@ namespace MTMTVFX.Effects
     {
         private static void Prefix(ExplosionVisualiser __instance, float size, Vector3 gameWorldPosition, IAudioClip sound = null, bool pushToClient = true)
         {
+            if (Core.Util.IS_DEGRADED) return;
+
             if (size < 1f || float.IsInfinity(size) || float.IsNaN(size))
             {
                 AdvLogger.LogError(string.Format("Explosion of size {0} requested in {1}. Not possible.", size, "MakeExplosion"), LogOptions._AlertDevInGame);

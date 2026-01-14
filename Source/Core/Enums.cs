@@ -8,29 +8,25 @@
             {
                 return MuzzleFlashName.muzzleflash_tiny;
             }
-            else if (gauge < 0.1f)
+            else if (gauge <= 0.127f)
             {
                 return MuzzleFlashName.muzzleflash_small;
             }
-            else if (gauge < 0.2f)
+            else if (gauge <= 0.225f)
             {
                 return MuzzleFlashName.muzzleflash_medium;
             }
-            else if (gauge < 0.279f)
+            else if (gauge <= 0.305f)
             {
                 return MuzzleFlashName.muzzleflash_big;
             }
-            else if (gauge < 0.356f)
+            else if (gauge <= 0.406f)
             {
                 return MuzzleFlashName.muzzleflash_bigger;
             }
-            else if (gauge < 0.43f)
-            {
-                return MuzzleFlashName.muzzleflash_biggest;
-            }
             else if (gauge <= 0.5f)
             {
-                return MuzzleFlashName.muzzleflash_gigant;
+                return MuzzleFlashName.muzzleflash_biggest;
             }
             else
             {

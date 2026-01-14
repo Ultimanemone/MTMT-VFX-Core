@@ -1,77 +1,76 @@
 ﻿using MTMTVFX.Core;
 using BrilliantSkies.Core;
-using BrilliantSkies.Core.Widgets;
 using BrilliantSkies.Effects.GunSounds;
 using BrilliantSkies.Effects.SoundSystem;
 using HarmonyLib;
-using UnityEngine;
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace MTMTVFX.Effects
 {
     // Code for gun venting heat after shots
-    //[HarmonyPatch(typeof(AdvCannonFiringPiece), "Vent")]
+    [HarmonyPatch(typeof(AdvCannonFiringPiece), "Vent")]
     public class APSVFXRemoveVent
     {
         private static bool Prefix(AdvCannonFiringPiece __instance)
         {
-            return false;
+            if (Util.E_MUZZLE && !Util.IS_DEGRADED) return false;
+            return true;
         }
     }
 
     // Not sure if its needed but visually its not needed
     //[HarmonyPatch(typeof(AdvCannonFiringPiece), "LateVisuals")]
-    public class APSVFXRemoveLateVisuals
-    {
-        private static bool Prefix(AdvCannonFiringPiece __instance, ref ParticleSystem ____particleSmoke, ref ITicker ____barrelColorTicker)
-        {
-            if (!Core.Util.E_MUZZLE) return true;
+    //public class APSVFXRemoveLateVisuals
+    //{
+    //    private static bool Prefix(AdvCannonFiringPiece __instance, ref ParticleSystem ____particleSmoke, ref ITicker ____barrelColorTicker)
+    //    {
+    //        if (!Core.Util.E_MUZZLE) return true;
 
-            ///////////////////////////////////////// BASE CODE
-            bool flag = ____particleSmoke != null && ____particleSmoke.isPlaying;
-            if (flag)
-            {
-                bool flag2 = __instance.SmokePlayingTime.Since > 2f;
-                if (flag2)
-                {
-                    ____particleSmoke.Stop();
-                }
-            }
-            bool flag3 = ____barrelColorTicker.CheckAndReset();
-            if (flag3)
-            {
-                ICannonBarrelSystem barrelSystem = __instance.BarrelSystem;
-                if (barrelSystem != null)
-                {
-                    barrelSystem.CheckBarrelColors();
-                }
-            }
-            ICannonBarrelSystem barrelSystem2 = __instance.BarrelSystem;
-            if (barrelSystem2 != null)
-            {
-                barrelSystem2.RedrawBarrels();
-            }
-            bool flag4 = __instance.GetFireDirection() != Vector3.zero;
-            if (flag4)
-            {
-                __instance.BarrelSystem.AimDirection = __instance.GetFireDirection();
-            }
-            else
-            {
-                __instance.BarrelSystem.AimDirection = __instance.GameWorldForwards;
-            }
-            __instance.BarrelSystem.LateUpdate(__instance.GameWorldUp);
-            ///////////////////////////////////////// BASE CODE
+    //        ///////////////////////////////////////// BASE CODE
+    //        bool flag = ____particleSmoke != null && ____particleSmoke.isPlaying;
+    //        if (flag)
+    //        {
+    //            bool flag2 = __instance.SmokePlayingTime.Since > 2f;
+    //            if (flag2)
+    //            {
+    //                ____particleSmoke.Stop();
+    //            }
+    //        }
+    //        bool flag3 = ____barrelColorTicker.CheckAndReset();
+    //        if (flag3)
+    //        {
+    //            ICannonBarrelSystem barrelSystem = __instance.BarrelSystem;
+    //            if (barrelSystem != null)
+    //            {
+    //                barrelSystem.CheckBarrelColors();
+    //            }
+    //        }
+    //        ICannonBarrelSystem barrelSystem2 = __instance.BarrelSystem;
+    //        if (barrelSystem2 != null)
+    //        {
+    //            barrelSystem2.RedrawBarrels();
+    //        }
+    //        bool flag4 = __instance.GetFireDirection() != Vector3.zero;
+    //        if (flag4)
+    //        {
+    //            __instance.BarrelSystem.AimDirection = __instance.GetFireDirection();
+    //        }
+    //        else
+    //        {
+    //            __instance.BarrelSystem.AimDirection = __instance.GameWorldForwards;
+    //        }
+    //        __instance.BarrelSystem.LateUpdate(__instance.GameWorldUp);
+    //        ///////////////////////////////////////// BASE CODE
 
-            return false;
-        }
-    }
+    //        return false;
+    //    }
+    //}
 
-    // Patch manual firing
     [HarmonyPatch(typeof(AdvCannonFiringPiece), "WeaponFire")]
     public class APSVFXPatch
     {
@@ -85,7 +84,7 @@ namespace MTMTVFX.Effects
         // Grab shell data before firing
         private static void Prefix(AdvCannonFiringPiece __instance, FiredMunitionReturn FMR, out State __state)
         {
-            if (!Core.Util.E_MUZZLE && !Core.Util.E_RAILGUN)
+            if ((!Util.E_MUZZLE && !Util.E_RAILGUN) || Util.IS_DEGRADED)
             {
                 __state = new State
                 {
@@ -111,7 +110,7 @@ namespace MTMTVFX.Effects
         [HarmonyTranspiler]
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            if (!Core.Util.E_MUZZLE)
+            if (!Util.E_MUZZLE || Util.IS_DEGRADED)
             {
                 foreach (var instruction in instructions)
                     yield return instruction;
@@ -141,42 +140,34 @@ namespace MTMTVFX.Effects
         {
             try
             {
-                if (Core.Util.E_MUZZLE)
+                if (Util.IS_DEGRADED) return;
+
+                if (Util.E_MUZZLE)
                 {
                     bool fired = (bool)AccessTools.Field(typeof(FiredMunitionReturn), "_fired").GetValue(__state.FMR);
-                    if (!fired) { return; }
+                    if (!fired) { return; } // Gun didn't fire
 
                     ShellModel firedShell = __state.shell;
-                    int gpCount = 0;
-                    int rcCount = 0;
-                    if (firedShell == null) return;
-                    foreach (ShellModule shellModule in firedShell.PartsAndMesh.AllParts)
-                    {
-                        if (gpCount > 0 && rcCount > 0) break;
-                        if (shellModule.Name == "Gunpowder casing")
-                        {
-                            gpCount++;
-                        }
-                        else if (shellModule.Name == "Railgun casing")
-                        {
-                            rcCount++;
-                        }
-                    }
+                    if (firedShell == null) return; // Couldn't find the shell
 
-                    float gauge = __instance.BarrelSystem.ShellDiameter;
-                    MuzzleFlashName muzzleType = Enums.GetMuzzleEnum(gauge);
-                    // Core.Util.LogInfo<APSVFXOverride>($"shell fire: {gauge} with {type.ToString()}");
-
-                    if (gpCount > 0 && muzzleType != MuzzleFlashName.none)
+                    bool gpUsed = firedShell.PartsAndMesh.AllParts.Exists(x => x.Name == "Gunpowder casing");
+                    if (gpUsed)
                     {
-                        MainThreadDispatcher.Enqueue(() =>
+                        float gauge = __instance.BarrelSystem.ShellDiameter;
+                        MuzzleFlashName muzzleType = Enums.GetMuzzleEnum(gauge);
+                        // Core.Util.LogInfo<APSVFXOverride>($"shell fire: {gauge} with {type.ToString()}");
+
+                        if (muzzleType != MuzzleFlashName.none)
                         {
-                            VFXManager.Create(muzzleType, __instance.GetFirePoint(0f), __instance.GetFireDirection());
-                        });
+                            MainThreadDispatcher.Enqueue(() =>
+                            {
+                                VFXManager.Create(muzzleType, __instance.GetFirePoint(0f), __instance.GetFireDirection());
+                            });
+                        }
                     }
                 }
 
-                if (Core.Util.E_RAILGUN)
+                if (Util.E_RAILGUN)
                 {
                     bool fired = (bool)AccessTools.Field(typeof(FiredMunitionReturn), "_fired").GetValue(__state.FMR);
                     if (!fired) { return; }
@@ -207,7 +198,7 @@ namespace MTMTVFX.Effects
             }
             catch (Exception e)
             {
-                Core.Util.LogError<APSVFXPatch>(e.Message, BrilliantSkies.Core.Logger.LogOptions.Popup);
+                Util.LogError<APSVFXPatch>(e.Message, BrilliantSkies.Core.Logger.LogOptions.Popup);
             }
         }
     }
@@ -218,7 +209,7 @@ namespace MTMTVFX.Effects
     {
         private static bool Prefix(AdvCannonFiringPiece __instance, bool localSource, ref SoundEventRegulator ____firingSoundRegulator)
         {
-            if (!Core.Util.E_RAILGUN) return true;
+            if (!Util.E_RAILGUN || Util.IS_DEGRADED) return true;
 
             GunSoundSystem.PlaySound(__instance.GameWorldPosition, __instance.BarrelSystem.ShellDiameter, ____firingSoundRegulator, localSource);
             bool isClient = Net.IsClient;

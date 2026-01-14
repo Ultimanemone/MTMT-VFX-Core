@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using BrilliantSkies.Environments;
-using static BrilliantSkies.FromTheDepths.Planets.Map.ForceButtonPanel;
-using UnityEngine.Windows;
 using System.Collections;
 
 
@@ -125,6 +121,7 @@ namespace MTMTVFX.Core
         /// <param name="type">The type of the object</param>
         /// <param name="pos">Where the object should be placed</param>
         /// <param name="forward">The direction the object should point at</param>
+        /// <param name="size">The size of the object</param>
         /// <returns></returns>
         public static GameObject Create(Enum type, Vector3 pos, Vector3 forward)
         {
@@ -132,13 +129,13 @@ namespace MTMTVFX.Core
 
             IDictionary pool;
 
-            if (type.GetType() == typeof(MuzzleFlashName))
+            if (type.GetType() == typeof(MuzzleFlashName) && (MuzzleFlashName)type != MuzzleFlashName.none)
                 pool = _muzzleFlashPools;
-            else if (type.GetType() == typeof(RailgunName))
+            else if (type.GetType() == typeof(RailgunName) && (RailgunName)type != RailgunName.none)
                 pool = _railgunPools;
-            else if (type.GetType() == typeof(ExplosionName))
+            else if (type.GetType() == typeof(ExplosionName) && (ExplosionName)type != ExplosionName.none)
                 pool = _explosionPools;
-            else if (type.GetType() == typeof(BeamName))
+            else if (type.GetType() == typeof(BeamName) && (BeamName)type != BeamName.none)
                 pool = _beamPools;
             else return null;
 

@@ -1,13 +1,14 @@
 ﻿using BrilliantSkies.Core.Logger;
+using BrilliantSkies.Effects.Regulation;
 using BrilliantSkies.FromTheDepths.Game;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-
 
 namespace MTMTVFX.Core
 {
@@ -17,7 +18,7 @@ namespace MTMTVFX.Core
         public static int maxLaser = 64;
     }
 
-    public class Util
+    public static class Util
     {
         public static bool E_MUZZLE { get; private set; } = false;
         public static int COUNT_MUZZLE { get; private set; } = 0;
@@ -35,17 +36,27 @@ namespace MTMTVFX.Core
         public static int COUNT_FLAMER { get; private set; } = 0;
 
         public static bool E_CONTINUOUS { get; private set; } = false;
+        public static bool IS_DEGRADED
+        {
+            get
+            {
+                if (!_init) InitConfig();
+                return !e_in_degraded && !ProcessorLoading.Instance.FullMode;
+            }
+        }
+        private static bool e_in_degraded = false;
+        private static bool _init = false;
 
 
 
         /// <summary>
         /// Calls AdvLogger.LogInfo with generated file path and member info
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="option"></param>
-        /// <param name="file"></param>
-        /// <param name="member"></param>
-        /// <param name="line"></param>
+        /// <param name="message">The message to log</param>
+        /// <param name="option">The logging option</param>
+        /// <param name="file">Leave this empty</param>
+        /// <param name="member">Leave this empty</param>
+        /// <param name="line">Leave this empty</param>
         public static void LogInfo<T>(
             string message,
             LogOptions option = LogOptions.None,
@@ -54,17 +65,17 @@ namespace MTMTVFX.Core
             [CallerLineNumber] int line = 0)
         {
             string ns = typeof(T).Namespace ?? "";
-            AdvLogger.LogInfo($"[{ns}.{System.IO.Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+            AdvLogger.LogInfo($"[{ns}.{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
         }
 
         /// <summary>
         /// Calls AdvLogger.LogError with generated file path and member info
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="option"></param>
-        /// <param name="file"></param>
-        /// <param name="member"></param>
-        /// <param name="line"></param>
+        /// <param name="message">The error to log</param>
+        /// <param name="option">The logging option</param>
+        /// <param name="file">Leave this empty</param>
+        /// <param name="member">Leave this empty</param>
+        /// <param name="line">Leave this empty</param>
         public static void LogError<T>(
             string message,
             LogOptions option = LogOptions.None,
@@ -73,13 +84,13 @@ namespace MTMTVFX.Core
             [CallerLineNumber] int line = 0)
         {
             string ns = typeof(T).Namespace ?? "";
-            AdvLogger.LogError($"[{ns}.{System.IO.Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+            AdvLogger.LogError($"[{ns}.{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
         }
 
         /// <summary>
         /// Find the mod's assetbundle GUID by file name
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">Name of the assetbundle json file, usually "name_*.assetbundle"</param>
         /// <returns></returns>
         public static string GetAssetbundleGUID(string filename)
         {
@@ -94,38 +105,55 @@ namespace MTMTVFX.Core
         /// <summary>
         /// Get all the configs
         /// </summary>
-        public static JObject GetConfig()
+        public static void InitConfig()
         {
-            string dllPath = Assembly.GetExecutingAssembly().Location;
-            string dllDir = Path.GetDirectoryName(dllPath);
-            string configPath = Path.Combine(dllDir, "config.json");
-            string json = File.ReadAllText(configPath);
-            var obj = JObject.Parse(json);
+            try
+            {
+                if (_init) return;
 
-            E_MUZZLE = (bool)obj["config"]["muzzle"]["enabled"];
-            COUNT_MUZZLE = (int)obj["config"]["muzzle"]["maxCount"];
+                string dllPath = Assembly.GetExecutingAssembly().Location;
+                string dllDir = Path.GetDirectoryName(dllPath);
+                string configPath = Path.Combine(dllDir, "config.json");
+                string json = File.ReadAllText(configPath);
+                var obj = JObject.Parse(json);
 
-            E_RAILGUN = (bool)obj["config"]["railgun"]["enabled"];
-            COUNT_RAILGUN = (int)obj["config"]["railgun"]["maxCount"];
+                E_MUZZLE = (bool)obj["config"]["muzzle"]["enabled"];
+                COUNT_MUZZLE = (int)obj["config"]["muzzle"]["maxCount"];
 
-            E_EXPL = (bool)obj["config"]["explosion"]["enabled"];
-            COUNT_EXPL = (int)obj["config"]["explosion"]["maxCount"];
+                E_RAILGUN = (bool)obj["config"]["railgun"]["enabled"];
+                COUNT_RAILGUN = (int)obj["config"]["railgun"]["maxCount"];
 
-            E_PULSE = (bool)obj["config"]["laser_pulse"]["enabled"];
-            COUNT_PULSE = (int)obj["config"]["laser_pulse"]["maxCount"];
+                E_EXPL = (bool)obj["config"]["explosion"]["enabled"];
+                COUNT_EXPL = (int)obj["config"]["explosion"]["maxCount"];
 
-            E_PAC = (bool)obj["config"]["pac"]["enabled"];
-            COUNT_PAC= (int)obj["config"]["pac"]["maxCount"];
+                E_PULSE = (bool)obj["config"]["laser_pulse"]["enabled"];
+                COUNT_PULSE = (int)obj["config"]["laser_pulse"]["maxCount"];
 
-            E_PLASMA = (bool)obj["config"]["plasma"]["enabled"];
-            COUNT_PLASMA= (int)obj["config"]["plasma"]["maxCount"];
+                E_PAC = (bool)obj["config"]["pac"]["enabled"];
+                COUNT_PAC = (int)obj["config"]["pac"]["maxCount"];
 
-            E_FLAMER = (bool)obj["config"]["flamer"]["enabled"];
-            COUNT_FLAMER = (int)obj["config"]["flamer"]["maxCount"];
+                E_PLASMA = (bool)obj["config"]["plasma"]["enabled"];
+                COUNT_PLASMA = (int)obj["config"]["plasma"]["maxCount"];
 
-            E_CONTINUOUS = (bool)obj["config"]["laser_continuous"]["enabled"];
+                E_FLAMER = (bool)obj["config"]["flamer"]["enabled"];
+                COUNT_FLAMER = (int)obj["config"]["flamer"]["maxCount"];
 
-            return obj;
+                E_CONTINUOUS = (bool)obj["config"]["laser_continuous"]["enabled"];
+                e_in_degraded = (bool)obj["config"]["enable_during_degraded"];
+
+                _init = true;
+            }
+            catch (Exception e)
+            {
+                LogError<CorePlugin>(e.Message);
+            }
+        }
+
+        public static GameObject[] GetChildren(this GameObject self, bool includeInactive = false)
+        {
+            return (from c in self.GetComponentsInChildren<Transform>(includeInactive)
+                    where c != self.transform
+                    select c.gameObject).ToArray<GameObject>();
         }
 
         /// <summary>

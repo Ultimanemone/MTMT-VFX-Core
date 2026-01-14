@@ -15,7 +15,7 @@ namespace MTMTVFX.Effects
     {
         private static bool Prefix(ConventionalLaser  __instance, bool newState)
         {
-            if (!Core.Util.E_CONTINUOUS) return true;
+            if (!Core.Util.E_CONTINUOUS || Core.Util.IS_DEGRADED) return true;
 
             if (newState) return false;
             return true;
@@ -27,7 +27,7 @@ namespace MTMTVFX.Effects
     {
         private static void Prefix(ShortRangeLaser __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
         {
-            if (!Core.Util.E_CONTINUOUS) return;
+            if (!Core.Util.E_CONTINUOUS || Core.Util.IS_DEGRADED) return;
 
             LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
         }
@@ -38,7 +38,7 @@ namespace MTMTVFX.Effects
     {
         private static void Prefix(LaserCombiner __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
         {
-            if (!Core.Util.E_CONTINUOUS) return;
+            if (!Core.Util.E_CONTINUOUS || Core.Util.IS_DEGRADED) return;
 
             LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
         }
@@ -49,7 +49,7 @@ namespace MTMTVFX.Effects
     {
         private static void Postfix(ConventionalLaser __instance)
         {
-            if (!Core.Util.E_CONTINUOUS) return;
+            if (!Core.Util.E_CONTINUOUS || Core.Util.IS_DEGRADED) return;
 
             MainThreadDispatcher.Enqueue(() =>
             {
@@ -64,7 +64,7 @@ namespace MTMTVFX.Effects
     {
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            if (!Core.Util.E_PULSE) return instructions;
+            if (!Core.Util.E_PULSE || Core.Util.IS_DEGRADED) return instructions;
 
             var codes = new List<CodeInstruction>(instructions);
 
@@ -99,7 +99,7 @@ namespace MTMTVFX.Effects
     {
         private static bool Prefix(LaserPulsePool __instance, LaserPulseSpecification spec, ref LaserPulseRender __result, PoolIndex ___Indexor)
         {
-            if (!Core.Util.E_PULSE) return true;
+            if (!Core.Util.E_PULSE || Core.Util.IS_DEGRADED) return true;
 
             __result = __instance.PoolArray[___Indexor.CycleIndex()];
             MainThreadDispatcher.Enqueue(() =>

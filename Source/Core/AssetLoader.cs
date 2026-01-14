@@ -21,7 +21,6 @@ namespace MTMTVFX.Core
         public static Dictionary<string, GameObject> GetDefault()
         {
             return new Dictionary<string, GameObject>();
-            return GetAllAssets(new Guid(CorePlugin.guid));
         }
 
         /// <summary>

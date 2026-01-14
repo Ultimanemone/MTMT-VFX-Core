@@ -43,12 +43,22 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Steamworks">
+      <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Steamworks.dll</HintPath>
+    </Reference>
+    <Reference Include="Ui">
+      <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Ui.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
       <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -87,9 +87,12 @@ namespace MTMTVFX.Core
 
         private static void Callback(SteamUGCRequestUGCDetailsResult_t param, bool bIOFailure)
         {
+            Util.LogInfo<CorePlugin>("flag1");
             GameEvents.Twice_Second.UnregWithEvent(SteamUGCRequest);
+            Util.LogInfo<CorePlugin>("flag2");
 
             string description = param.m_details.m_rgchDescription;
+            Util.LogInfo<CorePlugin>("flag3");
 
             if (!string.IsNullOrEmpty(description))
             {
@@ -101,14 +104,17 @@ namespace MTMTVFX.Core
                 {
                     if (inputLine.StartsWith("Latest version "))
                     {
-                        latestVersion = System.Version.Parse(inputLine.Remove(0, 18));
+                        latestVersion = System.Version.Parse(inputLine.Remove(0, 15));
+                        Util.LogInfo<CorePlugin>(description);
+                        Util.LogInfo<CorePlugin>(latestVersion.ToString());
+                        Util.LogInfo<CorePlugin>(_version.ToString());
                         break;
                     }
                 }
 
                 if (latestVersion != null && _version.CompareTo(latestVersion) == -1)
                 {
-                    ModProblemOverwrite($"<color=#900>{ModName}</color>", ModPath + "UpdateText", "New version released! v" + latestVersion, false);
+                    ModProblemOverwrite($"<color=#900>{ModName}</color>", ModPath, "New version released! v" + latestVersion, false);
                 }
             }
         }

@@ -477,11 +477,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\NoOne\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\MTMT_VFXCore.csproj",
+      "projectUniqueName": "D:\\MTMT\\MTMT VFX Core\\Source\\MTMT_VFXCore.csproj",
       "projectName": "MTMT_VFXCore",
-      "projectPath": "C:\\Users\\NoOne\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\MTMT_VFXCore.csproj",
+      "projectPath": "D:\\MTMT\\MTMT VFX Core\\Source\\MTMT_VFXCore.csproj",
       "packagesPath": "C:\\Users\\NoOne\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\NoOne\\Documents\\From The Depths\\Mods\\MTMT VFX Core\\Source\\obj\\",
+      "outputPath": "D:\\MTMT\\MTMT VFX Core\\Source\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

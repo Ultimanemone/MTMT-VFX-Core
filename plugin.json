@@ -1,9 +1,10 @@
 {
   "_comments": "",
   "name": "MTMT VFX Core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "gameversion": "4.2.8",
   "depends": [],
   "conflicts": [],
-  "filename": "0Harmony.dll,MTMT_VFXCore.dll"
+  "filename": "0Harmony.dll,MTMT_VFXCore.dll",
+  "workshop_id": "3646209938"
 }

@@ -1,5 +1,6 @@
 {
   "config": {
+    "debug_mode": false,
     "enable_during_degraded": false,
     "muzzle": {
         "enabled": true,

@@ -20,6 +20,8 @@ namespace MTMTVFX.Core
 
     public static class Util
     {
+        public static bool DEBUG_MODE { get; private set; } = false;
+
         public static bool E_MUZZLE { get; private set; } = false;
         public static int COUNT_MUZZLE { get; private set; } = 0;
         public static bool E_RAILGUN { get; private set; } = false;
@@ -64,6 +66,7 @@ namespace MTMTVFX.Core
             [CallerMemberName] string member = "",
             [CallerLineNumber] int line = 0)
         {
+            if (!DEBUG_MODE) return;
             string ns = typeof(T).Namespace ?? "";
             AdvLogger.LogInfo($"[{ns}.{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
         }
@@ -116,6 +119,8 @@ namespace MTMTVFX.Core
                 string configPath = Path.Combine(dllDir, "config.json");
                 string json = File.ReadAllText(configPath);
                 var obj = JObject.Parse(json);
+
+                DEBUG_MODE = (bool)obj["config"]["debug_mode"];
 
                 E_MUZZLE = (bool)obj["config"]["muzzle"]["enabled"];
                 COUNT_MUZZLE = (int)obj["config"]["muzzle"]["maxCount"];

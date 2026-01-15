@@ -1,7 +1,5 @@
-﻿#if false
-using BrilliantSkies.Ftd.Game.Pools;
+﻿using BrilliantSkies.Ftd.Game.Pools;
 using HarmonyLib;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MTMTVFX.Effects
@@ -41,10 +39,10 @@ namespace MTMTVFX.Effects
             LineRenderer trail = __result.gameObject.GetComponentInChildren<LineRenderer>();
             if (trail != null)
             {
-                trail.startColor = Color.clear;
-                trail.endColor = Color.clear;
+                Object.Destroy(trail);
+                //trail.startColor = Color.clear;
+                //trail.endColor = Color.clear;
             }
         }
     }
 }
-#endif

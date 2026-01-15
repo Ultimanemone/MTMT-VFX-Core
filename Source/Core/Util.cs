@@ -12,12 +12,6 @@ using UnityEngine;
 
 namespace MTMTVFX.Core
 {
-    public static class Constants
-    {
-        public static int maxMuzzleFlash = 64;
-        public static int maxLaser = 64;
-    }
-
     public static class Util
     {
         public static bool DEBUG_MODE { get; private set; } = false;

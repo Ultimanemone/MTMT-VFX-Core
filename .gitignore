@@ -30,6 +30,4 @@ Thumbs.db
 # Others #
 ##########
 *.cache
-MTMT VFX Unity/Library/
-releases/
-!! DEPRECATED !!/
+Source/Dll/

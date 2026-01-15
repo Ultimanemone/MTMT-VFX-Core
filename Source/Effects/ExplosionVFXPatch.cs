@@ -12,7 +12,7 @@ namespace MTMTVFX.Effects
     {
         private static void Prefix(ExplosionVisualiser __instance, float size, Vector3 gameWorldPosition, IAudioClip sound = null, bool pushToClient = true)
         {
-            if (Core.Util.IS_DEGRADED) return;
+            if (Util.IS_DEGRADED) return;
 
             if (size < 1f || float.IsInfinity(size) || float.IsNaN(size))
             {

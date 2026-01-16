@@ -2,6 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 
+#if false
 namespace MTMTVFX.Effects
 {
     [HarmonyPatch(typeof(AdvPooledProjectile), "ActivateHere")]
@@ -46,3 +47,4 @@ namespace MTMTVFX.Effects
         }
     }
 }
+#endif

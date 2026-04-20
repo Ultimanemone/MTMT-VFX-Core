@@ -1,7 +1,23 @@
-﻿namespace MTMTVFX.Core
+﻿using BrilliantSkies.PlayerProfiles;
+using MTMTVFX.UI;
+using System;
+
+namespace MTMTVFX.Core
 {
     public static class Enums
     {
+        public static int GetCount(Enum type)
+        {
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (type.GetType() == typeof(MuzzleFlashName)) return config.COUNT_MUZZLE;
+            if (type.GetType() == typeof(ExplosionName)) return config.COUNT_EXPL;
+            if (type.GetType() == typeof(RailgunName)) return config.COUNT_RAILGUN;
+            if (type is BeamName.laser_pulse) return config.COUNT_PULSE;
+            if (type is BeamName.pac_beam) return config.COUNT_PAC;
+
+            return -1;
+        }
+
         public static MuzzleFlashName GetMuzzleEnum(float gauge)
         {
             if (gauge <= 0.05f)

@@ -43,6 +43,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PlayerProfiles">
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\PlayerProfiles.dll</HintPath>
+    </Reference>
     <Reference Include="Steamworks">
       <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Steamworks.dll</HintPath>
     </Reference>
@@ -51,6 +54,9 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
       <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>

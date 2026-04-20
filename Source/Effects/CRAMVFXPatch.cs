@@ -1,10 +1,12 @@
-﻿using HarmonyLib;
-using BrilliantSkies.Core.Pooling;
+﻿using BrilliantSkies.Core.Pooling;
 using BrilliantSkies.Effects.SoundSystem;
-using BrilliantSkies.Modding.Types;
 using BrilliantSkies.Modding;
-using UnityEngine;
+using BrilliantSkies.Modding.Types;
+using BrilliantSkies.PlayerProfiles;
+using HarmonyLib;
 using MTMTVFX.Core;
+using MTMTVFX.UI;
+using UnityEngine;
 
 namespace MTMTVFX.Effects
 {
@@ -13,7 +15,8 @@ namespace MTMTVFX.Effects
     {
         private static bool Prefix(CannonFiringPiece __instance, float packedPayload)
         {
-            if (!Util.E_MUZZLE) return true;
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_MUZZLE) return true;
 
             bool bombChuteAttached = __instance.Node.BombChuteAttached;
             if (!bombChuteAttached)
@@ -31,7 +34,7 @@ namespace MTMTVFX.Effects
                     });
                 }
                 __instance.contraction = 0f;
-                if (Util.IS_DEGRADED)
+                if (config.IS_DEGRADED)
                 {
                     __instance.flasher.nominalScale = 0.75f * __instance.Node.Stats.BarrelDiameter * __instance.Node.Stats.FlashEffect;
                     __instance.flasher.nominalLengthScale = 1f * __instance.Node.Stats.BarrelDiameter;

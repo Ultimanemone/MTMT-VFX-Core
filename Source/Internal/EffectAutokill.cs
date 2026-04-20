@@ -36,7 +36,7 @@ namespace MTMTVFX.Internal
                 if (ps.particleCount > 0 || ps.isEmitting) goto B1;
             }
 
-            Core.Util.LogInfo<EffectAutokill>($"Effect {gameObject.name} killed");
+            Core.Utils.LogInfo<EffectAutokill>($"Effect {gameObject.name} killed");
             pool.Return(gameObject);
 
         B1:

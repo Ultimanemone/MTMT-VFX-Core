@@ -1,9 +1,11 @@
-﻿using BrilliantSkies.Effects.Explosions;
+﻿using BrilliantSkies.Core.Logger;
+using BrilliantSkies.Effects.Explosions;
 using BrilliantSkies.Effects.SoundSystem;
+using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
-using UnityEngine;
-using BrilliantSkies.Core.Logger;
 using MTMTVFX.Core;
+using MTMTVFX.UI;
+using UnityEngine;
 
 namespace MTMTVFX.Effects
 {
@@ -12,7 +14,8 @@ namespace MTMTVFX.Effects
     {
         private static void Prefix(ExplosionVisualiser __instance, float size, Vector3 gameWorldPosition, IAudioClip sound = null, bool pushToClient = true)
         {
-            if (Util.IS_DEGRADED) return;
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (config.IS_DEGRADED) return;
 
             if (size < 1f || float.IsInfinity(size) || float.IsNaN(size))
             {

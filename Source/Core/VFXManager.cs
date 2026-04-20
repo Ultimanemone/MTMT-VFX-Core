@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
-
+using MTMTVFX.UI;
+using BrilliantSkies.PlayerProfiles;
 
 namespace MTMTVFX.Core
 {
@@ -35,57 +36,39 @@ namespace MTMTVFX.Core
 
         private VFXManager() { }
 
-        // lazy ass init, idk how to do this otherwise
+        // lazy init
         public void Init()
         {
             if (_initialized) return;
             else _initialized = true;
-            Util.LogInfo<VFXManager>("Initializing...");
+            Utils.LogInfo<VFXManager>("Initializing...");
 
             AssetRegistry.Init();
 
             _vfxRoot = new GameObject("MTMT VFX Root");
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
 
-            if (Util.E_MUZZLE)
-            {
-                GameObject muzzleFlashRoot = new GameObject("Muzzle Flash Root");
-                muzzleFlashRoot.transform.SetParent(_vfxRoot.transform);
-                _muzzleFlashPools = InitPool<MuzzleFlashName>(muzzleFlashRoot.transform, Util.COUNT_MUZZLE);
-            }
+            GameObject muzzleFlashRoot = new GameObject("APS Muzzle Flash Root");
+            muzzleFlashRoot.transform.SetParent(_vfxRoot.transform);
+            _muzzleFlashPools = InitPool<MuzzleFlashName>(muzzleFlashRoot.transform, config.COUNT_MUZZLE);
 
-            if (Util.E_RAILGUN)
-            {
-                GameObject railgunRoot = new GameObject("Railgun FX Root");
-                railgunRoot.transform.SetParent(_vfxRoot.transform);
-                _railgunPools = InitPool<RailgunName>(railgunRoot.transform, Util.COUNT_RAILGUN);
-            }
+            GameObject railgunRoot = new GameObject("Railgun FX Root");
+            railgunRoot.transform.SetParent(_vfxRoot.transform);
+            _railgunPools = InitPool<RailgunName>(railgunRoot.transform, config.COUNT_RAILGUN);
 
-            if (Util.E_EXPL)
-            {
-                GameObject explosionRoot = new GameObject("Explosion Root");
-                explosionRoot.transform.SetParent(_vfxRoot.transform);
-                _explosionPools = InitPool<ExplosionName>(explosionRoot.transform, Util.COUNT_EXPL);
-            }
+            GameObject explosionRoot = new GameObject("Explosion Root");
+            explosionRoot.transform.SetParent(_vfxRoot.transform);
+            _explosionPools = InitPool<ExplosionName>(explosionRoot.transform, config.COUNT_EXPL);
 
+            GameObject beamRoot = new GameObject("Beam Root");
+            beamRoot.transform.SetParent(_vfxRoot.transform);
+            _beamPools = new Dictionary<BeamName, VFXPool>();
 
-            if (Util.E_PULSE || Util.E_PAC)
-            {
-                GameObject beamRoot = new GameObject("Beam Root");
-                beamRoot.transform.SetParent(_vfxRoot.transform);
-                _beamPools = new Dictionary<BeamName, VFXPool>();
+            VFXPool pulsePool = InitPool(BeamName.laser_pulse, beamRoot.transform, config.COUNT_PULSE);
+            if (pulsePool != null) _beamPools[BeamName.laser_pulse] = pulsePool;
 
-                if (Util.E_PULSE)
-                {
-                    VFXPool pulsePool = InitPool(BeamName.laser_pulse, beamRoot.transform, Util.COUNT_PULSE);
-                    if (pulsePool != null) _beamPools[BeamName.laser_pulse] = pulsePool;
-                }
-
-                if (Util.E_PULSE)
-                {
-                    VFXPool pacPool = InitPool(BeamName.pac_beam, beamRoot.transform, Util.COUNT_PULSE);
-                    if (pacPool != null) _beamPools[BeamName.pac_beam] = pacPool;
-                }
-            }
+            VFXPool pacPool = InitPool(BeamName.pac_beam, beamRoot.transform, config.COUNT_PULSE);
+            if (pacPool != null) _beamPools[BeamName.pac_beam] = pacPool;
         }
 
         private Dictionary<T, VFXPool> InitPool<T>(Transform root, int count) where T : Enum
@@ -99,7 +82,7 @@ namespace MTMTVFX.Core
                 {
                     pool[val] = new VFXPool(obj, modName, val, count, root);
                 }
-                else Util.LogError<VFXManager>($"Asset not found: {val}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
+                else Utils.LogError<VFXManager>($"Asset not found: {val}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
             }
             return pool;
         }
@@ -110,9 +93,21 @@ namespace MTMTVFX.Core
             {
                 return new VFXPool(obj, modName, type, count, root);
             }
-            else Util.LogError<VFXManager>($"Asset not found: {type}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
+            else Utils.LogError<VFXManager>($"Asset not found: {type}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
 
             return null;
+        }
+
+        private void OnConfigUpdate()
+        {
+            List<IDictionary> all = new List<IDictionary> { _muzzleFlashPools, _railgunPools, _explosionPools, _beamPools };
+            foreach (var dict in all)
+            {
+                foreach (DictionaryEntry entry in dict)
+                {
+                    ((VFXPool)entry.Value).OnConfigUpdate();
+                }
+            }
         }
 
         /// <summary>
@@ -141,7 +136,7 @@ namespace MTMTVFX.Core
 
             ((VFXPool)pool[type]).TryGet(pos, forward, out GameObject obj);
 
-            Util.LogInfo<VFXManager>($"Effect {type} got from pool!");
+            Utils.LogInfo<VFXManager>($"Effect {type} got from pool!");
 
             return obj;
         }
@@ -154,9 +149,9 @@ namespace MTMTVFX.Core
             GameObject obj = UnityEngine.Object.Instantiate(container.prefab);
             obj.transform.localPosition = pos;
             obj.transform.forward = forward;
-            Util.AddScript(obj, type, container.source);
+            Utils.AddScript(obj, type, container.source);
 
-            Util.LogInfo<VFXManager>($"Effect {type} instantiated!");
+            Utils.LogInfo<VFXManager>($"Effect {type} instantiated!");
             return obj;
         }
     }

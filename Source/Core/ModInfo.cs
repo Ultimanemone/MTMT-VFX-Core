@@ -1,7 +1,5 @@
 ﻿using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Modding;
-using BrilliantSkies.Ui.Displayer;
-using BrilliantSkies.Ui.Displayer.Types;
 using Newtonsoft.Json.Linq;
 using Steamworks;
 using System.IO;
@@ -87,12 +85,12 @@ namespace MTMTVFX.Core
 
         private static void Callback(SteamUGCRequestUGCDetailsResult_t param, bool bIOFailure)
         {
-            Util.LogInfo<CorePlugin>("flag1");
+            Utils.LogInfo<CorePlugin>("flag1");
             GameEvents.Twice_Second.UnregWithEvent(SteamUGCRequest);
-            Util.LogInfo<CorePlugin>("flag2");
+            Utils.LogInfo<CorePlugin>("flag2");
 
             string description = param.m_details.m_rgchDescription;
-            Util.LogInfo<CorePlugin>("flag3");
+            Utils.LogInfo<CorePlugin>("flag3");
 
             if (!string.IsNullOrEmpty(description))
             {
@@ -105,9 +103,9 @@ namespace MTMTVFX.Core
                     if (inputLine.StartsWith("Latest version "))
                     {
                         latestVersion = System.Version.Parse(inputLine.Remove(0, 15));
-                        Util.LogInfo<CorePlugin>(description);
-                        Util.LogInfo<CorePlugin>(latestVersion.ToString());
-                        Util.LogInfo<CorePlugin>(_version.ToString());
+                        Utils.LogInfo<CorePlugin>(description);
+                        Utils.LogInfo<CorePlugin>(latestVersion.ToString());
+                        Utils.LogInfo<CorePlugin>(_version.ToString());
                         break;
                     }
                 }

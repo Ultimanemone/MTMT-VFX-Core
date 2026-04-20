@@ -11,7 +11,6 @@ namespace MTMTVFX.Core
 
         public void OnLoad()
         {
-            Util.InitConfig();
             ModInfo.CheckVersion();
             new Harmony("MTMT_VFX_CORE").PatchAll();
         }

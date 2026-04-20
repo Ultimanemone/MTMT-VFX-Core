@@ -182,7 +182,6 @@ D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.AssemblyInfoI
 D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.AssemblyInfo.cs
 D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.csproj.CoreCompileInputs.cache
 D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.sourcelink.json
-D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.csproj.CopyComplete
 D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.dll
 D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.pdb
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMT-VFX-Core\Source\bin\Debug\netstandard2.1\MTMT_VFXCore.deps.json
@@ -237,3 +236,4 @@ C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\obj\Debug\netst
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\obj\Debug\netstandard2.1\MTMT_VFX.92C8B7D5.Up2Date
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.dll
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\obj\Debug\netstandard2.1\MTMT_VFXCore.pdb
+D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFX.92C8B7D5.Up2Date

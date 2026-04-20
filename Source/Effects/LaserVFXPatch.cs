@@ -1,8 +1,10 @@
 ﻿using BrilliantSkies.Blocks.Lasers.Weaponry;
 using BrilliantSkies.Core.Pooling;
 using BrilliantSkies.Effects.Pools.Lasers;
+using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
 using MTMTVFX.Core;
+using MTMTVFX.UI;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -10,61 +12,37 @@ using UnityEngine;
 
 namespace MTMTVFX.Effects
 {
-    [HarmonyPatch(typeof(ConventionalLaser), "EnableOrDisableEffects")]
+    [HarmonyPatch(typeof(ConventionalLaser))]
     public class LaserVFXPatchContinuous
     {
-        private static bool Prefix(ConventionalLaser  __instance, bool newState)
+        [HarmonyPatch("EnableOrDisableEffects")]
+        [HarmonyPrefix]
+        private static bool CancelBaseBeam(ConventionalLaser  __instance, bool newState)
         {
-            if (!Util.E_CONTINUOUS || Util.IS_DEGRADED) return true;
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_CONTINUOUS || config.IS_DEGRADED) return true;
 
             if (newState) return false;
             return true;
         }
-    }
 
-    [HarmonyPatch(typeof(ShortRangeLaser), "DrawBeam")]
-    public class LaserVFXPatchContinuous2
-    {
-        private static void Prefix(ShortRangeLaser __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
+        [HarmonyPatch("WeaponStart")]
+        [HarmonyPostfix]
+        private static void MakeBeam(ConventionalLaser __instance)
         {
-            if (!Util.E_CONTINUOUS || Util.IS_DEGRADED) return;
-
-            LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
-        }
-    }
-
-    [HarmonyPatch(typeof(LaserCombiner), "DrawBeam")]
-    public class LaserVFXPatchContinuous3
-    {
-        private static void Prefix(LaserCombiner __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
-        {
-            if (!Util.E_CONTINUOUS || Util.IS_DEGRADED) return;
-
-            LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
-        }
-    }
-
-    [HarmonyPatch(typeof(ConventionalLaser), "WeaponStart")]
-    public class LaserVFXPatchContinuous4
-    {
-        private static void Postfix(ConventionalLaser __instance)
-        {
-            if (!Util.E_CONTINUOUS || Util.IS_DEGRADED) return;
-
             MainThreadDispatcher.Enqueue(() =>
             {
                 GameObject obj = VFXManager.InstantiateCopy(SpecialName.laser_cont, Vector3.zero, Vector3.zero);
                 LaserPatchMod.laserBeams.Add(__instance, obj);
             });
         }
-    }
 
-    [HarmonyPatch(typeof(ConventionalLaser), "FixedUpdate_Fire")]
-    public class LaserVFXPatchPulse2
-    {
-        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        [HarmonyPatch("FixedUpdate_Fire")]
+        [HarmonyTranspiler]
+        private static IEnumerable<CodeInstruction> CancelBasePulseBeam(IEnumerable<CodeInstruction> instructions)
         {
-            if (!Util.E_PULSE || Util.IS_DEGRADED) return instructions;
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_PULSE || config.IS_DEGRADED) return instructions;
 
             var codes = new List<CodeInstruction>(instructions);
 
@@ -94,12 +72,37 @@ namespace MTMTVFX.Effects
         }
     }
 
+    [HarmonyPatch(typeof(ShortRangeLaser), "DrawBeam")]
+    public class LaserVFXPatchContinuous2
+    {
+        private static void Prefix(ShortRangeLaser __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
+        {
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_CONTINUOUS || config.IS_DEGRADED) return;
+
+            LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
+        }
+    }
+
+    [HarmonyPatch(typeof(LaserCombiner), "DrawBeam")]
+    public class LaserVFXPatchContinuous3
+    {
+        private static void Prefix(LaserCombiner __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
+        {
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_CONTINUOUS || config.IS_DEGRADED) return;
+
+            LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
+        }
+    }
+
     [HarmonyPatch(typeof(LaserPulsePool), "ActivateHere")]
     public class LaserVFXPatchPulse
     {
         private static bool Prefix(LaserPulsePool __instance, LaserPulseSpecification spec, ref LaserPulseRender __result, PoolIndex ___Indexor)
         {
-            if (!Util.E_PULSE || Util.IS_DEGRADED) return true;
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_PULSE || config.IS_DEGRADED) return true;
 
             __result = __instance.PoolArray[___Indexor.CycleIndex()];
             MainThreadDispatcher.Enqueue(() =>
@@ -149,7 +152,7 @@ namespace MTMTVFX.Effects
             }
             catch (Exception e)
             {
-                Util.LogError<LaserPatchMod>(e.Message);
+                Utils.LogError<LaserPatchMod>(e.Message);
             }
         }
 

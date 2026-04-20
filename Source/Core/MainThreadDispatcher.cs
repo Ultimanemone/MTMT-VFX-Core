@@ -1,5 +1,7 @@
-﻿using MTMTVFX.Core;
+﻿using BrilliantSkies.PlayerProfiles;
+using MTMTVFX.Core;
 using MTMTVFX.Effects;
+using MTMTVFX.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,6 +49,6 @@ public class MainThreadDispatcher : MonoBehaviour
 
     private void OnFixedUpdate()
     {
-        if (Util.E_CONTINUOUS) LaserPatchMod.UpdateContBeams();
+        if (ProfileManager.Instance.GetModule<SettingsConfig>().E_CONTINUOUS) LaserPatchMod.UpdateContBeams();
     }
 }

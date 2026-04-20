@@ -32,7 +32,7 @@ namespace MTMTVFX.Core
         {
             if (guid == loadedBundle)
             {
-                Util.LogError<CorePlugin>($"AssetBundle [{guid}] already loaded!");
+                Utils.LogError<CorePlugin>($"AssetBundle [{guid}] already loaded!");
                 return assets;
             }
 
@@ -41,7 +41,7 @@ namespace MTMTVFX.Core
             bool flag = bundle == null;
             if (flag)
             {
-                Util.LogError<CorePlugin>($"AssetBundle [{guid}] not found...", LogOptions.Popup);
+                Utils.LogError<CorePlugin>($"AssetBundle [{guid}] not found...", LogOptions.Popup);
                 return null;
             }
 
@@ -55,7 +55,7 @@ namespace MTMTVFX.Core
 
             if (prefabNames.Length < 1)
             {
-                Util.LogError<CorePlugin>($"AssetBundle [{guid}] is empty!", LogOptions.Popup);
+                Utils.LogError<CorePlugin>($"AssetBundle [{guid}] is empty!", LogOptions.Popup);
                 return null;
             }
 
@@ -69,11 +69,11 @@ namespace MTMTVFX.Core
                 if (flag1)
                 {
                     assetsReturn.Add(name, asset);
-                    Util.LogInfo<CorePlugin>($"Asset [{name}] loaded!");
+                    Utils.LogInfo<CorePlugin>($"Asset [{name}] loaded!");
                 }
                 else
                 {
-                    Util.LogError<CorePlugin>($"Asset [{name}] not found!");
+                    Utils.LogError<CorePlugin>($"Asset [{name}] not found!");
                 }
             }
 
@@ -98,7 +98,7 @@ namespace MTMTVFX.Core
             bool flag = bundle == null;
             if (flag)
             {
-                Util.LogError<CorePlugin>($"AssetBundle {guid} not found", LogOptions.Popup);
+                Utils.LogError<CorePlugin>($"AssetBundle {guid} not found", LogOptions.Popup);
                 asset = null;
                 return false;
             }

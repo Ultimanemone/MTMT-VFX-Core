@@ -1,33 +1,37 @@
-﻿using HarmonyLib;
-using UnityEngine;
+﻿using BrilliantSkies.PlayerProfiles;
+using HarmonyLib;
 using MTMTVFX.Core;
+using MTMTVFX.UI;
+using UnityEngine;
 
 namespace MTMTVFX.Effects
 {
-    [HarmonyPatch(typeof(ParticleCannonEffect), "RenderAndRun")]
+    [HarmonyPatch(typeof(ParticleCannonEffect))]
     public class PACVFXPatch
     {
-        private static void Prefix(ParticleCannonEffect __instance)
+        [HarmonyPatch("RenderAndRun")]
+        [HarmonyPrefix]
+        private static void CancelBaseBeam(ParticleCannonEffect __instance)
         {
-            if (!Util.E_PAC || Util.IS_DEGRADED) return;
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_PAC || config.IS_DEGRADED) return;
 
             // We keep the main obj since it is used for damage checks
-            GameObject[] children = __instance.gameObject.GetChildren();
+            // GameObject[] children = __instance.gameObject.GetChildren();
 
-            foreach (GameObject child in children)
+            foreach (var child in __instance.gameObject.GetComponentsInChildren<Transform>())
             {
                 //if (child.name != "SecondaryEffect") child.SetActive(false);
-                child.SetActive(false);
+                child.gameObject.SetActive(false);
             }
         }
-    }
 
-    [HarmonyPatch(typeof(ParticleCannonEffect), "ApplyDamage")]
-    public class PACVFXPatch2
-    {
-        private static void Postfix(ParticleCannonEffect __instance, Vector3[] worldPositions)
+        [HarmonyPatch("ApplyDamage")]
+        [HarmonyPostfix]
+        private static void MakeBeam(ParticleCannonEffect __instance, Vector3[] worldPositions)
         {
-            if (!Util.E_PAC || Util.IS_DEGRADED) return;
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_PAC || config.IS_DEGRADED) return;
 
             if (__instance.HasHit) return;
             MainThreadDispatcher.Enqueue(() =>
@@ -36,14 +40,13 @@ namespace MTMTVFX.Effects
                 PacPatchMod.PacMethod(worldPositions, obj, __instance.Range0Damage, __instance.ParticleType, __instance.m_BaseColor);
             });
         }
-    }
 
-    [HarmonyPatch(typeof(ParticleCannonEffect), "TerminateAtPoint")]
-    public class PACVFXPatch3
-    {
-        private static void Prefix(ParticleCannonEffect __instance, LineRenderer ____lineRenderer, Vector3 gameWorldPosition, int indexOfTermination)
+        [HarmonyPatch("TerminateAtPoint")]
+        [HarmonyPrefix]
+        private static void UpdateBeam(ParticleCannonEffect __instance, LineRenderer ____lineRenderer, Vector3 gameWorldPosition, int indexOfTermination)
         {
-            if (!Util.E_PAC || Util.IS_DEGRADED) return;
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_PAC || config.IS_DEGRADED) return;
 
             Vector3[] worldPositions = new Vector3[indexOfTermination];
 

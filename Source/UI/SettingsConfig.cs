@@ -1,5 +1,7 @@
 ﻿using BrilliantSkies.Effects.Regulation;
 using BrilliantSkies.PlayerProfiles;
+using MTMTVFX.Core;
+using MTMTVFX.Effects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -68,7 +70,11 @@ namespace MTMTVFX.UI
         public int COUNT_MUZZLE
         {
             get { return Internal.COUNT_MUZZLE; }
-            set { Internal.COUNT_MUZZLE = value; }
+            set
+            {
+                Internal.COUNT_MUZZLE = value;
+                VFXManager.Instance.OnConfigUpdate<MuzzleFlashName>();
+            }
         }
 
         public bool E_RAILGUN
@@ -80,7 +86,11 @@ namespace MTMTVFX.UI
         public int COUNT_RAILGUN
         {
             get { return Internal.COUNT_RAILGUN; }
-            set { Internal.COUNT_RAILGUN = value; }
+            set
+            {
+                Internal.COUNT_RAILGUN = value;
+                VFXManager.Instance.OnConfigUpdate<RailgunName>();
+            }
         }
 
         public bool E_EXPL
@@ -92,7 +102,11 @@ namespace MTMTVFX.UI
         public int COUNT_EXPL
         {
             get { return Internal.COUNT_EXPL; }
-            set { Internal.COUNT_EXPL = value; }
+            set
+            {
+                Internal.COUNT_EXPL = value;
+                VFXManager.Instance.OnConfigUpdate<ExplosionName>();
+            }
         }
 
         public bool E_PULSE
@@ -104,7 +118,11 @@ namespace MTMTVFX.UI
         public int COUNT_PULSE
         {
             get { return Internal.COUNT_PULSE; }
-            set { Internal.COUNT_PULSE = value; }
+            set
+            {
+                Internal.COUNT_PULSE = value;
+                VFXManager.Instance.OnConfigUpdate(BeamName.laser_pulse);
+            }
         }
 
         public bool E_PAC
@@ -116,7 +134,11 @@ namespace MTMTVFX.UI
         public int COUNT_PAC
         {
             get { return Internal.COUNT_PAC; }
-            set { Internal.COUNT_PAC = value; }
+            set
+            {
+                Internal.COUNT_PAC = value;
+                VFXManager.Instance.OnConfigUpdate(BeamName.pac_beam);
+            }
         }
 
         public bool E_PLASMA
@@ -128,13 +150,21 @@ namespace MTMTVFX.UI
         public int COUNT_PLASMA
         {
             get { return Internal.COUNT_PLASMA; }
-            set { Internal.COUNT_PLASMA = value; }
+            set
+            {
+                Internal.COUNT_PLASMA = value;
+                //VFXManager.Instance.OnConfigUpdate(BeamName.plasma);
+            }
         }
 
         public bool E_FLAMER
         {
             get { return Internal.E_FLAMER; }
-            set { Internal.E_FLAMER = value; }
+            set
+            {
+                Internal.E_FLAMER = value;
+                FlamerEmitterBase.ToggleVFX(value);
+            }
         }
 
         public int COUNT_FLAMER

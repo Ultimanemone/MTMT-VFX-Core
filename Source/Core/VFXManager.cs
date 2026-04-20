@@ -98,16 +98,44 @@ namespace MTMTVFX.Core
             return null;
         }
 
-        private void OnConfigUpdate()
+        public void OnConfigUpdate<T>() where T : Enum
         {
-            List<IDictionary> all = new List<IDictionary> { _muzzleFlashPools, _railgunPools, _explosionPools, _beamPools };
-            foreach (var dict in all)
+            if (!_initialized) Init();
+
+            IDictionary poolDict;
+            if (typeof(T) == typeof(MuzzleFlashName))
+                poolDict = _muzzleFlashPools;
+            else if (typeof(T) == typeof(RailgunName))
+                poolDict = _railgunPools;
+            else if (typeof(T) == typeof(ExplosionName))
+                poolDict = _explosionPools;
+            else if (typeof(T) == typeof(BeamName))
+                poolDict = _beamPools;
+            else return;
+
+            foreach (DictionaryEntry entry in poolDict)
             {
-                foreach (DictionaryEntry entry in dict)
-                {
-                    ((VFXPool)entry.Value).OnConfigUpdate();
-                }
+                ((VFXPool)entry.Value).OnConfigUpdate();
             }
+        }
+
+        public void OnConfigUpdate(Enum type)
+        {
+            if (!_initialized) Init();
+
+            VFXPool pool;
+            
+            if(type.GetType() == typeof(MuzzleFlashName) && (MuzzleFlashName)type != MuzzleFlashName.none)
+                pool = _muzzleFlashPools[(MuzzleFlashName)type];
+            else if (type.GetType() == typeof(RailgunName) && (RailgunName)type != RailgunName.none)
+                pool = _railgunPools[(RailgunName)type];
+            else if (type.GetType() == typeof(ExplosionName) && (ExplosionName)type != ExplosionName.none)
+                pool = _explosionPools[(ExplosionName)type];
+            else if (type.GetType() == typeof(BeamName) && (BeamName)type != BeamName.none)
+                pool = _beamPools[(BeamName)type];
+            else return;
+
+            pool.OnConfigUpdate();
         }
 
         /// <summary>

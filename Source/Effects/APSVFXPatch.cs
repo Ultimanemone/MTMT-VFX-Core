@@ -5,8 +5,6 @@ using BrilliantSkies.Effects.SoundSystem;
 using HarmonyLib;
 using System;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Collections.Generic;
 using MTMTVFX.UI;
 using BrilliantSkies.PlayerProfiles;
 

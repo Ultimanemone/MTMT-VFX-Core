@@ -16,7 +16,7 @@ namespace MTMTVFX.Core
         private readonly Transform _parent;
         private readonly Queue<GameObject> _reserve = new Queue<GameObject>();
         private readonly Queue<GameObject> _rendered = new Queue<GameObject>();
-        private readonly int _currentSize;
+        private int _currentSize;
 
         public VFXPool(GameObject prefab, string modName, Enum type, int initialSize = 10, Transform parent = null)
         {
@@ -45,20 +45,22 @@ namespace MTMTVFX.Core
         {
             obj = null;
 
-            if (_reserve.Count < 1)
+            // no objects in reserve or rendered objects exceed the preferred pool size
+            if (_reserve.Count < 1 || _rendered.Count >= _currentSize)
             {
+                // make a new one if the size is dynamic
                 if (ProfileManager.Instance.GetModule<SettingsConfig>().ADAPTIVE)
                 {
                     obj = InstantiateNewInReserve();
                 }
+                // otherwise dequeue and use the oldest rendered object
                 else
                 {
                     obj = _rendered.Dequeue();
                     Return(obj);
                 }
             }
-
-            if (_reserve.Count > 0)
+            else
             {
                 obj = _reserve.Dequeue();
                 _rendered.Enqueue(obj);
@@ -88,6 +90,8 @@ namespace MTMTVFX.Core
                     InstantiateNewInReserve();
                 }
             }
+
+            _currentSize = newSize;
         }
     }
 }

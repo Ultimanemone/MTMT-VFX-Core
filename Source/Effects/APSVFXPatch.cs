@@ -1,12 +1,16 @@
-﻿using MTMTVFX.Core;
-using BrilliantSkies.Core;
+﻿using BrilliantSkies.Core;
+using BrilliantSkies.Effects.Creators.FancyFlashes;
+using BrilliantSkies.Effects.Creators.SimpleFlashes;
 using BrilliantSkies.Effects.GunSounds;
 using BrilliantSkies.Effects.SoundSystem;
-using HarmonyLib;
-using System;
-using System.Reflection;
-using MTMTVFX.UI;
 using BrilliantSkies.PlayerProfiles;
+using HarmonyLib;
+using MTMTVFX.Core;
+using MTMTVFX.UI;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 
 
 namespace MTMTVFX.Effects
@@ -58,7 +62,6 @@ namespace MTMTVFX.Effects
         //    SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
         //    if (!config.E_MUZZLE || config.IS_DEGRADED)
         //    {
-        //        Utils.LogError<APSVFXPatch>("no vfx", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
         //        foreach (var instruction in instructions)
         //            yield return instruction;
 
@@ -67,7 +70,6 @@ namespace MTMTVFX.Effects
 
         //    foreach (CodeInstruction code in instructions)
         //    {
-        //        Utils.LogError<APSVFXPatch>("yes vfx", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
         //        if (code.opcode == OpCodes.Callvirt &&
         //            code.operand is MethodInfo method &&
         //            method.Name == "get_NormalisedVolumeOfPropellant")
@@ -179,20 +181,31 @@ namespace MTMTVFX.Effects
         }
     }
 
-
-    [HarmonyPatch(typeof(ShellModel_Propellant), "get_NormalisedVolumeOfPropellant")]
+    [HarmonyPatch(typeof(FancyMuzzleFlasher), "RandomScaleFire")]
     public class MuzzleFlashPatch
     {
-        private static void Postfix(ref float __result)
+        private static bool Prefix()
         {
             SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
-            if (config.E_MUZZLE && !config.IS_DEGRADED)
-            {
-                // enabled and not degraded
-                __result = 0f;
-            }
+            if (config.E_MUZZLE && !config.IS_DEGRADED) return false;
+            return true;
         }
     }
+
+    // THIS BREAKS APS!!!!!!
+    //[HarmonyPatch(typeof(ShellModel_Propellant), "get_NormalisedVolumeOfPropellant")]
+    //public class MuzzleFlashPatch
+    //{
+    //    private static void Postfix(ref float __result)
+    //    {
+    //        SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+    //        if (config.E_MUZZLE && !config.IS_DEGRADED)
+    //        {
+    //            // enabled and not degraded
+    //            __result = 0f;
+    //        }
+    //    }
+    //}
 
     // Not sure if its needed but visually its not needed
     //[HarmonyPatch(typeof(AdvCannonFiringPiece), "LateVisuals")]

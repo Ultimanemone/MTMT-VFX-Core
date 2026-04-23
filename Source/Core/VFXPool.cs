@@ -16,7 +16,7 @@ namespace MTMTVFX.Core
         private readonly Transform _parent;
         private readonly Queue<GameObject> _reserve = new Queue<GameObject>();
         private readonly Queue<GameObject> _rendered = new Queue<GameObject>();
-        private int _currentSize;
+        private int _preferredSize;
 
         public VFXPool(GameObject prefab, string modName, Enum type, int initialSize = 10, Transform parent = null)
         {
@@ -25,7 +25,7 @@ namespace MTMTVFX.Core
             this.type = type;
             this._prefab = prefab;
             this._parent = parent;
-            _currentSize = initialSize;
+            _preferredSize = initialSize;
 
             for (int i = 0; i < initialSize; i++) InstantiateNewInReserve();
         }
@@ -46,7 +46,7 @@ namespace MTMTVFX.Core
             obj = null;
 
             // no objects in reserve or rendered objects exceed the preferred pool size
-            if (_reserve.Count < 1 || _rendered.Count >= _currentSize)
+            if (_reserve.Count < 1 || _rendered.Count >= _preferredSize)
             {
                 // make a new one if the size is dynamic
                 if (ProfileManager.Instance.GetModule<SettingsConfig>().ADAPTIVE)
@@ -60,7 +60,8 @@ namespace MTMTVFX.Core
                     Return(obj);
                 }
             }
-            else
+
+            if (_reserve.Count > 0)
             {
                 obj = _reserve.Dequeue();
                 _rendered.Enqueue(obj);
@@ -80,18 +81,21 @@ namespace MTMTVFX.Core
 
         public void OnConfigUpdate()
         {
+            if (ProfileManager.Instance.GetModule<SettingsConfig>().ADAPTIVE) return;
+
             int newSize = Enums.GetCount(type);
-            if (newSize == -1) return;
-            if (newSize > _currentSize)
+            int currentSize = _reserve.Count + _rendered.Count;
+
+            if (newSize > currentSize)
             {
-                int temp = newSize - _currentSize;
+                int temp = newSize - currentSize;
                 for (int i = 0; i < temp; ++i)
                 {
                     InstantiateNewInReserve();
                 }
             }
 
-            _currentSize = newSize;
+            _preferredSize = newSize;
         }
     }
 }

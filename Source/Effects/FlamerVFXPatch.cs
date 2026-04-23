@@ -9,51 +9,74 @@ using UnityEngine;
 namespace MTMTVFX.Effects
 {
     [HarmonyPatch(typeof(FlamerMuzzleEffect))]
-    [HarmonyPatch(MethodType.Constructor)]
-    [HarmonyPatch(new Type[] { typeof(Vector3), typeof(Quaternion) })]
     public class FlamerVFXPatch
     {
+        [HarmonyPatch(MethodType.Constructor)]
+        [HarmonyPatch(new Type[] { typeof(Vector3), typeof(Quaternion) })]
         [HarmonyPostfix]
-        private static void CancelFlamerVFX(ParticleSystem.EmissionModule ____bigFlameEmission, ParticleSystem.EmissionModule ____smallFlameEmission, ParticleSystem.EmissionModule ____sparksEmission)
+        private static void CancelFlamerVFX(FlamerMuzzleEffect __instance, ParticleSystem ____bigFlame, ParticleSystem ____smallFlame, ParticleSystem ____sparks)
         {
-            FlamerEmitterBase.AddEmitter(____bigFlameEmission, ____smallFlameEmission, ____sparksEmission);
+            FlamerEmitterBase.AddEmitter(__instance, ____bigFlame, ____smallFlame, ____sparks);
         }
+
+        [HarmonyPatch("ChangeColor")]
+        [HarmonyPostfix]
+        private static void RecolorFlame(FlamerMuzzleEffect __instance, Color newColor)
+        {
+            FlamerEmitterBase.Recolor(__instance, newColor);
+        }
+
     }
 
     public static class FlamerEmitterBase
     {
         private struct Emitter
         {
-            public ParticleSystem.EmissionModule big;
-            public ParticleSystem.EmissionModule small;
-            public ParticleSystem.EmissionModule sparks;
+            public ParticleSystem big;
+            public ParticleSystem small;
+            public ParticleSystem sparks;
+
+            public readonly void Set(float bigRate, float smallRate, float sparksRate)
+            {
+                var bigEmission = big.emission;
+                bigEmission.rateOverTime = bigRate;
+                var smallEmission = small.emission;
+                smallEmission.rateOverTime = smallRate;
+                var sparksEmission = sparks.emission;
+                sparksEmission.rateOverTime = sparksRate;
+            }
+
+            public readonly void Stop()
+            {
+                Set(0f, 0f, 0f);
+            }
         }
 
         private static float baseBig;
         private static float baseSmall;
         private static float baseSparks;
         private static bool enabled;
-        private static List<Emitter> emitters = new List<Emitter>();
+        private static readonly Dictionary<FlamerMuzzleEffect, Emitter> emitters = new Dictionary<FlamerMuzzleEffect, Emitter>();
 
-        public static void AddEmitter(ParticleSystem.EmissionModule big, ParticleSystem.EmissionModule small, ParticleSystem.EmissionModule sparks)
+        public static void AddEmitter(FlamerMuzzleEffect instance, ParticleSystem big, ParticleSystem small, ParticleSystem sparks)
         {
             SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
 
             if (emitters.Count == 0)
             {
-                baseBig = big.rateOverTime.constant;
-                baseSmall = small.rateOverTime.constant;
-                baseSparks = sparks.rateOverTime.constant;
+                baseBig = big.emission.rateOverTime.constant;
+                baseSmall = small.emission.rateOverTime.constant;
+                baseSparks = sparks.emission.rateOverTime.constant;
                 enabled = config.E_FLAMER;
             }
 
-            if (!config.E_FLAMER)
+            Emitter emitter = new Emitter { big = big, small = small, sparks = sparks };
+            if (config.E_FLAMER)
             {
-                big.rateOverTime = 0f;
-                small.rateOverTime = 0f;
-                sparks.rateOverTime = 0f;
+                emitter.Stop();
             }
-            emitters.Add(new Emitter { big = big, small = small, sparks = sparks });
+
+            emitters.Add(instance, emitter);
         }
 
         public static void ToggleVFX(bool enabled)
@@ -67,13 +90,13 @@ namespace MTMTVFX.Effects
 
             foreach (var emitter in emitters)
             {
-                var bigEmission = emitter.big;
-                bigEmission.rateOverTime = bigRate;
-                var smallEmission = emitter.small;
-                smallEmission.rateOverTime = smallRate;
-                var sparksEmission = emitter.sparks;
-                sparksEmission.rateOverTime = sparksRate;
+                emitter.Value.Set(bigRate, smallRate, sparksRate);
             }
+        }
+
+        public static void Recolor(FlamerMuzzleEffect _instance, Color newColor)
+        {
+
         }
     }
 }

@@ -24,30 +24,30 @@ namespace MTMTVFX.Effects
             else
             {
                 float scaler = 1f;
-                ExplosionName explosionSize = ExplosionName.expl_tiny;
+                Explosion explosionSize = Explosion.expl_tiny;
 
-                if (size < (float)ExplosionName.expl_tiny)
+                if (size < (float)Explosion.expl_tiny)
                 {
                     goto spawn;
                 }
-                else if (size < (float)ExplosionName.expl_small)
+                else if (size < (float)Explosion.expl_small)
                 {
-                    explosionSize = ExplosionName.expl_small;
+                    explosionSize = Explosion.expl_small;
                     scaler = 6f;
                 }
-                else if (size < (float)ExplosionName.expl_medium)
+                else if (size < (float)Explosion.expl_medium)
                 {
-                    explosionSize = ExplosionName.expl_medium;
+                    explosionSize = Explosion.expl_medium;
                     scaler = 20f;
                 }
-                else if (size < (float)ExplosionName.expl_big)
+                else if (size < (float)Explosion.expl_big)
                 {
-                    explosionSize = ExplosionName.expl_big;
+                    explosionSize = Explosion.expl_big;
                     scaler = 60f;
                 }
                 else
                 {
-                    explosionSize = ExplosionName.expl_huge;
+                    explosionSize = Explosion.expl_huge;
                     scaler = 120f;
                 }
 
@@ -59,7 +59,7 @@ namespace MTMTVFX.Effects
             }
         }
 
-        public static void PatchedSpawn(ExplosionName explosionName, Vector3 pos, float scaler)
+        public static void PatchedSpawn(Explosion explosionName, Vector3 pos, float scaler)
         {
             GameObject obj = VFXManager.Create(explosionName, pos, Vector3.zero);
             if (scaler != 1f && obj != null)

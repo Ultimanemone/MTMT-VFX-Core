@@ -110,10 +110,10 @@ namespace MTMTVFX.Effects
                     if (gpUsed)
                     {
                         float gauge = __instance.BarrelSystem.ShellDiameter;
-                        MuzzleFlashName muzzleType = Enums.GetMuzzleEnum(gauge);
+                        MuzzleFlash muzzleType = Enums.GetMuzzleEnum(gauge);
                         // Core._config.LogInfo<APSVFXOverride>($"shell fire: {gauge} with {type.ToString()}");
 
-                        if (muzzleType != MuzzleFlashName.none)
+                        if (muzzleType != MuzzleFlash.none)
                         {
                             MainThreadDispatcher.Enqueue(() =>
                             {

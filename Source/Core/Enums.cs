@@ -9,8 +9,8 @@ namespace MTMTVFX.Core
         public static int GetCount(Enum type)
         {
             SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
-            if (type.GetType() == typeof(MuzzleFlashName)) return config.COUNT_MUZZLE;
-            if (type.GetType() == typeof(ExplosionName)) return config.COUNT_EXPL;
+            if (type.GetType() == typeof(MuzzleFlash)) return config.COUNT_MUZZLE;
+            if (type.GetType() == typeof(Explosion)) return config.COUNT_EXPL;
             if (type.GetType() == typeof(RailgunName)) return config.COUNT_RAILGUN;
             if (type is BeamName.laser_pulse) return config.COUNT_PULSE;
             if (type is BeamName.pac_beam) return config.COUNT_PAC;
@@ -18,40 +18,40 @@ namespace MTMTVFX.Core
             return -1;
         }
 
-        public static MuzzleFlashName GetMuzzleEnum(float gauge)
+        public static MuzzleFlash GetMuzzleEnum(float gauge)
         {
             if (gauge <= 0.05f)
             {
-                return MuzzleFlashName.muzzleflash_tiny;
+                return MuzzleFlash.muzzleflash_tiny;
             }
             else if (gauge <= 0.127f)
             {
-                return MuzzleFlashName.muzzleflash_small;
+                return MuzzleFlash.muzzleflash_small;
             }
             else if (gauge <= 0.225f)
             {
-                return MuzzleFlashName.muzzleflash_medium;
+                return MuzzleFlash.muzzleflash_medium;
             }
             else if (gauge <= 0.305f)
             {
-                return MuzzleFlashName.muzzleflash_big;
+                return MuzzleFlash.muzzleflash_big;
             }
             else if (gauge <= 0.406f)
             {
-                return MuzzleFlashName.muzzleflash_bigger;
+                return MuzzleFlash.muzzleflash_bigger;
             }
             else if (gauge <= 0.5f)
             {
-                return MuzzleFlashName.muzzleflash_biggest;
+                return MuzzleFlash.muzzleflash_biggest;
             }
             else
             {
-                return MuzzleFlashName.none;
+                return MuzzleFlash.none;
             }
         }
     }
 
-    public enum ExplosionName
+    public enum Explosion
     {
         none,
         expl_tiny = 4,
@@ -68,7 +68,7 @@ namespace MTMTVFX.Core
         //distshockwave,
     }
 
-    public enum MuzzleFlashName
+    public enum MuzzleFlash
     {
         none,
         muzzleflash_tiny,
@@ -96,7 +96,7 @@ namespace MTMTVFX.Core
         pac_beam
     }
 
-    public enum TrailName
+    public enum Trail
     {
         aps,
         railgun,

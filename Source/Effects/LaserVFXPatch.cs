@@ -73,29 +73,29 @@ namespace MTMTVFX.Effects
         }
     }
 
-    [HarmonyPatch(typeof(ShortRangeLaser), "DrawBeam")]
-    public class LaserVFXPatchContinuous2
-    {
-        private static void Prefix(ShortRangeLaser __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
-        {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
-            if (!config.E_CONTINUOUS || config.IS_DEGRADED) return;
+    //[HarmonyPatch(typeof(ShortRangeLaser), "DrawBeam")]
+    //public class LaserVFXPatchContinuous2
+    //{
+    //    private static void Prefix(ShortRangeLaser __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
+    //    {
+    //        SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+    //        if (!config.E_CONTINUOUS || config.IS_DEGRADED) return;
 
-            LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
-        }
-    }
+    //        LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
+    //    }
+    //}
 
-    [HarmonyPatch(typeof(LaserCombiner), "DrawBeam")]
-    public class LaserVFXPatchContinuous3
-    {
-        private static void Prefix(LaserCombiner __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
-        {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
-            if (!config.E_CONTINUOUS || config.IS_DEGRADED) return;
+    //[HarmonyPatch(typeof(LaserCombiner), "DrawBeam")]
+    //public class LaserVFXPatchContinuous3
+    //{
+    //    private static void Prefix(LaserCombiner __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
+    //    {
+    //        SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+    //        if (!config.E_CONTINUOUS || config.IS_DEGRADED) return;
 
-            LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
-        }
-    }
+    //        LaserPatchMod.PatchContLaser(__instance, exitPoint, direction, hitPoint, ____continuousColor);
+    //    }
+    //}
 
     [HarmonyPatch(typeof(LaserPulsePool), "ActivateHere")]
     public class LaserVFXPatchPulse

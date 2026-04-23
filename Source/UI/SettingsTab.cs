@@ -58,6 +58,7 @@ namespace MTMTVFX.UI
             screenSegmentTable.AddInterpretter(ButtonHelper.Bool(_focus, "VFX: PAC", "Enable or disable PAC VFX", I => I.E_PAC));
             screenSegmentTable.AddInterpretter(ButtonHelper.Bool(_focus, "VFX: Plasma", "NOT IMPLEMENTED YET", I => I.E_PLASMA));
             screenSegmentTable.AddInterpretter(ButtonHelper.Bool(_focus, "VFX: Flamer", "NOT IMPLEMENTED YET", I => I.E_FLAMER));
+            screenSegmentTable.AddInterpretter(ButtonHelper.Bool(_focus, "VFX: APS Trail", "NOT IMPLEMENTED YET", I => I.E_APS_TRAIL));
 
             //screenSegmentTable.AddInterpretter(ButtonHelper.Bool(_focus, "VFX: APS Gunpowder", "Enable or disable APS gunpowder VFX", I => I.E_MUZZLE), 0, 1);
             //screenSegmentTable.AddInterpretter(ButtonHelper.Bool(_focus, "VFX: APS Railgun", "Enable or disable APS railgun VFX", I => I.E_RAILGUN), 0, 2);

@@ -72,7 +72,7 @@ namespace MTMTVFX.Core
             return true;
         }
 
-        public void Return(GameObject obj)
+        public virtual void Return(GameObject obj)
         {
             obj.SetActive(false);
             _reserve.Enqueue(obj);

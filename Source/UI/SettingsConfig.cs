@@ -73,7 +73,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_MUZZLE = value;
-                VFXManager.Instance.OnConfigUpdate<MuzzleFlashName>();
+                VFXManager.Instance.OnConfigUpdate<MuzzleFlash>();
             }
         }
 
@@ -105,7 +105,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_EXPL = value;
-                VFXManager.Instance.OnConfigUpdate<ExplosionName>();
+                VFXManager.Instance.OnConfigUpdate<Explosion>();
             }
         }
 

@@ -140,8 +140,8 @@ namespace MTMTVFX.Core
             if (!_initialized) Init();
 
             VFXPool pool;
-            
-            if(type.GetType() == typeof(MuzzleFlash) && (MuzzleFlash)type != MuzzleFlash.none)
+
+            if (type.GetType() == typeof(MuzzleFlash) && (MuzzleFlash)type != MuzzleFlash.none)
                 pool = _muzzleFlashPools[(MuzzleFlash)type];
             else if (type.GetType() == typeof(RailgunName) && (RailgunName)type != RailgunName.none)
                 pool = _railgunPools[(RailgunName)type];

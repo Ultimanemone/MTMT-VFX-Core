@@ -14,16 +14,17 @@ namespace MTMTVFX.Projectiles
         [HarmonyPostfix]
         private static void Override(AdvPooledProjectile __instance)
         {
-            TrailRenderer trail = __instance.gameObject.GetComponent<TrailRenderer>();
+            Utils.LogInfo<APSTrailPatch>("overriding trail");
             SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
-            if (config.E_APS_TRAIL) return;
-            else trail.emitting = false;
+            if (config.E_APS_TRAIL) __instance.gameObject.GetComponent<TrailRenderer>().emitting = false;
+            else return;
         }
 
         [HarmonyPatch("Deactivate")]
         [HarmonyPostfix]
         private static void CloneTrail(AdvPooledProjectile __instance)
         {
+            Utils.LogInfo<APSTrailPatch>("cloning trail");
             TrailRenderer tr = __instance.GetComponent<TrailRenderer>();
             TrailRenderer clone = VFXManager.Create(Trail.aps, Vector3.zero, Vector3.zero).GetComponent<TrailRenderer>();
             clone.time = tr.time;

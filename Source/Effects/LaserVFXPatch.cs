@@ -30,6 +30,7 @@ namespace MTMTVFX.Effects
         [HarmonyPostfix]
         private static void MakeBeam(ConventionalLaser __instance)
         {
+            // always make a laser
             MainThreadDispatcher.Enqueue(() =>
             {
                 GameObject obj = VFXManager.InstantiateCopy(SpecialName.laser_cont, Vector3.zero, Vector3.zero);

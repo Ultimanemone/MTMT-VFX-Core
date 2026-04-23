@@ -98,7 +98,7 @@ namespace MTMTVFX.Core
             return null;
         }
 
-        public void OnConfigUpdate<T>() where T : Enum
+        public void OnConfigUpdatePool<T>() where T : Enum
         {
             if (!_initialized) Init();
 
@@ -119,7 +119,7 @@ namespace MTMTVFX.Core
             }
         }
 
-        public void OnConfigUpdate(Enum type)
+        public void OnConfigUpdatePool(Enum type)
         {
             if (!_initialized) Init();
 
@@ -136,6 +136,18 @@ namespace MTMTVFX.Core
             else return;
 
             pool.OnConfigUpdate();
+        }
+
+        public void OnConfigUpdateAllPool()
+        {
+            List<IDictionary> all = new List<IDictionary>() { _muzzleFlashPools, _railgunPools, _explosionPools, _beamPools };
+            foreach (var dict in all)
+            {
+                foreach (DictionaryEntry entry in dict)
+                {
+                    ((VFXPool)entry.Value).OnConfigUpdate();
+                }
+            }
         }
 
         /// <summary>

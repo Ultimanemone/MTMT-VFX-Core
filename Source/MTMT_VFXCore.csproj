@@ -61,10 +61,9 @@
     <Reference Include="UnityEngine.ParticleSystemModule">
       <HintPath>D:\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

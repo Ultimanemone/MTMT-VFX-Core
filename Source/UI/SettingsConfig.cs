@@ -64,7 +64,11 @@ namespace MTMTVFX.UI
         public bool E_MUZZLE
         {
             get { return Internal.E_MUZZLE; }
-            set { Internal.E_MUZZLE = value; }
+            set
+            {
+                Internal.E_MUZZLE = value;
+                VFXManager.Instance.OnConfigUpdateAllPool();
+            }
         }
 
         public int COUNT_MUZZLE
@@ -73,7 +77,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_MUZZLE = value;
-                VFXManager.Instance.OnConfigUpdate<MuzzleFlashName>();
+                VFXManager.Instance.OnConfigUpdatePool<MuzzleFlashName>();
             }
         }
 
@@ -89,7 +93,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_RAILGUN = value;
-                VFXManager.Instance.OnConfigUpdate<RailgunName>();
+                VFXManager.Instance.OnConfigUpdatePool<RailgunName>();
             }
         }
 
@@ -105,7 +109,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_EXPL = value;
-                VFXManager.Instance.OnConfigUpdate<ExplosionName>();
+                VFXManager.Instance.OnConfigUpdatePool<ExplosionName>();
             }
         }
 
@@ -121,7 +125,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_PULSE = value;
-                VFXManager.Instance.OnConfigUpdate(BeamName.laser_pulse);
+                VFXManager.Instance.OnConfigUpdatePool(BeamName.laser_pulse);
             }
         }
 
@@ -137,7 +141,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_PAC = value;
-                VFXManager.Instance.OnConfigUpdate(BeamName.pac_beam);
+                VFXManager.Instance.OnConfigUpdatePool(BeamName.pac_beam);
             }
         }
 
@@ -153,7 +157,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_PLASMA = value;
-                //VFXManager.Instance.OnConfigUpdate(BeamName.plasma);
+                //VFXManager.Instance.OnConfigUpdatePool(BeamName.plasma);
             }
         }
 

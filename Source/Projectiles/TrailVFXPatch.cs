@@ -2,7 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-#if true
+#if false
 namespace MTMTVFX.Projectiles
 {
     [HarmonyPatch(typeof(AdvPooledProjectile), "ActivateHere")]

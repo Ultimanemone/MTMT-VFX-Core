@@ -7,11 +7,9 @@ namespace MTMTVFX.Internal
     /// <summary>
     /// Script to kill vfx objects when they run out of the maximum lifetime, or are no longer rendering particles
     /// </summary>
-    public class EffectAutokill : MonoBehaviour
+    public class EffectAutokill : PooledObj
     {
         public ParticleSystem[] psList { get; private set; }
-        public VFXPool pool;
-        private const float maxLifetime = 12f;
 
         private void Awake()
         {
@@ -28,7 +26,7 @@ namespace MTMTVFX.Internal
             bool flag = (psList[0] == null || maxLifetime < psList[0].time) && psList[0].time > Time.deltaTime;
             if (flag)
             {
-                pool.Return(gameObject);
+                ReturnSelf();
             }
 
             foreach (ParticleSystem ps in psList)
@@ -37,7 +35,7 @@ namespace MTMTVFX.Internal
             }
 
             Core.Utils.LogInfo<EffectAutokill>($"Effect {gameObject.name} killed");
-            pool.Return(gameObject);
+            ReturnSelf();
 
         B1:
             return;

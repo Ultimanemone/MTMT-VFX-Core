@@ -1,4 +1,5 @@
-﻿using BrilliantSkies.PlayerProfiles;
+﻿using BrilliantSkies.Core.Networking;
+using BrilliantSkies.PlayerProfiles;
 using MTMTVFX.Internal;
 using MTMTVFX.UI;
 using System;
@@ -33,28 +34,28 @@ namespace MTMTVFX.Core
         private GameObject InstantiateNewInReserve(bool autokill = true)
         {
             GameObject obj = UnityEngine.Object.Instantiate(_prefab, _parent);
+            PooledObj comp;
 
             if (autokill)
             {
-                EffectAutokill comp = obj.AddComponent<EffectAutokill>();
-                comp.pool = this;
-                Utils.AddScript(obj, type, modName);
+                comp = obj.AddComponent<EffectAutokill>();
             }
             else
             {
-                EffectManualKill comp = obj.AddComponent<EffectManualKill>();
-                comp.pool = this;
-                Utils.AddScript(obj, type, modName);
+                comp = obj.AddComponent<EffectManualKill>();
             }
 
-                Return(obj);
+            comp.SetPool(this);
+            Utils.AddScript(obj, type, modName);
+
+            Return(obj);
             return obj;
         }
         public bool TryGet(Vector3 position, Vector3 forward, out GameObject obj)
         {
             obj = null;
 
-            // no objects in reserve or rendered objects exceed the preferred pool size
+            // no objects in reserve or rendered objects exceed the preferred _pool size
             if (_reserve.Count < 1 || _rendered.Count >= _preferredSize)
             {
                 // make a new one if the size is dynamic

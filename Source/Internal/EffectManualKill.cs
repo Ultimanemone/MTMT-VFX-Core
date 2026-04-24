@@ -8,10 +8,8 @@ namespace MTMTVFX.Internal
     /// <summary>
     /// Script to kill trail objects
     /// </summary>
-    public class EffectManualKill : MonoBehaviour
+    public class EffectManualKill : PooledObj
     {
-        private const float maxLifetime = 12f;
-
         public void Init(float lifetime, VFXPool pool)
         {
             StartCoroutine(ReturnCR(Mathf.Min(lifetime, maxLifetime), pool));
@@ -20,7 +18,7 @@ namespace MTMTVFX.Internal
         private IEnumerator ReturnCR(float lifetime, VFXPool pool)
         {
             yield return new WaitForSeconds(lifetime);
-            pool.Return(gameObject);
+            ReturnSelf();
             yield break;
         }
     }

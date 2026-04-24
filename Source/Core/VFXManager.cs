@@ -75,7 +75,7 @@ namespace MTMTVFX.Core
             GameObject apsTrailRoot = new GameObject("APS default trail Root");
             GameObject apsTrailObj = new GameObject("APS default trail ghost");
             apsTrailObj.AddComponent<TrailRenderer>();
-            apsDefaultTrailPool = InitPool(Trail.aps, apsTrailRoot.transform, 100, apsTrailObj);
+            apsDefaultTrailPool = new VFXPool(apsTrailObj, "", Trail.aps, 100, apsTrailRoot.transform, false);
         }
 
         private Dictionary<T, VFXPool> InitPool<T>(Transform root, int count) where T : Enum
@@ -185,7 +185,7 @@ namespace MTMTVFX.Core
                 else return null;
 
                 pool.TryGet(pos, forward, out GameObject obj);
-                Utils.LogInfo<VFXManager>($"Effect {type} got from pool!");
+                Utils.LogInfo<VFXManager>($"Effect {type} got from _pool!");
                 return obj;
             }
             else
@@ -203,7 +203,7 @@ namespace MTMTVFX.Core
                 else return null;
 
                 ((VFXPool)pool[type]).TryGet(pos, forward, out GameObject obj);
-                Utils.LogInfo<VFXManager>($"Effect {type} got from pool!");
+                Utils.LogInfo<VFXManager>($"Effect {type} got from _pool!");
                 return obj;
             }
         }

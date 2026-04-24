@@ -3,6 +3,7 @@ using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
 using MTMTVFX.Core;
 using MTMTVFX.UI;
+using System.Collections;
 using UnityEngine;
 
 namespace MTMTVFX.Projectiles
@@ -39,8 +40,6 @@ namespace MTMTVFX.Projectiles
             clone.SetPositions(positions);
 
             clone.emitting = false;
-
-            Object.Destroy(clone.gameObject, clone.time);
         }
     }
 

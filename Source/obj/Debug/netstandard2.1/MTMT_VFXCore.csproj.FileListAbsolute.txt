@@ -240,3 +240,5 @@ D:\MTMT\MTMT VFX Core\Source\obj\Debug\netstandard2.1\MTMT_VFX.92C8B7D5.Up2Date
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\bin\Debug\netstandard2.1\PlayerProfiles.dll
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\bin\Debug\netstandard2.1\UnityEngine.IMGUIModule.dll
 D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\Newtonsoft.Json.dll
+C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\bin\Debug\netstandard2.1\Newtonsoft.Json.dll
+C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\bin\Debug\netstandard2.1\UnityEngine.TextRenderingModule.dll

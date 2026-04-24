@@ -27,7 +27,7 @@ namespace MTMTVFX.Core
         private static Dictionary<RailgunName, VFXPool> _railgunPools;
         private static Dictionary<Explosion, VFXPool> _explosionPools;
         private static Dictionary<BeamName, VFXPool> _beamPools;
-        private static VFXPool _apsDefaultTrailPool;
+        public static VFXPool apsDefaultTrailPool;
 
         public static IReadOnlyDictionary<MuzzleFlash, VFXPool> MuzzleFlashPools => _muzzleFlashPools;
         public static IReadOnlyDictionary<RailgunName, VFXPool> RailgunPools => _railgunPools;
@@ -75,7 +75,7 @@ namespace MTMTVFX.Core
             GameObject apsTrailRoot = new GameObject("APS default trail Root");
             GameObject apsTrailObj = new GameObject("APS default trail ghost");
             apsTrailObj.AddComponent<TrailRenderer>();
-            _apsDefaultTrailPool = InitPool(Trail.aps, apsTrailRoot.transform, 100, apsTrailObj);
+            apsDefaultTrailPool = InitPool(Trail.aps, apsTrailRoot.transform, 100, apsTrailObj);
         }
 
         private Dictionary<T, VFXPool> InitPool<T>(Transform root, int count) where T : Enum
@@ -181,7 +181,7 @@ namespace MTMTVFX.Core
             {
                 VFXPool pool;
                 if ((Trail)type == Trail.aps)
-                    pool = _apsDefaultTrailPool;
+                    pool = apsDefaultTrailPool;
                 else return null;
 
                 pool.TryGet(pos, forward, out GameObject obj);

@@ -18,7 +18,7 @@ namespace MTMTVFX.Core
         private readonly Queue<GameObject> _rendered = new Queue<GameObject>();
         private int _preferredSize;
 
-        public VFXPool(GameObject prefab, string modName, Enum type, int initialSize = 10, Transform parent = null)
+        public VFXPool(GameObject prefab, string modName, Enum type, int initialSize = 10, Transform parent = null, bool autokill = true)
         {
             this.modName = modName;
             this.name = prefab.name;
@@ -27,18 +27,27 @@ namespace MTMTVFX.Core
             this._parent = parent;
             _preferredSize = initialSize;
 
-            for (int i = 0; i < initialSize; i++) InstantiateNewInReserve();
+            for (int i = 0; i < initialSize; i++) InstantiateNewInReserve(autokill);
         }
 
-        private GameObject InstantiateNewInReserve()
+        private GameObject InstantiateNewInReserve(bool autokill = true)
         {
             GameObject obj = UnityEngine.Object.Instantiate(_prefab, _parent);
 
-            EffectAutokill comp = obj.AddComponent<EffectAutokill>();
-            comp.pool = this;
-            Utils.AddScript(obj, type, modName);
+            if (autokill)
+            {
+                EffectAutokill comp = obj.AddComponent<EffectAutokill>();
+                comp.pool = this;
+                Utils.AddScript(obj, type, modName);
+            }
+            else
+            {
+                EffectManualKill comp = obj.AddComponent<EffectManualKill>();
+                comp.pool = this;
+                Utils.AddScript(obj, type, modName);
+            }
 
-            Return(obj);
+                Return(obj);
             return obj;
         }
         public bool TryGet(Vector3 position, Vector3 forward, out GameObject obj)

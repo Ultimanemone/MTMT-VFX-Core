@@ -8,6 +8,13 @@ using UnityEngine;
 
 namespace MTMTVFX.Core
 {
+    public enum KillType
+    {
+        auto,
+        manual,
+        trail
+    }
+
     public class VFXPool
     {
         public readonly string modName;
@@ -19,7 +26,7 @@ namespace MTMTVFX.Core
         private readonly Queue<GameObject> _rendered = new Queue<GameObject>();
         private int _preferredSize;
 
-        public VFXPool(GameObject prefab, string modName, Enum type, int initialSize = 10, Transform parent = null, bool autokill = true)
+        public VFXPool(GameObject prefab, string modName, Enum type, int initialSize = 10, Transform parent = null, KillType killType = KillType.auto)
         {
             this.modName = modName;
             this.name = prefab.name;
@@ -28,22 +35,18 @@ namespace MTMTVFX.Core
             this._parent = parent;
             _preferredSize = initialSize;
 
-            for (int i = 0; i < initialSize; i++) InstantiateNewInReserve(autokill);
+            for (int i = 0; i < initialSize; i++) InstantiateNewInReserve(killType);
         }
 
-        private GameObject InstantiateNewInReserve(bool autokill = true)
+        private GameObject InstantiateNewInReserve(KillType killType = KillType.auto)
         {
             GameObject obj = UnityEngine.Object.Instantiate(_prefab, _parent);
             PooledObj comp;
 
-            if (autokill)
-            {
-                comp = obj.AddComponent<EffectAutokill>();
-            }
-            else
-            {
-                comp = obj.AddComponent<EffectManualKill>();
-            }
+            if (killType == KillType.auto) comp = obj.AddComponent<EffectAutokill>();
+            else if (killType == KillType.manual) comp = obj.AddComponent<EffectManualKill>();
+            else if (killType == KillType.trail) comp = obj.AddComponent<TrailCloneFadeout>();
+            else return null;
 
             comp.SetPool(this);
             Utils.AddScript(obj, type, modName);

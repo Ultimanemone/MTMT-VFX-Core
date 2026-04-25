@@ -2,22 +2,8 @@
 using HarmonyLib;
 using UnityEngine;
 
-#if false
 namespace MTMTVFX.Projectiles
 {
-    [HarmonyPatch(typeof(AdvPooledProjectile), "ActivateHere")]
-    public class APSTrailPatch
-    {
-        private static void Postfix(AdvPooledProjectile __instance)
-        {
-            TrailRenderer trail = __instance.gameObject.GetComponent<TrailRenderer>();
-            if (trail != null)
-            {
-                trail.gameObject.SetActive(false);
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(PooledCramProjectile), "ActivateHere")]
     public class CramTrailPatch
     {
@@ -47,4 +33,3 @@ namespace MTMTVFX.Projectiles
         }
     }
 }
-#endif

@@ -10,12 +10,15 @@ namespace MTMTVFX.Internal
     /// </summary>
     public class EffectManualKill : PooledObj
     {
-        public void Init(float lifetime, VFXPool pool)
+        protected float _lifetime;
+
+        public virtual void Init(float lifetime, VFXPool pool)
         {
+            _lifetime = lifetime;
             StartCoroutine(ReturnCR(Mathf.Min(lifetime, maxLifetime), pool));
         }
 
-        private IEnumerator ReturnCR(float lifetime, VFXPool pool)
+        protected virtual IEnumerator ReturnCR(float lifetime, VFXPool pool)
         {
             yield return new WaitForSeconds(lifetime);
             ReturnSelf();

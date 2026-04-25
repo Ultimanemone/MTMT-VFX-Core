@@ -74,8 +74,9 @@ namespace MTMTVFX.Core
 
             GameObject apsTrailRoot = new GameObject("APS default trail Root");
             GameObject apsTrailObj = new GameObject("APS default trail ghost");
-            apsTrailObj.AddComponent<TrailRenderer>();
-            apsDefaultTrailPool = new VFXPool(apsTrailObj, "", Trail.aps, 100, apsTrailRoot.transform, false);
+            apsTrailObj.AddComponent<LineRenderer>();
+            apsDefaultTrailPool = new VFXPool(apsTrailObj, "", Trail.aps, 100, apsTrailRoot.transform, KillType.trail);
+            UnityEngine.Object.Destroy(apsTrailObj);
         }
 
         private Dictionary<T, VFXPool> InitPool<T>(Transform root, int count) where T : Enum

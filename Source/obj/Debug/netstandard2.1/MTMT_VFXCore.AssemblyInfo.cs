@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MTMT_VFXCore")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3729661fc12783180f4ce7d667d488cefdde40b2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14ee2bb3c3697fd61a67521ce40a2f7af018a549")]
 [assembly: System.Reflection.AssemblyProductAttribute("MTMT_VFXCore")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MTMT_VFXCore")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

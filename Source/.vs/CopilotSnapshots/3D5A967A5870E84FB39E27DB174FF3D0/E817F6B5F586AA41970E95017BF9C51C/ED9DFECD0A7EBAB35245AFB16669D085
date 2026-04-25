@@ -1,0 +1,120 @@
+﻿using BrilliantSkies.Ftd.Game.Pools;
+using BrilliantSkies.PlayerProfiles;
+using HarmonyLib;
+using MTMTVFX.Core;
+using MTMTVFX.Internal;
+using MTMTVFX.UI;
+using System.Collections;
+using UnityEngine;
+
+namespace MTMTVFX.Projectiles
+{
+    [HarmonyPatch(typeof(AdvPooledProjectile))]
+    public class APSTrailPatch
+    {
+        [HarmonyPatch("ActivateHere")]
+        [HarmonyPostfix]
+        private static void Override(AdvPooledProjectile __instance)
+        {
+            Utils.LogInfo<APSTrailPatch>("overriding trail");
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (config.E_APS_TRAIL)
+            {
+                MainThreadDispatcher.Enqueue(() =>
+                {
+                    __instance.gameObject.GetComponent<TrailRenderer>().emitting = false;
+                });
+            }
+            else return;
+        }
+
+        [HarmonyPatch("Deactivate")]
+        [HarmonyPostfix]
+        private static void CloneTrail(AdvPooledProjectile __instance)
+        {
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            if (!config.E_APS_TRAIL) return;
+
+            MainThreadDispatcher.Enqueue(() =>
+            {
+                var tr = __instance.GetComponent<TrailRenderer>();
+                if (tr == null) return;
+
+                // Capture BEFORE it gets cleared
+                int count = tr.positionCount;
+                if (count < 2) return;
+
+                var positions = new Vector3[count];
+                tr.GetPositions(positions);
+
+                // Reverse positions array to fix head/tail swap
+                // TrailRenderer stores newest point first, LineRenderer expects oldest first
+                System.Array.Reverse(positions);
+
+                var mat = tr.material;
+
+                float time = tr.time;
+                float widthMultiplier = tr.widthMultiplier;
+                float startWidth = tr.startWidth;
+                float endWidth = tr.endWidth;
+
+                var textureMode = tr.textureMode;
+                var numCapVertices = tr.numCapVertices;
+                var numCornerVertices = tr.numCornerVertices;
+                var colorGradient = tr.colorGradient;
+                Utils.LogInfo<APSTrailPatch>("cloning trail");
+
+                // Create a new GameObject with a LineRenderer instead of TrailRenderer
+                GameObject cloneObj = new GameObject("APS_Trail_Clone");
+                LineRenderer lineRenderer = cloneObj.AddComponent<LineRenderer>();
+
+                // Copy properties to LineRenderer
+                lineRenderer.widthMultiplier = widthMultiplier;
+                lineRenderer.startWidth = startWidth;
+                lineRenderer.endWidth = endWidth;
+                lineRenderer.textureMode = (UnityEngine.LineTextureMode)textureMode;
+                lineRenderer.numCapVertices = numCapVertices;
+                lineRenderer.numCornerVertices = numCornerVertices;
+                lineRenderer.material = mat;
+                lineRenderer.colorGradient = colorGradient;
+
+                // Set positions
+                lineRenderer.positionCount = count;
+                lineRenderer.SetPositions(positions);
+
+                // Add fadeout component to simulate TrailRenderer behavior
+                var fadeout = cloneObj.AddComponent<TrailCloneFadeout>();
+                fadeout.Init(lineRenderer, time);
+            });
+        }
+
+        [HarmonyPatch(typeof(PooledCramProjectile), "ActivateHere")]
+        public class CramTrailPatch
+        {
+            private static void Postfix(PooledCramProjectile __instance)
+            {
+                TrailRenderer trail = __instance.gameObject.GetComponent<TrailRenderer>();
+                if (trail != null)
+                {
+                    trail.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(PlasmaProjectilePool), "ActivateHere")]
+        public class PlasmaTrailPatch
+        {
+            private static void Postfix(ref PooledPlasmaProjectile __result)
+            {
+                // FtD plasma uses a LineRenderer instead of a trail...
+                LineRenderer trail = __result.gameObject.GetComponentInChildren<LineRenderer>();
+                if (trail != null)
+                {
+                    trail.gameObject.SetActive(false);
+                    //trail.startColor = Color.clear;
+                    //trail.endColor = Color.clear;
+                }
+            }
+        }
+    }
+}

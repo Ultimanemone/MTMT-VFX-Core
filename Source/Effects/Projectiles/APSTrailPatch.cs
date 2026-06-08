@@ -2,39 +2,42 @@
 using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
 using MTMTVFX.Core;
-using MTMTVFX.Internal;
+using MTMTVFX.MonoScripts;
 using MTMTVFX.UI;
 using System;
 using System.Collections;
 using UnityEngine;
 
-namespace MTMTVFX.Projectiles
+namespace MTMTVFX.Effects.Trail
 {
+    public enum APSTrailMode
+    {
+        Default,
+        DefaultWithFade,
+        Custom
+    }
+
     [HarmonyPatch(typeof(AdvPooledProjectile))]
     public class APSTrailPatch
     {
         [HarmonyPatch("ActivateHere")]
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         private static void Override(AdvPooledProjectile __instance)
         {
-            Utils.LogInfo<APSTrailPatch>("overriding trail");
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (config.E_APS_TRAIL)
             {
-                MainThreadDispatcher.Enqueue(() =>
-                {
-                    __instance.gameObject.GetComponent<TrailRenderer>().emitting = false;
-                });
+                TrailRenderer tr = __instance.gameObject.GetComponent<TrailRenderer>();
+                tr.emitting = false;
             }
-            else return;
         }
 
-        [HarmonyPatch("Deactivate")]
+        [HarmonyPatch("SetInactiveMainThread")]
         [HarmonyPostfix]
         private static void CloneTrail(AdvPooledProjectile __instance)
         {
-
-            MainThreadDispatcher.Enqueue(() =>
+            SettingsConfig config = Utils.GetConfig();
+            if (config.E_APS_TRAIL_DEFAULT_FADE)
             {
                 var tr = __instance.GetComponent<TrailRenderer>();
                 if (tr == null) return;
@@ -53,7 +56,7 @@ namespace MTMTVFX.Projectiles
                 Utils.LogInfo<APSTrailPatch>("cloning trail");
 
                 // Create a new GameObject with a LineRenderer instead of TrailRenderer
-                GameObject cloneObj = VFXManager.Create(Trail.aps, Vector3.zero, Vector3.zero);
+                GameObject cloneObj = VFXManager.Create(TrailType.aps, Vector3.zero, Vector3.zero);
                 LineRenderer lineRenderer = cloneObj.GetComponent<LineRenderer>();
 
                 // Copy properties to LineRenderer
@@ -73,7 +76,7 @@ namespace MTMTVFX.Projectiles
 
                 // Add the EffectManualKill component to return it to the pool
                 cloneObj.GetComponent<TrailCloneFadeout>()?.Init(time, VFXManager.apsDefaultTrailPool);
-            });
+            }
         }
     }
 }

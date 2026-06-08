@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace MTMTVFX.Core
+namespace MTMTVFX.Core.AssetManagement
 {
     public struct AssetContainer
     {
@@ -10,13 +10,11 @@ namespace MTMTVFX.Core
         public string source;
     }
 
-    public class AssetRegistry
+    public static class AssetRegistry
     {
         public static IReadOnlyDictionary<string, AssetContainer> assetList => registry;
         private static Dictionary<string, AssetContainer> registry = new Dictionary<string, AssetContainer>();
         private static bool _init = false;
-
-        private AssetRegistry() { }
 
         public static void Init()
         {
@@ -36,10 +34,10 @@ namespace MTMTVFX.Core
         /// <param name="source"></param>
         public static void Register(string key, GameObject prefab, int priority, string source)
         {
-            key.Trim().ToLowerInvariant();
+            key = key.Trim().ToLowerInvariant();
             if (registry.TryGetValue(key, out AssetContainer currentAsset))
             {
-                if (currentAsset.priority > priority)
+                if (currentAsset.priority < priority)
                 {
                     registry[key] = new AssetContainer()
                     {

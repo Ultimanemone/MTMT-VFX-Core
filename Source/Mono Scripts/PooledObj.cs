@@ -1,8 +1,8 @@
-﻿using MTMTVFX.Core;
+﻿using MTMTVFX.Core.Pooling;
 using UnityEngine;
 
 
-namespace MTMTVFX.Internal
+namespace MTMTVFX.MonoScripts
 {
     public class PooledObj : MonoBehaviour
     {

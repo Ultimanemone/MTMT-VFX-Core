@@ -5,6 +5,8 @@ using System.Collections;
 using MTMTVFX.UI;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ftd.Game.Pools;
+using MTMTVFX.Core.Pooling;
+using MTMTVFX.Core.AssetManagement;
 
 namespace MTMTVFX.Core
 {
@@ -23,15 +25,16 @@ namespace MTMTVFX.Core
         private static VFXManager _instance;
         private bool _initialized = false;
 
-        private static Dictionary<MuzzleFlash, VFXPool> _muzzleFlashPools;
-        private static Dictionary<RailgunName, VFXPool> _railgunPools;
-        private static Dictionary<Explosion, VFXPool> _explosionPools;
+        private static Dictionary<MuzzleFlashType, VFXPool> _muzzleFlashPools;
+        private static Dictionary<RailgunMuzzleType, VFXPool> _railgunPools;
+        private static Dictionary<ExplosionType, VFXPool> _explosionPools;
         private static Dictionary<BeamName, VFXPool> _beamPools;
+        public static Dictionary<ConventionalLaser, GameObject> laserBeams;
         public static VFXPool apsDefaultTrailPool;
 
-        public static IReadOnlyDictionary<MuzzleFlash, VFXPool> MuzzleFlashPools => _muzzleFlashPools;
-        public static IReadOnlyDictionary<RailgunName, VFXPool> RailgunPools => _railgunPools;
-        public static IReadOnlyDictionary<Explosion, VFXPool> ExplosionPools => _explosionPools;
+        public static IReadOnlyDictionary<MuzzleFlashType, VFXPool> MuzzleFlashPools => _muzzleFlashPools;
+        public static IReadOnlyDictionary<RailgunMuzzleType, VFXPool> RailgunPools => _railgunPools;
+        public static IReadOnlyDictionary<ExplosionType, VFXPool> ExplosionPools => _explosionPools;
         public static IReadOnlyDictionary<BeamName, VFXPool> BeamPools => _beamPools;
 
         private static GameObject _vfxRoot;
@@ -48,19 +51,19 @@ namespace MTMTVFX.Core
             AssetRegistry.Init();
 
             _vfxRoot = new GameObject("MTMT VFX Root");
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
 
             GameObject muzzleFlashRoot = new GameObject("APS Muzzle Flash Root");
             muzzleFlashRoot.transform.SetParent(_vfxRoot.transform);
-            _muzzleFlashPools = InitPool<MuzzleFlash>(muzzleFlashRoot.transform, config.COUNT_MUZZLE);
+            _muzzleFlashPools = InitPool<MuzzleFlashType>(muzzleFlashRoot.transform, config.COUNT_MUZZLE);
 
             GameObject railgunRoot = new GameObject("Railgun FX Root");
             railgunRoot.transform.SetParent(_vfxRoot.transform);
-            _railgunPools = InitPool<RailgunName>(railgunRoot.transform, config.COUNT_RAILGUN);
+            _railgunPools = InitPool<RailgunMuzzleType>(railgunRoot.transform, config.COUNT_RAILGUN);
 
-            GameObject explosionRoot = new GameObject("Explosion Root");
+            GameObject explosionRoot = new GameObject("ExplosionType Root");
             explosionRoot.transform.SetParent(_vfxRoot.transform);
-            _explosionPools = InitPool<Explosion>(explosionRoot.transform, config.COUNT_EXPL);
+            _explosionPools = InitPool<ExplosionType>(explosionRoot.transform, config.COUNT_EXPL);
 
             GameObject beamRoot = new GameObject("Beam Root");
             beamRoot.transform.SetParent(_vfxRoot.transform);
@@ -72,10 +75,13 @@ namespace MTMTVFX.Core
             VFXPool pacPool = InitPool(BeamName.pac_beam, beamRoot.transform, config.COUNT_PULSE);
             if (pacPool != null) _beamPools[BeamName.pac_beam] = pacPool;
 
+            // not worth pooling ts
+            laserBeams = new Dictionary<ConventionalLaser, GameObject>();
+
             GameObject apsTrailRoot = new GameObject("APS default trail Root");
             GameObject apsTrailObj = new GameObject("APS default trail ghost");
             apsTrailObj.AddComponent<LineRenderer>();
-            apsDefaultTrailPool = new VFXPool(apsTrailObj, "", Trail.aps, 100, apsTrailRoot.transform, KillType.trail);
+            apsDefaultTrailPool = new VFXPool(apsTrailObj, "", TrailType.aps, 100, apsTrailRoot.transform, KillType.trail);
             UnityEngine.Object.Destroy(apsTrailObj);
         }
 
@@ -120,11 +126,11 @@ namespace MTMTVFX.Core
             if (!_initialized) Init();
 
             IDictionary poolDict;
-            if (typeof(T) == typeof(MuzzleFlash))
+            if (typeof(T) == typeof(MuzzleFlashType))
                 poolDict = _muzzleFlashPools;
-            else if (typeof(T) == typeof(RailgunName))
+            else if (typeof(T) == typeof(RailgunMuzzleType))
                 poolDict = _railgunPools;
-            else if (typeof(T) == typeof(Explosion))
+            else if (typeof(T) == typeof(ExplosionType))
                 poolDict = _explosionPools;
             else if (typeof(T) == typeof(BeamName))
                 poolDict = _beamPools;
@@ -142,12 +148,12 @@ namespace MTMTVFX.Core
 
             VFXPool pool;
 
-            if (type.GetType() == typeof(MuzzleFlash) && (MuzzleFlash)type != MuzzleFlash.none)
-                pool = _muzzleFlashPools[(MuzzleFlash)type];
-            else if (type.GetType() == typeof(RailgunName) && (RailgunName)type != RailgunName.none)
-                pool = _railgunPools[(RailgunName)type];
-            else if (type.GetType() == typeof(Explosion) && (Explosion)type != Explosion.none)
-                pool = _explosionPools[(Explosion)type];
+            if (type.GetType() == typeof(MuzzleFlashType) && (MuzzleFlashType)type != MuzzleFlashType.none)
+                pool = _muzzleFlashPools[(MuzzleFlashType)type];
+            else if (type.GetType() == typeof(RailgunMuzzleType) && (RailgunMuzzleType)type != RailgunMuzzleType.none)
+                pool = _railgunPools[(RailgunMuzzleType)type];
+            else if (type.GetType() == typeof(ExplosionType) && (ExplosionType)type != ExplosionType.none)
+                pool = _explosionPools[(ExplosionType)type];
             else if (type.GetType() == typeof(BeamName) && (BeamName)type != BeamName.none)
                 pool = _beamPools[(BeamName)type];
             else return;
@@ -178,10 +184,10 @@ namespace MTMTVFX.Core
         public static GameObject Create(Enum type, Vector3 pos, Vector3 forward)
         {
             Instance.Init();
-            if (type.GetType() == typeof(Trail))
+            if (type.GetType() == typeof(TrailType))
             {
                 VFXPool pool;
-                if ((Trail)type == Trail.aps)
+                if ((TrailType)type == TrailType.aps)
                     pool = apsDefaultTrailPool;
                 else return null;
 
@@ -193,11 +199,11 @@ namespace MTMTVFX.Core
             {
                 IDictionary pool;
 
-                if (type.GetType() == typeof(MuzzleFlash) && (MuzzleFlash)type != MuzzleFlash.none)
+                if (type.GetType() == typeof(MuzzleFlashType) && (MuzzleFlashType)type != MuzzleFlashType.none)
                     pool = _muzzleFlashPools;
-                else if (type.GetType() == typeof(RailgunName) && (RailgunName)type != RailgunName.none)
+                else if (type.GetType() == typeof(RailgunMuzzleType) && (RailgunMuzzleType)type != RailgunMuzzleType.none)
                     pool = _railgunPools;
-                else if (type.GetType() == typeof(Explosion) && (Explosion)type != Explosion.none)
+                else if (type.GetType() == typeof(ExplosionType) && (ExplosionType)type != ExplosionType.none)
                     pool = _explosionPools;
                 else if (type.GetType() == typeof(BeamName) && (BeamName)type != BeamName.none)
                     pool = _beamPools;

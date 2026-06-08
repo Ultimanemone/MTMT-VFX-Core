@@ -1,12 +1,12 @@
 ﻿using BrilliantSkies.Core.Networking;
 using BrilliantSkies.PlayerProfiles;
-using MTMTVFX.Internal;
+using MTMTVFX.MonoScripts;
 using MTMTVFX.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MTMTVFX.Core
+namespace MTMTVFX.Core.Pooling
 {
     public enum KillType
     {
@@ -24,15 +24,16 @@ namespace MTMTVFX.Core
         private readonly Transform _parent;
         private readonly Queue<GameObject> _reserve = new Queue<GameObject>();
         private readonly Queue<GameObject> _rendered = new Queue<GameObject>();
+        private readonly bool dynamicOverride;
         private int _preferredSize;
 
         public VFXPool(GameObject prefab, string modName, Enum type, int initialSize = 10, Transform parent = null, KillType killType = KillType.auto)
         {
             this.modName = modName;
-            this.name = prefab.name;
+            name = prefab.name;
             this.type = type;
-            this._prefab = prefab;
-            this._parent = parent;
+            _prefab = prefab;
+            _parent = parent;
             _preferredSize = initialSize;
 
             for (int i = 0; i < initialSize; i++) InstantiateNewInReserve(killType);
@@ -62,7 +63,7 @@ namespace MTMTVFX.Core
             if (_reserve.Count < 1 || _rendered.Count >= _preferredSize)
             {
                 // make a new one if the size is dynamic
-                if (ProfileManager.Instance.GetModule<SettingsConfig>().ADAPTIVE)
+                if (Utils.GetConfig().ISDYNAMIC)
                 {
                     obj = InstantiateNewInReserve();
                 }
@@ -94,7 +95,7 @@ namespace MTMTVFX.Core
 
         public void OnConfigUpdate()
         {
-            if (ProfileManager.Instance.GetModule<SettingsConfig>().ADAPTIVE) return;
+            if (Utils.GetConfig().ISDYNAMIC) return;
 
             int newSize = Enums.GetCount(type);
             int currentSize = _reserve.Count + _rendered.Count;

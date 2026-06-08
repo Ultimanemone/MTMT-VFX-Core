@@ -31,9 +31,28 @@ namespace MTMTVFX.Core
             [CallerMemberName] string member = "",
             [CallerLineNumber] int line = 0)
         {
-            if (!ProfileManager.Instance.GetModule<SettingsConfig>().DEBUG_MODE) return;
+            if (!Utils.GetConfig().DEBUG_MODE) return;
             string ns = typeof(T).Namespace ?? "";
             AdvLogger.LogInfo($"[{ns}.{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+        }
+
+        /// <summary>
+        /// Calls AdvLogger.LogInfo with generated file path and member info
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        /// <param name="option">The logging option</param>
+        /// <param name="file">Leave this empty</param>
+        /// <param name="member">Leave this empty</param>
+        /// <param name="line">Leave this empty</param>
+        public static void LogInfo(
+            string message,
+            LogOptions option = LogOptions.None,
+            [CallerFilePath] string file = "",
+            [CallerMemberName] string member = "",
+            [CallerLineNumber] int line = 0)
+        {
+            if (!Utils.GetConfig().DEBUG_MODE) return;
+            AdvLogger.LogInfo($"[{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
         }
 
         /// <summary>
@@ -53,6 +72,24 @@ namespace MTMTVFX.Core
         {
             string ns = typeof(T).Namespace ?? "";
             AdvLogger.LogError($"[{ns}.{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+        }
+
+        /// <summary>
+        /// Calls AdvLogger.LogError with generated file path and member info
+        /// </summary>
+        /// <param name="message">The error to log</param>
+        /// <param name="option">The logging option</param>
+        /// <param name="file">Leave this empty</param>
+        /// <param name="member">Leave this empty</param>
+        /// <param name="line">Leave this empty</param>
+        public static void LogError(
+            string message,
+            LogOptions option = LogOptions.None,
+            [CallerFilePath] string file = "",
+            [CallerMemberName] string member = "",
+            [CallerLineNumber] int line = 0)
+        {
+            AdvLogger.LogError($"[{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
         }
 
         /// <summary>
@@ -77,6 +114,11 @@ namespace MTMTVFX.Core
         /// <param name="type"></param>
         /// <param name="modName"></param>
         public static void AddScript(GameObject obj, Enum type, string modName) { }
+
+        public static SettingsConfig GetConfig()
+        {
+            return ProfileManager.Instance.GetModule<SettingsConfig>();
+        }
     }
 
     [HarmonyPatch(typeof(AutoBattle), "Start")]

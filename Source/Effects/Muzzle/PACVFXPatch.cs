@@ -4,7 +4,7 @@ using MTMTVFX.Core;
 using MTMTVFX.UI;
 using UnityEngine;
 
-namespace MTMTVFX.Effects
+namespace MTMTVFX.Effects.Muzzle
 {
     [HarmonyPatch(typeof(ParticleCannonEffect))]
     public class PACVFXPatch
@@ -13,7 +13,7 @@ namespace MTMTVFX.Effects
         [HarmonyPrefix]
         private static void CancelBaseBeam(ParticleCannonEffect __instance)
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (!config.E_PAC || config.IS_DEGRADED) return;
 
             // We keep the main obj since it is used for damage checks
@@ -30,7 +30,7 @@ namespace MTMTVFX.Effects
         [HarmonyPostfix]
         private static void MakeBeam(ParticleCannonEffect __instance, Vector3[] worldPositions)
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (!config.E_PAC || config.IS_DEGRADED) return;
 
             if (__instance.HasHit) return;
@@ -45,7 +45,7 @@ namespace MTMTVFX.Effects
         [HarmonyPrefix]
         private static void UpdateBeam(ParticleCannonEffect __instance, LineRenderer ____lineRenderer, Vector3 gameWorldPosition, int indexOfTermination)
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (!config.E_PAC || config.IS_DEGRADED) return;
 
             Vector3[] worldPositions = new Vector3[indexOfTermination];

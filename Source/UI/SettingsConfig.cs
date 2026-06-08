@@ -2,6 +2,7 @@
 using BrilliantSkies.PlayerProfiles;
 using MTMTVFX.Core;
 using MTMTVFX.Effects;
+using MTMTVFX.Effects.Muzzle;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +32,7 @@ namespace MTMTVFX.UI
             public bool E_FLAMER { get; set; } = true;
             public int COUNT_FLAMER { get; set; } = 50;
 
+            public bool E_APS_TRAIL_DEFAULT_FADE { get; set; } = false;
             public bool E_APS_TRAIL { get; set; } = false;
             public bool E_APS_MODEL { get; set; } = false;
             public bool E_CRAM_TRAIL { get; set; } = false;
@@ -55,7 +57,7 @@ namespace MTMTVFX.UI
             set { Internal.DEBUG_MODE = value; }
         }
 
-        public bool ADAPTIVE
+        public bool ISDYNAMIC
         {
             get { return Internal.ADAPTIVE; }
             set { Internal.ADAPTIVE = value; }
@@ -77,7 +79,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_MUZZLE = value;
-                VFXManager.Instance.OnConfigUpdatePool<MuzzleFlash>();
+                VFXManager.Instance.OnConfigUpdatePool<MuzzleFlashType>();
             }
         }
 
@@ -93,7 +95,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_RAILGUN = value;
-                VFXManager.Instance.OnConfigUpdatePool<RailgunName>();
+                VFXManager.Instance.OnConfigUpdatePool<RailgunMuzzleType>();
             }
         }
 
@@ -109,7 +111,7 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_EXPL = value;
-                VFXManager.Instance.OnConfigUpdatePool<Explosion>();
+                VFXManager.Instance.OnConfigUpdatePool<ExplosionType>();
             }
         }
 
@@ -177,6 +179,12 @@ namespace MTMTVFX.UI
             set { Internal.COUNT_FLAMER = value; }
         }
 
+
+        public bool E_APS_TRAIL_DEFAULT_FADE
+        {
+            get { return Internal.E_APS_TRAIL_DEFAULT_FADE; }
+            set { Internal.E_APS_TRAIL_DEFAULT_FADE = value; }
+        }
 
         public bool E_APS_TRAIL
         {

@@ -1,12 +1,13 @@
 ﻿using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
+using MTMTVFX.Core;
 using MTMTVFX.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace MTMTVFX.Effects
+namespace MTMTVFX.Effects.Muzzle
 {
     [HarmonyPatch(typeof(FlamerMuzzleEffect))]
     public class FlamerVFXPatch
@@ -60,7 +61,7 @@ namespace MTMTVFX.Effects
 
         public static void AddEmitter(FlamerMuzzleEffect instance, ParticleSystem big, ParticleSystem small, ParticleSystem sparks)
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
 
             if (emitters.Count == 0)
             {

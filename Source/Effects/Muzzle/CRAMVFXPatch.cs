@@ -8,14 +8,14 @@ using MTMTVFX.Core;
 using MTMTVFX.UI;
 using UnityEngine;
 
-namespace MTMTVFX.Effects
+namespace MTMTVFX.Effects.Muzzle
 {
     [HarmonyPatch(typeof(CannonFiringPiece), "Flash")]
     public class CRAMVFXPatch
     {
         private static bool Prefix(CannonFiringPiece __instance, float packedPayload)
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (!config.E_MUZZLE) return true;
 
             bool bombChuteAttached = __instance.Node.BombChuteAttached;
@@ -44,11 +44,11 @@ namespace MTMTVFX.Effects
                 else
                 {
                     float num = Mathf.Pow(__instance.Node.Stats.FlashEffect * packedPayload / 500f, 0.35f);
-                    MuzzleFlash muzzleType = MuzzleFlash.none;
-                    if (num > 2.3f) muzzleType = MuzzleFlash.muzzleflash_gigant;
-                    else if (num > 1.3f) muzzleType = MuzzleFlash.muzzleflash_huge;
-                    else if (num > 0.5f) muzzleType = MuzzleFlash.muzzleflash_biggest;
-                    else if (num > 0f) muzzleType = MuzzleFlash.muzzleflash_bigger;
+                    MuzzleFlashType muzzleType = MuzzleFlashType.none;
+                    if (num > 2.3f) muzzleType = MuzzleFlashType.muzzleflash_gigant;
+                    else if (num > 1.3f) muzzleType = MuzzleFlashType.muzzleflash_huge;
+                    else if (num > 0.5f) muzzleType = MuzzleFlashType.muzzleflash_biggest;
+                    else if (num > 0f) muzzleType = MuzzleFlashType.muzzleflash_bigger;
                     MainThreadDispatcher.Enqueue(() =>
                     {
                         GameObject obj = VFXManager.Create(muzzleType, __instance.GetFirePoint(0f), __instance.GetFireDirection());

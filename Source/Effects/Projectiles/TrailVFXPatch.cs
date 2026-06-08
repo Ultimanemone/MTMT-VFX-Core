@@ -2,9 +2,9 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace MTMTVFX.Projectiles
+namespace MTMTVFX.Effects.Trail
 {
-    [HarmonyPatch(typeof(PooledCramProjectile), "ActivateHere")]
+    //[HarmonyPatch(typeof(PooledCramProjectile), "ActivateHere")]
     public class CramTrailPatch
     {
         private static void Postfix(PooledCramProjectile __instance)
@@ -17,7 +17,7 @@ namespace MTMTVFX.Projectiles
         }
     }
 
-    [HarmonyPatch(typeof(PlasmaProjectilePool), "ActivateHere")]
+    //[HarmonyPatch(typeof(PlasmaProjectilePool), "ActivateHere")]
     public class PlasmaTrailPatch
     {
         private static void Postfix(ref PooledPlasmaProjectile __result)

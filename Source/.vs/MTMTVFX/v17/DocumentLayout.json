@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "D:\\MTMT\\MTMT VFX Core\\Source\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\projectiles\\trailvfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:projectiles\\trailvfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\effects\\projectiles\\trailvfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:effects\\projectiles\\trailvfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\projectiles\\apstrailpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:projectiles\\apstrailpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\internal\\trailclonefadeout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:internal\\trailclonefadeout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\effects\\apsvfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:effects\\apsvfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\ui\\uipatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:ui\\uipatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\ui\\settingstab.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:ui\\settingstab.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\ui\\settingsconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,40 +19,24 @@
       "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\vfxmappedpool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxmappedpool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\ui\\uipatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:ui\\uipatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\internal\\effectmanualkill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:internal\\effectmanualkill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\mtmt_vfxcore.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:mtmt_vfxcore.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\vfxpool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxpool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\effects\\projectiles\\apstrailpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:effects\\projectiles\\apstrailpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\internal\\effectautokill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:internal\\effectautokill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\mono scripts\\trailclonefadeout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:mono scripts\\trailclonefadeout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\internal\\pooledobj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:internal\\pooledobj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\effects\\laservfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:effects\\laservfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\mainthreaddispatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\mainthreaddispatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\ui\\settingstab.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:ui\\settingstab.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\pooling\\vfxmappedpool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\pooling\\vfxmappedpool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
@@ -84,64 +56,75 @@
               "RelativeDocumentMoniker": "UI\\UIPatch.cs",
               "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\UIPatch.cs",
               "RelativeToolTip": "UI\\UIPatch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAB0AAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-19T11:05:39.573Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "SettingsConfig.cs",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\SettingsConfig.cs",
               "RelativeDocumentMoniker": "UI\\SettingsConfig.cs",
               "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\SettingsConfig.cs",
               "RelativeToolTip": "UI\\SettingsConfig.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAA5wJsAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAADQAAAAAAAAAAAAswCIAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-19T10:55:59.866Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "SettingsTab.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\SettingsTab.cs",
-              "RelativeDocumentMoniker": "UI\\SettingsTab.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\SettingsTab.cs",
-              "RelativeToolTip": "UI\\SettingsTab.cs",
-              "ViewState": "AgIAAHMAAAAAAAAAAAAUwGEAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-19T11:07:10.742Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "APSTrailPatch.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Projectiles\\APSTrailPatch.cs",
-              "RelativeDocumentMoniker": "Projectiles\\APSTrailPatch.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Projectiles\\APSTrailPatch.cs",
-              "RelativeToolTip": "Projectiles\\APSTrailPatch.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAowEwAAAAJAAAAAAAAAA==",
+              "Title": "SettingsTab.cs",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\SettingsTab.cs",
+              "RelativeDocumentMoniker": "UI\\SettingsTab.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\SettingsTab.cs",
+              "RelativeToolTip": "UI\\SettingsTab.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAIwF8AAABhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T01:14:23.658Z",
+              "WhenOpened": "2026-04-19T11:07:10.742Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "VFXManager.cs",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
+              "RelativeDocumentMoniker": "Core\\VFXManager.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
+              "RelativeToolTip": "Core\\VFXManager.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAnwLcAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T10:21:37.508Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "VFXMappedPool.cs",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\Pooling\\VFXMappedPool.cs",
+              "RelativeDocumentMoniker": "Core\\Pooling\\VFXMappedPool.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\Pooling\\VFXMappedPool.cs",
+              "RelativeToolTip": "Core\\Pooling\\VFXMappedPool.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T10:26:41.842Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "TrailVFXPatch.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Projectiles\\TrailVFXPatch.cs",
-              "RelativeDocumentMoniker": "Projectiles\\TrailVFXPatch.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Projectiles\\TrailVFXPatch.cs",
-              "RelativeToolTip": "Projectiles\\TrailVFXPatch.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\TrailVFXPatch.cs",
+              "RelativeDocumentMoniker": "Effects\\Projectiles\\TrailVFXPatch.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\TrailVFXPatch.cs",
+              "RelativeToolTip": "Effects\\Projectiles\\TrailVFXPatch.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T10:45:34.981Z",
+              "WhenOpened": "2026-06-08T14:05:26.819Z",
               "EditorCaption": ""
             },
             {
@@ -162,146 +145,48 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TrailCloneFadeout.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Internal\\TrailCloneFadeout.cs",
-              "RelativeDocumentMoniker": "Internal\\TrailCloneFadeout.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Internal\\TrailCloneFadeout.cs",
-              "RelativeToolTip": "Internal\\TrailCloneFadeout.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T07:17:22.775Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "APSVFXPatch.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\APSVFXPatch.cs",
-              "RelativeDocumentMoniker": "Effects\\APSVFXPatch.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\APSVFXPatch.cs",
-              "RelativeToolTip": "Effects\\APSVFXPatch.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAEwLsAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T04:25:49.894Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "PooledObj.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Internal\\PooledObj.cs",
-              "RelativeDocumentMoniker": "Internal\\PooledObj.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Internal\\PooledObj.cs",
-              "RelativeToolTip": "Internal\\PooledObj.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T04:18:15.401Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "EffectAutokill.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Internal\\EffectAutokill.cs",
-              "RelativeDocumentMoniker": "Internal\\EffectAutokill.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Internal\\EffectAutokill.cs",
-              "RelativeToolTip": "Internal\\EffectAutokill.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T04:18:04.285Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "EffectManualKill.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Internal\\EffectManualKill.cs",
-              "RelativeDocumentMoniker": "Internal\\EffectManualKill.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Internal\\EffectManualKill.cs",
-              "RelativeToolTip": "Internal\\EffectManualKill.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T09:56:01.432Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "MainThreadDispatcher.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\MainThreadDispatcher.cs",
-              "RelativeDocumentMoniker": "Core\\MainThreadDispatcher.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\MainThreadDispatcher.cs",
-              "RelativeToolTip": "Core\\MainThreadDispatcher.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T09:36:01.662Z",
-              "EditorCaption": ""
+              "DocumentIndex": 5,
+              "Title": "MTMT_VFXCore",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\MTMT_VFXCore.csproj",
+              "RelativeDocumentMoniker": "MTMT_VFXCore.csproj",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\MTMT_VFXCore.csproj",
+              "RelativeToolTip": "MTMT_VFXCore.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-30T07:53:33.366Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "VFXMappedPool.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXMappedPool.cs",
-              "RelativeDocumentMoniker": "Core\\VFXMappedPool.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXMappedPool.cs",
-              "RelativeToolTip": "Core\\VFXMappedPool.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Title": "TrailCloneFadeout.cs",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Mono Scripts\\TrailCloneFadeout.cs",
+              "RelativeDocumentMoniker": "Mono Scripts\\TrailCloneFadeout.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Mono Scripts\\TrailCloneFadeout.cs",
+              "RelativeToolTip": "Mono Scripts\\TrailCloneFadeout.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T01:17:31.835Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "LaserVFXPatch.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\LaserVFXPatch.cs",
-              "RelativeDocumentMoniker": "Effects\\LaserVFXPatch.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\LaserVFXPatch.cs",
-              "RelativeToolTip": "Effects\\LaserVFXPatch.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAgwFQAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T01:15:31.921Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "VFXPool.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXPool.cs",
-              "RelativeDocumentMoniker": "Core\\VFXPool.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXPool.cs",
-              "RelativeToolTip": "Core\\VFXPool.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAUwDQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-20T09:01:10.77Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Enums.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\Enums.cs",
-              "RelativeDocumentMoniker": "Core\\Enums.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\Enums.cs",
-              "RelativeToolTip": "Core\\Enums.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAowDoAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T01:53:27.688Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-21T13:45:20.157Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "VFXManager.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
-              "RelativeDocumentMoniker": "Core\\VFXManager.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
-              "RelativeToolTip": "Core\\VFXManager.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAiwE4AAAA0AAAAAAAAAA==",
+              "Title": "APSTrailPatch.cs",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\APSTrailPatch.cs",
+              "RelativeDocumentMoniker": "Effects\\Projectiles\\APSTrailPatch.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\APSTrailPatch.cs",
+              "RelativeToolTip": "Effects\\Projectiles\\APSTrailPatch.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAswCUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-20T08:51:49.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-16T10:20:18.739Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 184,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
             }
           ]
         }

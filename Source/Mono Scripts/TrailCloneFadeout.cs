@@ -1,8 +1,8 @@
-using MTMTVFX.Core;
+using MTMTVFX.Core.Pooling;
 using System.Collections;
 using UnityEngine;
 
-namespace MTMTVFX.Internal
+namespace MTMTVFX.MonoScripts
 {
     public class TrailCloneFadeout : EffectManualKill
     {
@@ -13,8 +13,6 @@ namespace MTMTVFX.Internal
         public override void Init(float lifetime, VFXPool pool)
         {
             _lifetime = lifetime;
-            StartCoroutine(ReturnCR(Mathf.Min(lifetime, maxLifetime), pool));
-
 
             _lr = GetComponent<LineRenderer>();
             _initWidth = _lr.widthMultiplier;
@@ -23,7 +21,8 @@ namespace MTMTVFX.Internal
 
         private void Update()
         {
-            _lifeLeft = Mathf.Lerp(_lifeLeft, 0, Time.deltaTime * 3f);
+            if (_lifeLeft <= 0f) ReturnSelf();
+            _lifeLeft -= Time.deltaTime;
             _lr.widthMultiplier = _initWidth * (_lifeLeft / _lifetime);
         }
     }

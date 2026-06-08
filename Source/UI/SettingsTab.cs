@@ -8,7 +8,9 @@ using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Numbers;
 using BrilliantSkies.Ui.Consoles.Segments;
 using BrilliantSkies.Ui.Consoles.Styles;
 using BrilliantSkies.Ui.Examples.OptionsMenu;
+using BrilliantSkies.Ui.Layouts.DropDowns;
 using BrilliantSkies.Ui.Tips;
+using MTMTVFX.Effects.Trail;
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -116,7 +118,7 @@ namespace MTMTVFX.UI
             screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_MUZZLE, "Set the maxmimum number of APS gunpowder VFX"), 1, 2);
             screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_RAILGUN, "Set the maxmimum number of APS gunpowder VFX"), 2, 2);
             screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_EXPL, "Set the maxmimum number of APS gunpowder VFX"), 3, 2);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick("(This is made when a combiner is placed)"), 4, 2).Justify = new TextAnchor?(TextAnchor.MiddleLeft);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 4, 2);
             screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PULSE, "Set the maxmimum number of APS gunpowder VFX"), 5, 2);
             screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PAC, "Set the maxmimum number of APS gunpowder VFX"), 6, 2);
             screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PLASMA, "Set the maxmimum number of APS gunpowder VFX"), 7, 2);
@@ -153,13 +155,52 @@ namespace MTMTVFX.UI
             screenSegmentTable.SpaceBelow = _spacing;
             screenSegmentTable.SetColumnFractionalWidths(new float[] { 0.2f, 0.2f, 0.4f, 0.2f });
             screenSegmentTable.BackgroundStyleWhereApplicable = ConsoleStyles.Instance.Styles.Segments.OptionalSegmentDarkBackgroundWithHeader.Style;
-            screenSegmentTable.NameWhereApplicable = "Trail Toggles";
+            screenSegmentTable.NameWhereApplicable = "Trail Effects Toggles";
 
             for (int i = 0; i < row; ++i)
             {
-                screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), i, 1);
+                screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), i, 0);
                 screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), i, col - 1);
             }
+
+            DropDownMenuAlt<APSTrailMode> modeDropdown = new DropDownMenuAlt<APSTrailMode>();
+            modeDropdown.SetItems(
+                new DropDownMenuAltItem<APSTrailMode>()
+                {
+                    Name = "Custom APS trails",
+                    ObjectForAction = APSTrailMode.Custom,
+                    ToolTip = "Purely custom APS trails"
+                },
+                new DropDownMenuAltItem<APSTrailMode>()
+                {
+                    Name = "Default APS trails with fade out",
+                    ObjectForAction = APSTrailMode.DefaultWithFade,
+                    ToolTip = "Default APS trails, but with a lingering effect after the shell hits"
+                },
+                new DropDownMenuAltItem<APSTrailMode>()
+                {
+                    Name = "Default APS trails",
+                    ObjectForAction = APSTrailMode.Default,
+                    ToolTip = "Good old APS trails with no modifications"
+                });
+            screenSegmentTable.AddInterpretter(
+                new DropDown<SettingsConfig, APSTrailMode>(
+                    _focus,
+                    modeDropdown,
+                    (I, e) =>
+                    {
+                        APSTrailMode current = I.E_APS_TRAIL
+                            ? APSTrailMode.Custom
+                            : (I.E_APS_TRAIL_DEFAULT_FADE ? APSTrailMode.DefaultWithFade : APSTrailMode.Default);
+
+                        return current == e;
+                    },
+                    (I, e) =>
+                    {
+                        I.E_APS_TRAIL_DEFAULT_FADE = e == APSTrailMode.DefaultWithFade;
+                        I.E_APS_TRAIL = e == APSTrailMode.Custom;
+                    }
+                ));
         }
 
         private void MiscSection()
@@ -171,7 +212,7 @@ namespace MTMTVFX.UI
             screenSegmentTable.NameWhereApplicable = "Miscellaneous Settings";
 
             screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "Debug mode", "Enable debugging mode, some debugging logs can be found in the FtD log file", I => I.DEBUG_MODE));
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "Dynamic pooling", "Enable dynamic pooling, allowing more effects to be created (lag warning)", I => I.ADAPTIVE));
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "Dynamic pooling", "Enable dynamic pooling, allowing more effects to be created (lag warning)", I => I.ISDYNAMIC));
             screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "Ignore Degraded Mode", "Play all custom VFX even in degraded mode", I => I.E_IN_DEGRADED));
         }
     }

@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Linq;
 using System.IO;
 
-namespace MTMTVFX.Core
+namespace MTMTVFX.Core.AssetManagement
 {
     public class AssetLoader
     {

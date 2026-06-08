@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace MTMTVFX.Core
+namespace MTMTVFX.Core.Pooling
 {
     public class VFXMappedPool<T>
     {

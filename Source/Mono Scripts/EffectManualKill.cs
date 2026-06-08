@@ -1,9 +1,9 @@
-﻿using MTMTVFX.Core;
+﻿using MTMTVFX.Core.Pooling;
 using System.Collections;
 using UnityEngine;
 
 
-namespace MTMTVFX.Internal
+namespace MTMTVFX.MonoScripts
 {
     /// <summary>
     /// Script to kill trail objects

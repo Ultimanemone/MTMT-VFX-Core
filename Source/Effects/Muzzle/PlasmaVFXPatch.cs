@@ -1,8 +1,9 @@
 ﻿using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
+using MTMTVFX.Core;
 using MTMTVFX.UI;
 
-namespace MTMTVFX.Effects
+namespace MTMTVFX.Effects.Muzzle
 {
 
     [HarmonyPatch(typeof(PlasmaMuzzleEffect), "Play")]
@@ -10,7 +11,7 @@ namespace MTMTVFX.Effects
     {
         private static bool Prefix()
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (config.E_PLASMA && !config.IS_DEGRADED) return false;
             return true;
         }

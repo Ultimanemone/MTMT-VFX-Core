@@ -13,7 +13,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 
-namespace MTMTVFX.Effects
+namespace MTMTVFX.Effects.Muzzle
 {
     [HarmonyPatch(typeof(AdvCannonFiringPiece))]
     public class APSVFXPatch
@@ -30,7 +30,7 @@ namespace MTMTVFX.Effects
         [HarmonyPrefix]
         private static void GetStateBefore(AdvCannonFiringPiece __instance, FiredMunitionReturn FMR, out FireState __state)
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if ((!config.E_MUZZLE && !config.E_RAILGUN) || config.IS_DEGRADED)
             {
                 __state = new FireState
@@ -59,7 +59,7 @@ namespace MTMTVFX.Effects
         //[HarmonyTranspiler]
         //private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         //{
-        //    SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+        //    SettingsConfig config = Utils.GetConfig();
         //    if (!config.E_MUZZLE || config.IS_DEGRADED)
         //    {
         //        foreach (var instruction in instructions)
@@ -92,7 +92,7 @@ namespace MTMTVFX.Effects
         {
             try
             {
-                SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+                SettingsConfig config = Utils.GetConfig();
                 if (config.IS_DEGRADED) return;
 
                 if (config.E_MUZZLE || config.E_RAILGUN)
@@ -110,10 +110,10 @@ namespace MTMTVFX.Effects
                     if (gpUsed)
                     {
                         float gauge = __instance.BarrelSystem.ShellDiameter;
-                        MuzzleFlash muzzleType = Enums.GetMuzzleEnum(gauge);
+                        Core.MuzzleFlashType muzzleType = Enums.GetMuzzleEnum(gauge);
                         // Core._config.LogInfo<APSVFXOverride>($"shell fire: {gauge} with {type.ToString()}");
 
-                        if (muzzleType != MuzzleFlash.none)
+                        if (muzzleType != Core.MuzzleFlashType.none)
                         {
                             MainThreadDispatcher.Enqueue(() =>
                             {
@@ -125,11 +125,11 @@ namespace MTMTVFX.Effects
 
                 if (config.E_RAILGUN)
                 {
-                    RailgunName railType = RailgunName.none;
+                    RailgunMuzzleType railType = RailgunMuzzleType.none;
                     if (__state.railDraw < 5000) return;
-                    else if (__state.railDraw < 15000) railType = RailgunName.muzzlerail_small;
-                    else if (__state.railDraw < 50000) railType = RailgunName.muzzlerail_medium;
-                    else railType = RailgunName.muzzlerail_big;
+                    else if (__state.railDraw < 15000) railType = RailgunMuzzleType.muzzlerail_small;
+                    else if (__state.railDraw < 50000) railType = RailgunMuzzleType.muzzlerail_medium;
+                    else railType = RailgunMuzzleType.muzzlerail_big;
 
                     MainThreadDispatcher.Enqueue(() =>
                     {
@@ -147,7 +147,7 @@ namespace MTMTVFX.Effects
         [HarmonyPrefix]
         private static bool CancelDefaultRailgunVFX(AdvCannonFiringPiece __instance, bool localSource, ref SoundEventRegulator ____firingSoundRegulator)
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (!config.E_RAILGUN || config.IS_DEGRADED) return true;
 
             GunSoundSystem.PlaySound(__instance.GameWorldPosition, __instance.BarrelSystem.ShellDiameter, ____firingSoundRegulator, localSource);
@@ -175,7 +175,7 @@ namespace MTMTVFX.Effects
         [HarmonyPrefix]
         private static bool RemoveVentVFX(AdvCannonFiringPiece __instance)
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (config.E_MUZZLE) return false;
             return true;
         }
@@ -186,7 +186,7 @@ namespace MTMTVFX.Effects
     {
         private static bool Prefix()
         {
-            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+            SettingsConfig config = Utils.GetConfig();
             if (config.E_MUZZLE && !config.IS_DEGRADED) return false;
             return true;
         }
@@ -198,7 +198,7 @@ namespace MTMTVFX.Effects
     //{
     //    private static void Postfix(ref float __result)
     //    {
-    //        SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
+    //        SettingsConfig config = Utils.GetConfig();
     //        if (config.E_MUZZLE && !config.IS_DEGRADED)
     //        {
     //            // enabled and not degraded

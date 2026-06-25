@@ -64,16 +64,22 @@ namespace MTMTVFX.Core.AssetManagement
 
             foreach (string name in prefabNames)
             {
-                GameObject asset = new GameObject();
-                bool flag1 = GetAsset(name, bundle, out asset);
-                if (flag1)
+                if (!assetsReturn.ContainsKey(name))
                 {
-                    assetsReturn.Add(name, asset);
-                    Utils.LogInfo<CorePlugin>($"Asset [{name}] loaded!");
+                    bool flag1 = GetAsset(name, bundle, out GameObject asset);
+                    if (flag1)
+                    {
+                        assetsReturn.Add(name, asset);
+                        Utils.LogInfo<CorePlugin>($"Asset [{name}] loaded!");
+                    }
+                    else
+                    {
+                        Utils.LogError<CorePlugin>($"Asset [{name}] not found!");
+                    }
                 }
                 else
                 {
-                    Utils.LogError<CorePlugin>($"Asset [{name}] not found!");
+                    Utils.LogError<CorePlugin>($"Duplicate asset [{name}]");
                 }
             }
 

@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "D:\\MTMT\\MTMT VFX Core\\Source\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\asset management\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\asset management\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\modinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\modinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\effects\\projectiles\\trailvfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:effects\\projectiles\\trailvfxpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\ui\\settingsconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:ui\\settingsconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|solutionrelative:core\\vfxmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E489634B-C7C0-4F87-B3B6-0F22085A2658}|MTMT_VFXCore.csproj|d:\\mtmt\\mtmt vfx core\\source\\ui\\uipatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +58,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "UIPatch.cs",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\UIPatch.cs",
               "RelativeDocumentMoniker": "UI\\UIPatch.cs",
@@ -63,7 +71,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "SettingsConfig.cs",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\SettingsConfig.cs",
               "RelativeDocumentMoniker": "UI\\SettingsConfig.cs",
@@ -76,7 +84,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "SettingsTab.cs",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\UI\\SettingsTab.cs",
               "RelativeDocumentMoniker": "UI\\SettingsTab.cs",
@@ -85,25 +93,25 @@
               "ViewState": "AgIAAE0AAAAAAAAAAAAIwF8AAABhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-19T11:07:10.742Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "VFXManager.cs",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
               "RelativeDocumentMoniker": "Core\\VFXManager.cs",
               "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\VFXManager.cs",
               "RelativeToolTip": "Core\\VFXManager.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAnwLcAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAnwF4AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-16T10:21:37.508Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "VFXMappedPool.cs",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\Pooling\\VFXMappedPool.cs",
               "RelativeDocumentMoniker": "Core\\Pooling\\VFXMappedPool.cs",
@@ -117,14 +125,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TrailVFXPatch.cs",
-              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\TrailVFXPatch.cs",
-              "RelativeDocumentMoniker": "Effects\\Projectiles\\TrailVFXPatch.cs",
-              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\TrailVFXPatch.cs",
-              "RelativeToolTip": "Effects\\Projectiles\\TrailVFXPatch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
+              "Title": "AssetLoader.cs",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\Asset Management\\AssetLoader.cs",
+              "RelativeDocumentMoniker": "Core\\Asset Management\\AssetLoader.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\Asset Management\\AssetLoader.cs",
+              "RelativeToolTip": "Core\\Asset Management\\AssetLoader.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAswE8AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-08T14:05:26.819Z",
+              "WhenOpened": "2026-06-08T14:41:24.065Z",
               "EditorCaption": ""
             },
             {
@@ -145,7 +153,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
+              "Title": "ModInfo.cs",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\ModInfo.cs",
+              "RelativeDocumentMoniker": "Core\\ModInfo.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Core\\ModInfo.cs",
+              "RelativeToolTip": "Core\\ModInfo.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAcwGcAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-08T14:19:58.357Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TrailVFXPatch.cs",
+              "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\TrailVFXPatch.cs",
+              "RelativeDocumentMoniker": "Effects\\Projectiles\\TrailVFXPatch.cs",
+              "ToolTip": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\TrailVFXPatch.cs",
+              "RelativeToolTip": "Effects\\Projectiles\\TrailVFXPatch.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-08T14:05:26.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "MTMT_VFXCore",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\MTMT_VFXCore.csproj",
               "RelativeDocumentMoniker": "MTMT_VFXCore.csproj",
@@ -156,7 +190,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "TrailCloneFadeout.cs",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Mono Scripts\\TrailCloneFadeout.cs",
               "RelativeDocumentMoniker": "Mono Scripts\\TrailCloneFadeout.cs",
@@ -168,7 +202,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "APSTrailPatch.cs",
               "DocumentMoniker": "D:\\MTMT\\MTMT VFX Core\\Source\\Effects\\Projectiles\\APSTrailPatch.cs",
               "RelativeDocumentMoniker": "Effects\\Projectiles\\APSTrailPatch.cs",

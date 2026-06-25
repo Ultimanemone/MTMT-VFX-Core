@@ -110,9 +110,10 @@ namespace MTMTVFX.Core
                     }
                 }
 
-                if (latestVersion != null && _version.CompareTo(latestVersion) == -1)
+                if (latestVersion != null)
                 {
-                    ModProblemOverwrite($"<color=#900>{ModName}</color>", ModPath, "New version released! v" + latestVersion, false);
+                    if (_version.CompareTo(latestVersion) == -1) ModProblemOverwrite(ModName, ModPath, "New version released! v" + latestVersion, false);
+                    if (_version.CompareTo(latestVersion) == 1) ModProblemOverwrite(ModName, ModPath, "<color=#0F0>Your mod is ahead in version!!! v" + _version + "</color>", false);
                 }
             }
         }

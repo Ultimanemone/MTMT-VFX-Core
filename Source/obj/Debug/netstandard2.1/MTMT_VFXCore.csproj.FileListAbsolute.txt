@@ -242,3 +242,10 @@ C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\bin\Debug\netst
 D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\Newtonsoft.Json.dll
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\bin\Debug\netstandard2.1\Newtonsoft.Json.dll
 C:\Users\LOTTE\Documents\From The Depths\Mods\MTMTVFXCore\Source\bin\Debug\netstandard2.1\UnityEngine.TextRenderingModule.dll
+D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.VectorGraphicsModule.dll
+D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.HierarchyModule.dll
+D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.AdaptivePerformanceModule.dll
+D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.IdentifiersModule.dll
+D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.RenderAs2DModule.dll
+D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.ShaderRuntimeModule.dll
+D:\MTMT\MTMT VFX Core\Source\bin\Debug\netstandard2.1\UnityEngine.UnityConsentModule.dll

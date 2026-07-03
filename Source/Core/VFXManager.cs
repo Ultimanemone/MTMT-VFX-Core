@@ -88,15 +88,15 @@ namespace MTMTVFX.Core
         private Dictionary<T, VFXPool> InitPool<T>(Transform root, int count) where T : Enum
         {
             Dictionary<T, VFXPool> pool = new Dictionary<T, VFXPool>();
-            foreach (T val in Enum.GetValues(typeof(T)))
+            foreach (T type in Enum.GetValues(typeof(T)))
             {
-                if (val.ToString() == "none") continue;
+                if (type.ToString() == "none") continue;
 
-                if (AssetRegistry.TryGetAsset(val.ToString(), out GameObject obj, out string modName))
+                if (AssetRegistry.TryGetAsset(type.ToString(), Utils.GetAssetTypeFromEnum(type), out GameObject obj, out string modName))
                 {
-                    pool[val] = new VFXPool(obj, modName, val, count, root);
+                    pool[type] = new VFXPool(obj, modName, type, count, root);
                 }
-                else Utils.LogError<VFXManager>($"Asset not found: {val}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
+                else Utils.LogError<VFXManager>($"Asset not found: {type}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
             }
             return pool;
         }
@@ -105,7 +105,7 @@ namespace MTMTVFX.Core
         {
             if (obj == null)
             {
-                if (AssetRegistry.TryGetAsset(type.ToString(), out obj, out string modName))
+                if (AssetRegistry.TryGetAsset(type.ToString(), Utils.GetAssetTypeFromEnum(type), out obj, out string modName))
                 {
                     return new VFXPool(obj, modName, type, count, root);
                 }
@@ -218,12 +218,14 @@ namespace MTMTVFX.Core
         public static GameObject InstantiateCopy(Enum type, Vector3 pos, Vector3 forward)
         {
             Instance.Init();
-            AssetRegistry.assetList.TryGetValue(type.ToString(), out AssetContainer container);
+            string assetName = type.ToString();
+            string modName = Utils.GetModNameFromAssetType(Utils.GetAssetTypeFromEnum(type));
+            AssetRegistry.assetList.TryGetValue(new AssetDetail(assetName, modName), out GameObject prefab);
 
-            GameObject obj = UnityEngine.Object.Instantiate(container.prefab);
+            GameObject obj = UnityEngine.Object.Instantiate(prefab);
             obj.transform.localPosition = pos;
             obj.transform.forward = forward;
-            Utils.AddScript(obj, type, container.source);
+            Utils.AddScript(obj, type, modName);
 
             Utils.LogInfo<VFXManager>($"Effect {type} instantiated!");
             return obj;

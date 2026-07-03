@@ -1,26 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using MonoMod.Utils;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MTMTVFX.Core.AssetManagement
 {
-    public struct AssetContainer
+    public struct AssetDetail
     {
-        public GameObject prefab;
-        public int priority;
-        public string source;
+        public string assetName;
+        public string sourceModName;
+
+        public AssetDetail(string assetName, string sourceModName)
+        {
+            this.assetName = assetName;
+            this.sourceModName = sourceModName;
+        }
+    }
+
+    public enum AssetType
+    {
+        none,
+
+        muzzle,
+        railgun,
+        explosion,
+        pulse_laser,
+        pac,
+        plasma,
+        flamer,
+        cont_laser,
+
+        aps_trail,
+        cram_trail,
+        plasma_trail,
+        missile_trail,
+
+        aps_model,
+        cram_model,
+        plasma_model,
+        missile_model
     }
 
     public static class AssetRegistry
     {
-        public static IReadOnlyDictionary<string, AssetContainer> assetList => registry;
-        private static Dictionary<string, AssetContainer> registry = new Dictionary<string, AssetContainer>();
+        public static IReadOnlyDictionary<AssetDetail, GameObject> assetList => _registry;
+        private static readonly Dictionary<AssetDetail, GameObject> _registry = new Dictionary<AssetDetail, GameObject>();
         private static bool _init = false;
 
         public static void Init()
         {
             if (!_init)
             {
-                Register(AssetLoader.GetDefault(), -1, "MTMT_VFXCore.Default");
+                Register(AssetLoader.GetDefault(), "Default");
                 _init = true;
             }
         }
@@ -28,70 +59,55 @@ namespace MTMTVFX.Core.AssetManagement
         /// <summary>
         /// Register one VFX
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="prefab"></param>
-        /// <param name="priority"></param>
-        /// <param name="source"></param>
-        public static void Register(string key, GameObject prefab, int priority, string source)
+        /// <param name="assetName">The name of the asset, this should match the pattern provided by MTMT VFX</param>
+        /// <param name="sourceModName">The name of the mod providing the asset</param>
+        public static void Register(string assetName, string sourceModName, GameObject prefab)
         {
-            key = key.Trim().ToLowerInvariant();
-            if (registry.TryGetValue(key, out AssetContainer currentAsset))
-            {
-                if (currentAsset.priority < priority)
-                {
-                    registry[key] = new AssetContainer()
-                    {
-                        prefab = prefab,
-                        priority = priority,
-                        source = source
-                    };
-                }
-                else return;
-            }
-
-            registry[key] = new AssetContainer()
-            {
-                prefab = prefab,
-                priority = priority,
-                source = source
-            };
+            _registry[new AssetDetail(assetName, sourceModName)] = prefab;
         }
 
         /// <summary>
-        /// Register many VFX
+        /// Register one VFX
         /// </summary>
-        /// <param name="assets"></param>
-        /// <param name="priority"></param>
-        /// <param name="source"></param>
-        public static void Register(Dictionary<string, GameObject> assets, int priority, string source)
+        /// <param name="assetDetail">The details of the asset and mod providing it</param>
+        public static void Register(AssetDetail assetDetail, GameObject prefab)
+        {
+            _registry[assetDetail] = prefab;
+        }
+
+        /// <summary>
+        /// Register a dictionary of VFXs
+        /// </summary>
+        /// <param name="assets">The dictionary of assets to register</param>
+        /// <param name="sourceModName">The name of the mod providing the assets</param>
+        public static void Register(Dictionary<string, GameObject> assets, string sourceModName)
         {
             foreach (KeyValuePair<string, GameObject> asset in assets)
             {
-                Register(asset.Key, asset.Value, priority, source);
+                Register(asset.Key, sourceModName, asset.Value);
             }
         }
 
         /// <summary>
-        /// Get a VFX from the registry
+        /// Register a dictionary of VFXs
         /// </summary>
-        /// <param name="type">Type of VFX</param>
-        /// <param name="effect">Name of the VFX</param>
-        /// <param name="modName">Name of the mod this asset is from</param>
-        /// <returns></returns>
-        public static bool TryGetAsset(string type, out GameObject effect, out string modName)
+        /// <param name="assets">The dictionary of assets to register</param>
+        public static void Register(Dictionary<AssetDetail, GameObject> assets)
         {
-            bool flag = registry.TryGetValue(type, out AssetContainer container);
-            if (flag)
-            {
-                effect = container.prefab;
-                modName = container.source;
-            }
-            else
-            {
-                effect = null;
-                modName = "";
-            }
-            return flag;
+            _registry.AddRange(assets);
+        }
+
+        /// <summary>
+        /// Get a VFX from the _registry
+        /// </summary>
+        /// <param name="assetName">Type of VFX</param>
+        /// <param name="prefab">Name of the VFX</param>
+        /// <param name="sourceModName">The name of the mod providing the asset</param>
+        /// <returns></returns>
+        public static bool TryGetAsset(string assetName, AssetType type, out GameObject prefab, out string sourceModName)
+        {
+            sourceModName = Utils.GetModNameFromAssetType(type);
+            return _registry.TryGetValue(new AssetDetail(assetName, sourceModName), out prefab);
         }
     }
 }

@@ -3,6 +3,7 @@ using BrilliantSkies.PlayerProfiles;
 using MTMTVFX.Core;
 using MTMTVFX.Effects;
 using MTMTVFX.Effects.Muzzle;
+using MTMTVFX.Effects.Trail;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,36 +17,83 @@ namespace MTMTVFX.UI
             public bool DEBUG_MODE { get; set; } = false;
             public bool ADAPTIVE { get; set; } = false;
 
+            //================================= VFX =================================//
+            // Muzzle flashes
             public bool E_MUZZLE { get; set; } = true;
             public int COUNT_MUZZLE { get; set; } = 100;
+            public string MUZZLE_MOD { get; set; } = "";
+
+            // Railgun
             public bool E_RAILGUN { get; set; } = true;
             public int COUNT_RAILGUN { get; set; } = 100;
+            public string RAILGUN_MOD { get; set; } = "";
 
+            // Explosions
             public bool E_EXPL { get; set; } = true;
             public int COUNT_EXPL { get; set; } = 100;
+            public string EXPL_MOD { get; set; } = "";
+
+            // Pulse laser
             public bool E_PULSE { get; set; } = true;
             public int COUNT_PULSE { get; set; } = 100;
+            public string PULSE_MOD { get; set; } = "";
+
+            // PAC
             public bool E_PAC { get; set; } = true;
             public int COUNT_PAC { get; set; } = 50;
+            public string PAC_MOD { get; set; } = "";
+
+            // Plasma
             public bool E_PLASMA { get; set; } = true;
             public int COUNT_PLASMA { get; set; } = 50;
+            public string PLASMA_MOD { get; set; } = "";
+
+            // Flamer
             public bool E_FLAMER { get; set; } = true;
             public int COUNT_FLAMER { get; set; } = 50;
+            public string FLAMER_MOD { get; set; } = "";
 
-            public bool E_APS_TRAIL_DEFAULT_FADE { get; set; } = false;
-            public bool E_APS_TRAIL { get; set; } = false;
-            public bool E_APS_MODEL { get; set; } = false;
-            public bool E_CRAM_TRAIL { get; set; } = false;
-            public bool E_CRAM_MODEL { get; set; } = false;
-            public bool E_PLASMA_TRAIL { get; set; } = false;
-            public bool E_PLASMA_MODEL { get; set; } = false;
-            public bool E_MISSILE_TRAIL { get; set; } = false;
-            public bool E_MISSILE_MODEL { get; set; } = false;
-
+            // Continuous laser
             public bool E_CONTINUOUS { get; set; } = false;
+            public string CONTINUOUS_MOD { get; set; } = "";
+            //=======================================================================//
+
+
+            //================================ TRAILS ===============================//
+            // APS Trail
+            public APSTrailMode APS_TRAIL_MODE { get; set; } = APSTrailMode.Default;
+            public string APS_TRAIL_MOD { get; set; } = "";
+
+            // APS Model
+            public bool E_APS_MODEL { get; set; } = false;
+            public string APS_MODEL_MOD { get; set; } = "";
+
+            // CRAM Trail
+            public bool E_CRAM_TRAIL { get; set; } = false;
+            public string CRAM_TRAIL_MOD { get; set; } = "";
+
+            // CRAM Model
+            public bool E_CRAM_MODEL { get; set; } = false;
+            public string CRAM_MODEL_MOD { get; set; } = "";
+
+            // Plasma Trail
+            public bool E_PLASMA_TRAIL { get; set; } = false;
+            public string PLASMA_TRAIL_MOD { get; set; } = "";
+
+            // Plasma Model
+            public bool E_PLASMA_MODEL { get; set; } = false;
+            public string PLASMA_MODEL_MOD { get; set; } = "";
+
+            // Missile Trail
+            public bool E_MISSILE_TRAIL { get; set; } = false;
+            public string MISSILE_TRAIL_MOD { get; set; } = "";
+
+            // Missile Model
+            public bool E_MISSILE_MODEL { get; set; } = false;
+            public string MISSILE_MODEL_MOD { get; set; } = "";
+            //=======================================================================//
+
             public bool E_IN_DEGRADED { get; set; } = false;
-
-
         }
 
         public override ModuleType ModuleType => ModuleType.Options;
@@ -82,6 +130,12 @@ namespace MTMTVFX.UI
                 VFXManager.Instance.OnConfigUpdatePool<MuzzleFlashType>();
             }
         }
+        public string MUZZLE_MOD
+        {
+            get { return Internal.EXPL_MOD; }
+            set { Internal.EXPL_MOD = value; }
+        }
+
 
         public bool E_RAILGUN
         {
@@ -97,6 +151,12 @@ namespace MTMTVFX.UI
                 Internal.COUNT_RAILGUN = value;
                 VFXManager.Instance.OnConfigUpdatePool<RailgunMuzzleType>();
             }
+        }
+
+        public string RAILGUN_MOD
+        {
+            get { return Internal.EXPL_MOD; }
+            set { Internal.EXPL_MOD = value; }
         }
 
         public bool E_EXPL
@@ -115,6 +175,12 @@ namespace MTMTVFX.UI
             }
         }
 
+        public string EXPL_MOD
+        {
+            get { return Internal.EXPL_MOD; }
+            set { Internal.EXPL_MOD = value; }
+        }
+
         public bool E_PULSE
         {
             get { return Internal.E_PULSE; }
@@ -129,6 +195,12 @@ namespace MTMTVFX.UI
                 Internal.COUNT_PULSE = value;
                 VFXManager.Instance.OnConfigUpdatePool(BeamName.laser_pulse);
             }
+        }
+
+        public string PULSE_MOD
+        {
+            get { return Internal.PULSE_MOD; }
+            set { Internal.PULSE_MOD = value; }
         }
 
         public bool E_PAC
@@ -147,6 +219,12 @@ namespace MTMTVFX.UI
             }
         }
 
+        public string PAC_MOD
+        {
+            get { return Internal.PAC_MOD; }
+            set { Internal.PAC_MOD = value; }
+        }
+
         public bool E_PLASMA
         {
             get { return Internal.E_PLASMA; }
@@ -161,6 +239,12 @@ namespace MTMTVFX.UI
                 Internal.COUNT_PLASMA = value;
                 //VFXManager.Instance.OnConfigUpdatePool(BeamName.plasma);
             }
+        }
+
+        public string PLASMA_MOD
+        {
+            get { return Internal.PLASMA_MOD; }
+            set { Internal.PLASMA_MOD = value; }
         }
 
         public bool E_FLAMER
@@ -179,17 +263,22 @@ namespace MTMTVFX.UI
             set { Internal.COUNT_FLAMER = value; }
         }
 
-
-        public bool E_APS_TRAIL_DEFAULT_FADE
+        public string FLAMER_MOD
         {
-            get { return Internal.E_APS_TRAIL_DEFAULT_FADE; }
-            set { Internal.E_APS_TRAIL_DEFAULT_FADE = value; }
+            get { return Internal.FLAMER_MOD; }
+            set { Internal.FLAMER_MOD = value; }
         }
 
-        public bool E_APS_TRAIL
+        public APSTrailMode APS_TRAIL_MODE
         {
-            get { return Internal.E_APS_TRAIL; }
-            set { Internal.E_APS_TRAIL = value; }
+            get { return Internal.APS_TRAIL_MODE; }
+            set { Internal.APS_TRAIL_MODE = value; }
+        }
+
+        public string APS_TRAIL_MOD
+        {
+            get { return Internal.APS_TRAIL_MOD; }
+            set { Internal.APS_TRAIL_MOD = value; }
         }
 
         public bool E_APS_MODEL
@@ -198,10 +287,22 @@ namespace MTMTVFX.UI
             set { Internal.E_APS_MODEL = value; }
         }
 
+        public string APS_MODEL_MOD
+        {
+            get { return Internal.APS_MODEL_MOD; }
+            set { Internal.APS_MODEL_MOD = value; }
+        }
+
         public bool E_CRAM_TRAIL
         {
             get { return Internal.E_CRAM_TRAIL; }
             set { Internal.E_CRAM_TRAIL = value; }
+        }
+
+        public string CRAM_TRAIL_MOD
+        {
+            get { return Internal.CRAM_TRAIL_MOD; }
+            set { Internal.CRAM_TRAIL_MOD = value; }
         }
 
         public bool E_CRAM_MODEL
@@ -210,10 +311,22 @@ namespace MTMTVFX.UI
             set { Internal.E_CRAM_MODEL = value; }
         }
 
+        public string CRAM_MODEL_MOD
+        {
+            get { return Internal.CRAM_MODEL_MOD; }
+            set { Internal.CRAM_MODEL_MOD = value; }
+        }
+
         public bool E_PLASMA_TRAIL
         {
             get { return Internal.E_PLASMA_TRAIL; }
             set { Internal.E_PLASMA_TRAIL = value; }
+        }
+
+        public string PLASMA_TRAIL_MOD
+        {
+            get { return Internal.PLASMA_TRAIL_MOD; }
+            set { Internal.PLASMA_TRAIL_MOD = value; }
         }
 
         public bool E_PLASMA_MODEL
@@ -222,10 +335,22 @@ namespace MTMTVFX.UI
             set { Internal.E_PLASMA_MODEL = value; }
         }
 
+        public string PLASMA_MODEL_MOD
+        {
+            get { return Internal.PLASMA_MODEL_MOD; }
+            set { Internal.PLASMA_MODEL_MOD = value; }
+        }
+
         public bool E_MISSILE_TRAIL
         {
             get { return Internal.E_MISSILE_TRAIL; }
             set { Internal.E_MISSILE_TRAIL = value; }
+        }
+
+        public string MISSILE_TRAIL_MOD
+        {
+            get { return Internal.MISSILE_TRAIL_MOD; }
+            set { Internal.MISSILE_TRAIL_MOD = value; }
         }
 
         public bool E_MISSILE_MODEL
@@ -234,11 +359,22 @@ namespace MTMTVFX.UI
             set { Internal.E_MISSILE_MODEL = value; }
         }
 
+        public string MISSILE_MODEL_MOD
+        {
+            get { return Internal.MISSILE_MODEL_MOD; }
+            set { Internal.MISSILE_MODEL_MOD = value; }
+        }
 
         public bool E_CONTINUOUS
         {
             get { return Internal.E_CONTINUOUS; }
             set { Internal.E_CONTINUOUS = value; }
+        }
+
+        public string CONTINUOUS_MOD
+        {
+            get { return Internal.CONTINUOUS_MOD; }
+            set { Internal.CONTINUOUS_MOD = value; }
         }
 
         public bool E_IN_DEGRADED

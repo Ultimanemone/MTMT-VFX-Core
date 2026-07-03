@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using MTMTVFX.UI;
+using MTMTVFX.Core.AssetManagement;
 using BrilliantSkies.PlayerProfiles;
 
 namespace MTMTVFX.Core
@@ -93,7 +94,7 @@ namespace MTMTVFX.Core
         }
 
         /// <summary>
-        /// Find the mod's assetbundle GUID by file name
+        /// Find the sourceModName's assetbundle GUID by file name
         /// </summary>
         /// <param name="filename">Name of the assetbundle json file, usually "name_*.assetbundle"</param>
         /// <returns></returns>
@@ -118,6 +119,98 @@ namespace MTMTVFX.Core
         public static SettingsConfig GetConfig()
         {
             return ProfileManager.Instance.GetModule<SettingsConfig>();
+        }
+
+        public static string GetModNameFromAssetType(AssetType type)
+        {
+            var cfg = GetConfig();
+            if (cfg == null) return "";
+
+            switch (type)
+            {
+                case AssetType.muzzle:
+                    return cfg.MUZZLE_MOD;
+                case AssetType.railgun:
+                    return cfg.RAILGUN_MOD;
+                case AssetType.explosion:
+                    return cfg.EXPL_MOD;
+                case AssetType.pulse_laser:
+                    return cfg.PULSE_MOD;
+                case AssetType.pac:
+                    return cfg.PAC_MOD;
+                case AssetType.plasma:
+                    return cfg.PLASMA_MOD;
+                case AssetType.flamer:
+                    return cfg.FLAMER_MOD;
+                case AssetType.cont_laser:
+                    return cfg.CONTINUOUS_MOD;
+
+                case AssetType.aps_trail:
+                    return cfg.APS_TRAIL_MOD;
+                case AssetType.cram_trail:
+                    return cfg.CRAM_TRAIL_MOD;
+                case AssetType.plasma_trail:
+                    return cfg.PLASMA_TRAIL_MOD;
+                case AssetType.missile_trail:
+                    return cfg.MISSILE_TRAIL_MOD;
+
+                case AssetType.aps_model:
+                    return cfg.APS_MODEL_MOD;
+                case AssetType.cram_model:
+                    return cfg.CRAM_MODEL_MOD;
+                case AssetType.plasma_model:
+                    return cfg.PLASMA_MODEL_MOD;
+                case AssetType.missile_model:
+                    return cfg.MISSILE_MODEL_MOD;
+
+                default:
+                    return "";
+            }
+        }
+
+        public static AssetType GetAssetTypeFromEnum(Enum value)
+        {
+            if (value == null)
+                return AssetType.none; // Default fallback
+
+            Type enumType = value.GetType();
+
+            if (enumType == typeof(MuzzleFlashType))
+                return AssetType.muzzle;
+            else if (enumType == typeof(RailgunMuzzleType))
+                return AssetType.railgun;
+            else if (enumType == typeof(ExplosionType))
+                return AssetType.explosion;
+            else if (enumType == typeof(BeamName))
+            {
+                if ((BeamName)(object)value == BeamName.laser_pulse)
+                    return AssetType.pulse_laser;
+                else if ((BeamName)(object)value == BeamName.pac_beam)
+                    return AssetType.pac;
+                else
+                    return AssetType.none; // Default for BeamName.none
+            }
+            else if (enumType == typeof(TrailType))
+            {
+                TrailType trailType = (TrailType)(object)value;
+                return trailType switch
+                {
+                    TrailType.aps => AssetType.aps_trail,
+                    TrailType.cram => AssetType.cram_trail,
+                    TrailType.plasma => AssetType.plasma_trail,
+                    TrailType.missile => AssetType.missile_trail,
+                    _ => AssetType.none
+                };
+            }
+            else if (enumType == typeof(SpecialName))
+            {
+                if ((SpecialName)(object)value == SpecialName.laser_cont)
+                    return AssetType.cont_laser;
+                else
+                    return AssetType.none;
+            }
+
+            return AssetType.none; // Default fallback
         }
     }
 

@@ -14,7 +14,7 @@ namespace MTMTVFX.Core
         {
             if (!_init)
             {
-                registry = AssetLoader.GetDefault();
+                AssetLoader.GetDefault();
                 _init = true;
             }
         }
@@ -42,7 +42,7 @@ namespace MTMTVFX.Core
         }
 
         /// <summary>
-        /// Get a VFX from the registry
+        /// Get a VFX from the _registry
         /// </summary>
         /// <param name="type"></param>
         /// <param name="effect"></param>

@@ -12,9 +12,9 @@ namespace MTMTVFX.Effects.Trail
 {
     public enum APSTrailMode
     {
-        Default,
-        DefaultWithFade,
-        Custom
+        Default = 0,
+        DefaultWithFade = 1,
+        Custom = 2
     }
 
     [HarmonyPatch(typeof(AdvPooledProjectile))]
@@ -25,7 +25,7 @@ namespace MTMTVFX.Effects.Trail
         private static void Override(AdvPooledProjectile __instance)
         {
             SettingsConfig config = Utils.GetConfig();
-            if (config.E_APS_TRAIL)
+            if (config.APS_TRAIL_MODE == APSTrailMode.Custom)
             {
                 TrailRenderer tr = __instance.gameObject.GetComponent<TrailRenderer>();
                 tr.emitting = false;
@@ -37,7 +37,7 @@ namespace MTMTVFX.Effects.Trail
         private static void CloneTrail(AdvPooledProjectile __instance)
         {
             SettingsConfig config = Utils.GetConfig();
-            if (config.E_APS_TRAIL_DEFAULT_FADE)
+            if (config.APS_TRAIL_MODE == APSTrailMode.DefaultWithFade)
             {
                 var tr = __instance.GetComponent<TrailRenderer>();
                 if (tr == null) return;

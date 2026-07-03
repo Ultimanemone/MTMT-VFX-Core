@@ -87,13 +87,13 @@ namespace MTMTVFX.UI
 
         private void VFXToggles()
         {
-            int col = 4;
+            int col = 5;
             int row = 8;
             ++row;
             ScreenSegmentTable screenSegmentTable = CreateTableSegment(col, row);
             screenSegmentTable.SqueezeTable = false;
             screenSegmentTable.SpaceBelow = _spacing;
-            screenSegmentTable.SetColumnFractionalWidths(new float[] { 0.2f, 0.2f, 0.4f, 0.2f });
+            screenSegmentTable.SetColumnFractionalWidths(new float[] { 0.1f, 0.2f, 0.3f, 0.3f, 0.1f });
             screenSegmentTable.BackgroundStyleWhereApplicable = ConsoleStyles.Instance.Styles.Segments.OptionalSegmentDarkBackgroundWithHeader.Style;
             screenSegmentTable.NameWhereApplicable = "VFX Toggles";
 
@@ -114,6 +114,15 @@ namespace MTMTVFX.UI
             screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: PAC", "Enable or disable PAC VFX", I => I.E_PAC), 6, 1);
             screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Plasma", "NOT IMPLEMENTED YET", I => I.E_PLASMA), 7, 1);
             screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Flamer", "NOT IMPLEMENTED YET", I => I.E_FLAMER), 8, 1);
+
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 1, 3);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 2, 3);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 3, 3);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 4, 3);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 5, 3);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 6, 3);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 7, 3);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 8, 3);
 
             screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_MUZZLE, "Set the maxmimum number of APS gunpowder VFX"), 1, 2);
             screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_RAILGUN, "Set the maxmimum number of APS gunpowder VFX"), 2, 2);
@@ -165,7 +174,7 @@ namespace MTMTVFX.UI
 
             DropDownMenuAlt<APSTrailMode> modeDropdown = new DropDownMenuAlt<APSTrailMode>();
             modeDropdown.SetItems(
-                new DropDownMenuAltItem<APSTrailMode>()
+                new DropDownMenuAltItem<APSTrailMode>() 
                 {
                     Name = "Custom APS trails",
                     ObjectForAction = APSTrailMode.Custom,
@@ -188,17 +197,10 @@ namespace MTMTVFX.UI
                     _focus,
                     modeDropdown,
                     (I, e) =>
-                    {
-                        APSTrailMode current = I.E_APS_TRAIL
-                            ? APSTrailMode.Custom
-                            : (I.E_APS_TRAIL_DEFAULT_FADE ? APSTrailMode.DefaultWithFade : APSTrailMode.Default);
-
-                        return current == e;
-                    },
+                        I.APS_TRAIL_MODE == e,
                     (I, e) =>
                     {
-                        I.E_APS_TRAIL_DEFAULT_FADE = e == APSTrailMode.DefaultWithFade;
-                        I.E_APS_TRAIL = e == APSTrailMode.Custom;
+                        I.APS_TRAIL_MODE = e;
                     }
                 ));
         }

@@ -1,14 +1,20 @@
-﻿using BrilliantSkies.PlayerProfiles;
+﻿using BrilliantSkies.Core;
+using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
 using MTMTVFX.Core;
 using MTMTVFX.UI;
+using System.Collections.Generic;
+using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace MTMTVFX.Effects.Muzzle
 {
     [HarmonyPatch(typeof(ParticleCannonEffect))]
-    public class PACVFXPatch
+    public static class PACVFXPatch
     {
+        private static ConditionalWeakTable<ParticleCannonEffect, GameObject> pacFXTable = new ConditionalWeakTable<ParticleCannonEffect, GameObject>();
+
         [HarmonyPatch("RenderAndRun")]
         [HarmonyPrefix]
         private static void CancelBaseBeam(ParticleCannonEffect __instance)
@@ -26,25 +32,11 @@ namespace MTMTVFX.Effects.Muzzle
             }
         }
 
-        [HarmonyPatch("ApplyDamage")]
-        [HarmonyPostfix]
-        private static void MakeBeam(ParticleCannonEffect __instance, Vector3[] worldPositions)
-        {
-            SettingsConfig config = Utils.GetConfig();
-            if (!config.E_PAC || config.IS_DEGRADED) return;
-
-            if (__instance.HasHit) return;
-            MainThreadDispatcher.Enqueue(() =>
-            {
-                GameObject obj = VFXManager.Create(BeamName.pac_beam, worldPositions[0], __instance.transform.forward);
-                PacPatchMod.PacMethod(worldPositions, obj, __instance.Range0Damage, __instance.ParticleType, __instance.m_BaseColor);
-            });
-        }
-
         [HarmonyPatch("TerminateAtPoint")]
         [HarmonyPrefix]
-        private static void UpdateBeam(ParticleCannonEffect __instance, LineRenderer ____lineRenderer, Vector3 gameWorldPosition, int indexOfTermination)
+        private static void RenderTerminated(ParticleCannonEffect __instance, LineRenderer ____lineRenderer, Vector3 gameWorldPosition, int indexOfTermination)
         {
+            // this runs when it does damage and runs out before max range
             SettingsConfig config = Utils.GetConfig();
             if (!config.E_PAC || config.IS_DEGRADED) return;
 
@@ -57,11 +49,25 @@ namespace MTMTVFX.Effects.Muzzle
             }
             worldPositions[indexOfTermination - 1] = gameWorldPosition;
 
-            MainThreadDispatcher.Enqueue(() =>
+            GameObject obj = VFXManager.Create(BeamName.pac_beam, worldPositions[0], __instance.transform.forward);
+            PacPatchMod.PacMethod(worldPositions, obj, __instance.Range0Damage, __instance.ParticleType, __instance.m_BaseColor);
+            pacFXTable.Add(__instance, obj);
+        }
+
+        [HarmonyPatch("ApplyDamage")]
+        [HarmonyPostfix]
+        private static void RenderFull(ParticleCannonEffect __instance, Vector3[] worldPositions)
+        {
+            // this runs when it does damage
+            SettingsConfig config = Utils.GetConfig();
+            if (!config.E_PAC || config.IS_DEGRADED) return;
+
+            if (!pacFXTable.TryGetValue(__instance, out GameObject _))
             {
+                // doesnt matter if it hits, if its not terminatedd and rendered we gotta render it
                 GameObject obj = VFXManager.Create(BeamName.pac_beam, worldPositions[0], __instance.transform.forward);
                 PacPatchMod.PacMethod(worldPositions, obj, __instance.Range0Damage, __instance.ParticleType, __instance.m_BaseColor);
-            });
+            }
         }
     }
 

@@ -1,0 +1,3 @@
+# .editorconfig
+root = true
+

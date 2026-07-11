@@ -1,0 +1,507 @@
+﻿using BrilliantSkies.Effects.Regulation;
+using BrilliantSkies.PlayerProfiles;
+using MTMTVFX.Core;
+using static MTMTVFX.Core.AssetType;
+using MTMTVFX.Effects;
+using MTMTVFX.Effects.Muzzle;
+using MTMTVFX.Effects.Trail;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MTMTVFX.UI
+{
+    public class SettingsConfig : ProfileModule<SettingsConfig.InternalData>
+    {
+        public class InternalData
+        {
+            public bool DEBUG_MODE { get; set; } = false;
+            public bool ADAPTIVE { get; set; } = false;
+
+            //================================= VFX =================================//
+            // Muzzle flashes
+            public bool E_MUZZLE { get; set; } = true;
+            public int COUNT_MUZZLE { get; set; } = 100;
+            public string MUZZLE_MOD { get; set; } = "";
+
+            // Railgun
+            public bool E_RAILGUN { get; set; } = true;
+            public int COUNT_RAILGUN { get; set; } = 100;
+            public string RAILGUN_MOD { get; set; } = "";
+
+            // Explosions
+            public bool E_EXPL { get; set; } = true;
+            public int COUNT_EXPL { get; set; } = 100;
+            public string EXPL_MOD { get; set; } = "";
+
+            // Pulse laser
+            public bool E_PULSE { get; set; } = true;
+            public int COUNT_PULSE { get; set; } = 100;
+            public string PULSE_MOD { get; set; } = "";
+
+            // PAC
+            public bool E_PAC { get; set; } = true;
+            public int COUNT_PAC { get; set; } = 50;
+            public string PAC_MOD { get; set; } = "";
+
+            // Plasma
+            public bool E_PLASMA { get; set; } = true;
+            public int COUNT_PLASMA { get; set; } = 50;
+            public string PLASMA_MOD { get; set; } = "";
+
+            // Flamer
+            public bool E_FLAMER { get; set; } = true;
+            public int COUNT_FLAMER { get; set; } = 50;
+            public string FLAMER_MOD { get; set; } = "";
+
+            // Continuous laser
+            public bool E_CONTINUOUS { get; set; } = false;
+            public string CONTINUOUS_MOD { get; set; } = "";
+            //=======================================================================//
+
+
+            //================================ TRAILS ===============================//
+            // APS Trail
+            public APSTrailMode APS_TRAIL_MODE { get; set; } = APSTrailMode.Default;
+            public string APS_TRAIL_MOD { get; set; } = "";
+            public string APS_RAILGUN_MOD { get; set; } = "";
+
+            // APS Model
+            public bool E_APS_MODEL { get; set; } = false;
+            public string APS_MODEL_MOD { get; set; } = "";
+
+            // CRAM Trail
+            public bool E_CRAM_TRAIL { get; set; } = false;
+            public string CRAM_TRAIL_MOD { get; set; } = "";
+
+            // CRAM Model
+            public bool E_CRAM_MODEL { get; set; } = false;
+            public string CRAM_MODEL_MOD { get; set; } = "";
+
+            // Plasma Trail
+            public bool E_PLASMA_TRAIL { get; set; } = false;
+            public string PLASMA_TRAIL_MOD { get; set; } = "";
+
+            // Plasma Model
+            public bool E_PLASMA_MODEL { get; set; } = false;
+            public string PLASMA_MODEL_MOD { get; set; } = "";
+
+            // Missile Trail
+            public bool E_MISSILE_TRAIL { get; set; } = false;
+            public string MISSILE_TRAIL_MOD { get; set; } = "";
+
+            // Missile Model
+            public bool E_MISSILE_MODEL { get; set; } = false;
+            public string MISSILE_MODEL_MOD { get; set; } = "";
+            //=======================================================================//
+
+            public bool E_IN_DEGRADED { get; set; } = false;
+        }
+
+        public override ModuleType ModuleType => ModuleType.Options;
+        protected override string FilenameAndExtension => "profile.MTMTConfig";
+
+        public bool DEBUG_MODE
+        {
+            get { return Internal.DEBUG_MODE; }
+            set { Internal.DEBUG_MODE = value; }
+        }
+
+        public bool ISDYNAMIC
+        {
+            get { return Internal.ADAPTIVE; }
+            set { Internal.ADAPTIVE = value; }
+        }
+
+        public bool E_MUZZLE
+        {
+            get { return Internal.E_MUZZLE; }
+            set { Internal.E_MUZZLE = value; }
+        }
+
+        public int COUNT_MUZZLE
+        {
+            get { return Internal.COUNT_MUZZLE; }
+            set
+            {
+                Internal.COUNT_MUZZLE = value;
+                VFXManager.Instance.OnConfigUpdatePool<MuzzleFlash>();
+            }
+        }
+        public string MUZZLE_MOD
+        {
+            get { return Internal.MUZZLE_MOD; }
+            set
+            {
+                if (Internal.MUZZLE_MOD != value)
+                {
+                    Internal.MUZZLE_MOD = value;
+                    VFXManager.Instance.SwapPoolMod<MuzzleFlash>(value);
+                }
+            }
+        }
+
+
+        public bool E_RAILGUN
+        {
+            get { return Internal.E_RAILGUN; }
+            set { Internal.E_RAILGUN = value; }
+        }
+
+        public int COUNT_RAILGUN
+        {
+            get { return Internal.COUNT_RAILGUN; }
+            set
+            {
+                Internal.COUNT_RAILGUN = value;
+                VFXManager.Instance.OnConfigUpdatePool<Railgun>();
+            }
+        }
+
+        public string RAILGUN_MOD
+        {
+            get { return Internal.RAILGUN_MOD; }
+            set
+            {
+                if (Internal.RAILGUN_MOD != value)
+                {
+                    Internal.RAILGUN_MOD = value;
+                    VFXManager.Instance.SwapPoolMod<Railgun>(value);
+                }
+            }
+        }
+
+        public bool E_EXPL
+        {
+            get { return Internal.E_EXPL; }
+            set { Internal.E_EXPL = value; }
+        }
+
+        public int COUNT_EXPL
+        {
+            get { return Internal.COUNT_EXPL; }
+            set
+            {
+                Internal.COUNT_EXPL = value;
+                VFXManager.Instance.OnConfigUpdatePool<Explosion>();
+            }
+        }
+
+        public string EXPL_MOD
+        {
+            get { return Internal.EXPL_MOD; }
+            set
+            {
+                if (Internal.EXPL_MOD != value)
+                {
+                    Internal.EXPL_MOD = value;
+                    VFXManager.Instance.SwapPoolMod<Explosion>(value);
+                }
+            }
+        }
+
+        public bool E_PULSE
+        {
+            get { return Internal.E_PULSE; }
+            set { Internal.E_PULSE = value; }
+        }
+
+        public int COUNT_PULSE
+        {
+            get { return Internal.COUNT_PULSE; }
+            set
+            {
+                Internal.COUNT_PULSE = value;
+                VFXManager.Instance.OnConfigUpdatePool(Beam.laser_pulse);
+            }
+        }
+
+        public string PULSE_MOD
+        {
+            get { return Internal.PULSE_MOD; }
+            set
+            {
+                if (Internal.PULSE_MOD != value)
+                {
+                    Internal.PULSE_MOD = value;
+                    VFXManager.Instance.SwapPoolMod(value, Beam.laser_pulse);
+                }
+            }
+        }
+
+        public bool E_PAC
+        {
+            get { return Internal.E_PAC; }
+            set { Internal.E_PAC = value; }
+        }
+
+        public int COUNT_PAC
+        {
+            get { return Internal.COUNT_PAC; }
+            set
+            {
+                Internal.COUNT_PAC = value;
+                VFXManager.Instance.OnConfigUpdatePool(Beam.pac_beam);
+            }
+        }
+
+        public string PAC_MOD
+        {
+            get { return Internal.PAC_MOD; }
+            set
+            {
+                if (Internal.PAC_MOD != value)
+                {
+                    Internal.PAC_MOD = value;
+                    VFXManager.Instance.SwapPoolMod(value, Beam.pac_beam);
+                }
+            }
+        }
+
+        public bool E_PLASMA
+        {
+            get { return Internal.E_PLASMA; }
+            set { Internal.E_PLASMA = value; }
+        }
+
+        public int COUNT_PLASMA
+        {
+            get { return Internal.COUNT_PLASMA; }
+            set
+            {
+                Internal.COUNT_PLASMA = value;
+                //VFXManager.Instance.OnConfigUpdatePool(BeamName.plasma);
+            }
+        }
+
+        public string PLASMA_MOD
+        {
+            get { return Internal.PLASMA_MOD; }
+            set
+            {
+                if (Internal.PLASMA_MOD != value)
+                {
+                    Internal.PLASMA_MOD = value;
+                    VFXManager.Instance.SwapPoolMod<PlasmaMuzzle>(value);
+                }
+            }
+        }
+
+        public bool E_FLAMER
+        {
+            get { return Internal.E_FLAMER; }
+            set
+            {
+                Internal.E_FLAMER = value;
+                FlamerEmitterBase.ToggleVFX(value);
+            }
+        }
+
+        public int COUNT_FLAMER
+        {
+            get { return Internal.COUNT_FLAMER; }
+            set { Internal.COUNT_FLAMER = value; }
+        }
+
+        public string FLAMER_MOD
+        {
+            get { return Internal.FLAMER_MOD; }
+            set
+            {
+                if (Internal.FLAMER_MOD != value)
+                {
+                    Internal.FLAMER_MOD = value;
+                    VFXManager.Instance.SwapPoolMod<Flamer>(value);
+                }
+            }
+        }
+
+        public APSTrailMode APS_TRAIL_MODE
+        {
+            get { return Internal.APS_TRAIL_MODE; }
+            set { Internal.APS_TRAIL_MODE = value; }
+        }
+
+        public string APS_TRAIL_MOD
+        {
+            get { return Internal.APS_TRAIL_MOD; }
+            set
+            {
+                if (Internal.APS_TRAIL_MOD != value)
+                {
+                    Internal.APS_TRAIL_MOD = value;
+                }
+            }
+        }
+
+        public bool E_APS_MODEL
+        {
+            get { return Internal.E_APS_MODEL; }
+            set { Internal.E_APS_MODEL = value; }
+        }
+
+        public string APS_MODEL_MOD
+        {
+            get { return Internal.APS_MODEL_MOD; }
+            set
+            {
+                if (Internal.APS_MODEL_MOD != value)
+                {
+                    Internal.APS_MODEL_MOD = value;
+                }
+            }
+        }
+
+        public string RAILGUN_TRAIL_MOD
+        {
+            get { return Internal.APS_RAILGUN_MOD; }
+            set
+            {
+                if (Internal.APS_RAILGUN_MOD != value)
+                {
+                    Internal.APS_RAILGUN_MOD = value;
+                }
+            }
+        }
+
+        public bool E_CRAM_TRAIL
+        {
+            get { return Internal.E_CRAM_TRAIL; }
+            set { Internal.E_CRAM_TRAIL = value; }
+        }
+
+        public string CRAM_TRAIL_MOD
+        {
+            get { return Internal.CRAM_TRAIL_MOD; }
+            set
+            {
+                if (Internal.CRAM_TRAIL_MOD != value)
+                {
+                    Internal.CRAM_TRAIL_MOD = value;
+                }
+            }
+        }
+
+        public bool E_CRAM_MODEL
+        {
+            get { return Internal.E_CRAM_MODEL; }
+            set { Internal.E_CRAM_MODEL = value; }
+        }
+
+        public string CRAM_MODEL_MOD
+        {
+            get { return Internal.CRAM_MODEL_MOD; }
+            set
+            {
+                if (Internal.CRAM_MODEL_MOD != value)
+                {
+                    Internal.CRAM_MODEL_MOD = value;
+                }
+            }
+        }
+
+        public bool E_PLASMA_TRAIL
+        {
+            get { return Internal.E_PLASMA_TRAIL; }
+            set { Internal.E_PLASMA_TRAIL = value; }
+        }
+
+        public string PLASMA_TRAIL_MOD
+        {
+            get { return Internal.PLASMA_TRAIL_MOD; }
+            set
+            {
+                if (Internal.PLASMA_TRAIL_MOD != value)
+                {
+                    Internal.PLASMA_TRAIL_MOD = value;
+                }
+            }
+        }
+
+        public bool E_PLASMA_MODEL
+        {
+            get { return Internal.E_PLASMA_MODEL; }
+            set { Internal.E_PLASMA_MODEL = value; }
+        }
+
+        public string PLASMA_MODEL_MOD
+        {
+            get { return Internal.PLASMA_MODEL_MOD; }
+            set
+            {
+                if (Internal.PLASMA_MODEL_MOD != value)
+                {
+                    Internal.PLASMA_MODEL_MOD = value;
+                }
+            }
+        }
+
+        public bool E_MISSILE_TRAIL
+        {
+            get { return Internal.E_MISSILE_TRAIL; }
+            set { Internal.E_MISSILE_TRAIL = value; }
+        }
+
+        public string MISSILE_TRAIL_MOD
+        {
+            get { return Internal.MISSILE_TRAIL_MOD; }
+            set
+            {
+                if (Internal.MISSILE_TRAIL_MOD != value)
+                {
+                    Internal.MISSILE_TRAIL_MOD = value;
+                }
+            }
+        }
+
+        public bool E_MISSILE_MODEL
+        {
+            get { return Internal.E_MISSILE_MODEL; }
+            set { Internal.E_MISSILE_MODEL = value; }
+        }
+
+        public string MISSILE_MODEL_MOD
+        {
+            get { return Internal.MISSILE_MODEL_MOD; }
+            set
+            {
+                if (Internal.MISSILE_MODEL_MOD != value)
+                {
+                    Internal.MISSILE_MODEL_MOD = value;
+                }
+            }
+        }
+
+        public bool E_CONTINUOUS
+        {
+            get { return Internal.E_CONTINUOUS; }
+            set { Internal.E_CONTINUOUS = value; }
+        }
+
+        public string CONTINUOUS_MOD
+        {
+            get { return Internal.CONTINUOUS_MOD; }
+            set
+            {
+                if (Internal.CONTINUOUS_MOD != value)
+                {
+                    Internal.CONTINUOUS_MOD = value;
+                }
+            }
+        }
+
+        public bool E_IN_DEGRADED
+        {
+            get { return Internal.E_IN_DEGRADED; }
+            set { Internal.E_IN_DEGRADED = value; }
+        }
+
+        public bool IS_DEGRADED
+        {
+            get
+            {
+                return !E_IN_DEGRADED && !ProcessorLoading.Instance.FullMode;
+            }
+        }
+    }
+}

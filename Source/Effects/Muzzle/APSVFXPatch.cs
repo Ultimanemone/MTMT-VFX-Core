@@ -6,6 +6,7 @@ using BrilliantSkies.Effects.SoundSystem;
 using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
 using MTMTVFX.Core;
+using static MTMTVFX.Core.AssetType;
 using MTMTVFX.UI;
 using System;
 using System.Collections.Generic;
@@ -110,10 +111,10 @@ namespace MTMTVFX.Effects.Muzzle
                     if (gpUsed)
                     {
                         float gauge = __instance.BarrelSystem.ShellDiameter;
-                        Core.MuzzleFlashType muzzleType = Enums.GetMuzzleEnum(gauge);
+                        MuzzleFlash muzzleType = GetMuzzleEnum(gauge);
                         // Core._config.LogInfo<APSVFXOverride>($"shell fire: {gauge} with {type.ToString()}");
 
-                        if (muzzleType != Core.MuzzleFlashType.none)
+                        if (muzzleType != MuzzleFlash.none)
                         {
                             MainThreadDispatcher.Enqueue(() =>
                             {
@@ -125,11 +126,11 @@ namespace MTMTVFX.Effects.Muzzle
 
                 if (config.E_RAILGUN)
                 {
-                    RailgunMuzzleType railType = RailgunMuzzleType.none;
+                    Railgun railType = Railgun.none;
                     if (__state.railDraw < 5000) return;
-                    else if (__state.railDraw < 15000) railType = RailgunMuzzleType.muzzlerail_small;
-                    else if (__state.railDraw < 50000) railType = RailgunMuzzleType.muzzlerail_medium;
-                    else railType = RailgunMuzzleType.muzzlerail_big;
+                    else if (__state.railDraw < 15000) railType = Railgun.muzzlerail_small;
+                    else if (__state.railDraw < 50000) railType = Railgun.muzzlerail_medium;
+                    else railType = Railgun.muzzlerail_big;
 
                     MainThreadDispatcher.Enqueue(() =>
                     {

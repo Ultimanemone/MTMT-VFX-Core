@@ -6,6 +6,7 @@ using HarmonyLib;
 using MTMTVFX.Core;
 using MTMTVFX.UI;
 using UnityEngine;
+using static MTMTVFX.Core.AssetType;
 
 namespace MTMTVFX.Effects.Muzzle
 {
@@ -24,30 +25,30 @@ namespace MTMTVFX.Effects.Muzzle
             else
             {
                 float scaler = 1f;
-                ExplosionType explosionSize = ExplosionType.expl_tiny;
+                AssetType.Explosion explosionSize = AssetType.Explosion.expl_tiny;
 
-                if (size < (float)ExplosionType.expl_tiny)
+                if (size < (float)Explosion.expl_tiny)
                 {
                     goto spawn;
                 }
-                else if (size < (float)ExplosionType.expl_small)
+                else if (size < (float)Explosion.expl_small)
                 {
-                    explosionSize = ExplosionType.expl_small;
+                    explosionSize = AssetType.Explosion.expl_small;
                     scaler = 6f;
                 }
-                else if (size < (float)ExplosionType.expl_medium)
+                else if (size < (float)Explosion.expl_medium)
                 {
-                    explosionSize = ExplosionType.expl_medium;
+                    explosionSize = AssetType.Explosion.expl_medium;
                     scaler = 20f;
                 }
-                else if (size < (float)ExplosionType.expl_big)
+                else if (size < (float)Explosion.expl_big)
                 {
-                    explosionSize = ExplosionType.expl_big;
+                    explosionSize = AssetType.Explosion.expl_big;
                     scaler = 60f;
                 }
                 else
                 {
-                    explosionSize = ExplosionType.expl_huge;
+                    explosionSize = AssetType.Explosion.expl_huge;
                     scaler = 120f;
                 }
 
@@ -59,7 +60,7 @@ namespace MTMTVFX.Effects.Muzzle
             }
         }
 
-        public static void PatchedSpawn(ExplosionType explosionName, Vector3 pos, float scaler)
+        public static void PatchedSpawn(AssetType.Explosion explosionName, Vector3 pos, float scaler)
         {
             GameObject obj = VFXManager.Create(explosionName, pos, Vector3.zero);
             if (scaler != 1f && obj != null)

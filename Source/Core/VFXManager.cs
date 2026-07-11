@@ -1,79 +1,73 @@
-﻿using System;
+﻿using BrilliantSkies.Core.Pooling;
+using BrilliantSkies.Ftd.Game.Pools;
+using BrilliantSkies.PlayerProfiles;
+using MTMTVFX.Core.AssetManagement;
+using MTMTVFX.Core.Pooling;
+using MTMTVFX.UI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using MTMTVFX.UI;
-using BrilliantSkies.PlayerProfiles;
-using BrilliantSkies.Ftd.Game.Pools;
-using MTMTVFX.Core.Pooling;
-using MTMTVFX.Core.AssetManagement;
+using static MTMTVFX.Core.AssetType;
 
 namespace MTMTVFX.Core
 {
-    public class VFXManager
+    public static class VFXManager
     {
-        public static VFXManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new VFXManager();
-                return _instance;
-            }
-        }
+        private static bool _initialized = false;
 
-        private static VFXManager _instance;
-        private bool _initialized = false;
-
-        private static Dictionary<MuzzleFlashType, VFXPool> _muzzleFlashPools;
-        private static Dictionary<RailgunMuzzleType, VFXPool> _railgunPools;
-        private static Dictionary<ExplosionType, VFXPool> _explosionPools;
-        private static Dictionary<BeamName, VFXPool> _beamPools;
+        private static Dictionary<MuzzleFlash, VFXPool> _muzzleFlashPools;
+        private static Dictionary<Railgun, VFXPool> _railgunPools;
+        private static Dictionary<Explosion, VFXPool> _explosionPools;
+        private static Dictionary<Beam, VFXPool> _beamPools;
+        private static Dictionary<PlasmaMuzzle, VFXPool> _plasmaMuzzlePools;
         public static Dictionary<ConventionalLaser, GameObject> laserBeams;
         public static VFXPool apsDefaultTrailPool;
 
-        public static IReadOnlyDictionary<MuzzleFlashType, VFXPool> MuzzleFlashPools => _muzzleFlashPools;
-        public static IReadOnlyDictionary<RailgunMuzzleType, VFXPool> RailgunPools => _railgunPools;
-        public static IReadOnlyDictionary<ExplosionType, VFXPool> ExplosionPools => _explosionPools;
-        public static IReadOnlyDictionary<BeamName, VFXPool> BeamPools => _beamPools;
+        private static Dictionary<Type, GameObject> _roots = new Dictionary<Type, GameObject>();
+
+        public static IReadOnlyDictionary<MuzzleFlash, VFXPool> MuzzleFlashPools => _muzzleFlashPools;
+        public static IReadOnlyDictionary<Railgun, VFXPool> RailgunPools => _railgunPools;
+        public static IReadOnlyDictionary<Explosion, VFXPool> ExplosionPools => _explosionPools;
+        public static IReadOnlyDictionary<Beam, VFXPool> PulsePool => _beamPools;
+        public static IReadOnlyDictionary<PlasmaMuzzle, VFXPool> PACPool => _plasmaMuzzlePools;
 
         private static GameObject _vfxRoot;
 
-        private VFXManager() { }
-
         // lazy init
-        public void Init()
+        public static void Init()
         {
             if (_initialized) return;
             else _initialized = true;
-            Utils.LogInfo<VFXManager>("Initializing...");
+            Utils.LogInfo("Initializing...");
 
             AssetRegistry.Init();
 
             _vfxRoot = new GameObject("MTMT VFX Root");
-            SettingsConfig config = Utils.GetConfig();
+            SettingsConfig config = ProfileManager.Instance.GetModule<SettingsConfig>();
 
             GameObject muzzleFlashRoot = new GameObject("APS Muzzle Flash Root");
-            muzzleFlashRoot.transform.SetParent(_vfxRoot.transform);
-            _muzzleFlashPools = InitPool<MuzzleFlashType>(muzzleFlashRoot.transform, config.COUNT_MUZZLE);
-
             GameObject railgunRoot = new GameObject("Railgun FX Root");
-            railgunRoot.transform.SetParent(_vfxRoot.transform);
-            _railgunPools = InitPool<RailgunMuzzleType>(railgunRoot.transform, config.COUNT_RAILGUN);
-
-            GameObject explosionRoot = new GameObject("ExplosionType Root");
-            explosionRoot.transform.SetParent(_vfxRoot.transform);
-            _explosionPools = InitPool<ExplosionType>(explosionRoot.transform, config.COUNT_EXPL);
-
+            GameObject explosionRoot = new GameObject("Explosion Root");
             GameObject beamRoot = new GameObject("Beam Root");
+            muzzleFlashRoot.transform.SetParent(_vfxRoot.transform);
+            railgunRoot.transform.SetParent(_vfxRoot.transform);
+            explosionRoot.transform.SetParent(_vfxRoot.transform);
             beamRoot.transform.SetParent(_vfxRoot.transform);
-            _beamPools = new Dictionary<BeamName, VFXPool>();
 
-            VFXPool pulsePool = InitPool(BeamName.laser_pulse, beamRoot.transform, config.COUNT_PULSE);
-            if (pulsePool != null) _beamPools[BeamName.laser_pulse] = pulsePool;
+            _roots[typeof(MuzzleFlash)] = muzzleFlashRoot;
+            _roots[typeof(Railgun)] = railgunRoot;
+            _roots[typeof(Explosion)] = explosionRoot;
+            _roots[typeof(Beam)] = beamRoot;
 
-            VFXPool pacPool = InitPool(BeamName.pac_beam, beamRoot.transform, config.COUNT_PULSE);
-            if (pacPool != null) _beamPools[BeamName.pac_beam] = pacPool;
+            _muzzleFlashPools = InitPools<MuzzleFlash>(muzzleFlashRoot.transform, config.COUNT_MUZZLE);
+            _railgunPools = InitPools<Railgun>(railgunRoot.transform, config.COUNT_RAILGUN);
+            _explosionPools = InitPools<Explosion>(explosionRoot.transform, config.COUNT_EXPL);
+            _beamPools = new Dictionary<Beam, VFXPool>();
+            VFXPool pulsePool = InitPool(Beam.laser_pulse, beamRoot.transform, config.COUNT_PULSE);
+            if (pulsePool != null) _beamPools[Beam.laser_pulse] = pulsePool;
+            VFXPool pacPool = InitPool(Beam.pac_beam, beamRoot.transform, config.COUNT_PAC);
+            if (pacPool != null) _beamPools[Beam.pac_beam] = pacPool;
 
             // not worth pooling ts
             laserBeams = new Dictionary<ConventionalLaser, GameObject>();
@@ -81,95 +75,142 @@ namespace MTMTVFX.Core
             GameObject apsTrailRoot = new GameObject("APS default trail Root");
             GameObject apsTrailObj = new GameObject("APS default trail ghost");
             apsTrailObj.AddComponent<LineRenderer>();
-            apsDefaultTrailPool = new VFXPool(apsTrailObj, "", TrailType.aps, 100, apsTrailRoot.transform, KillType.trail);
+            apsDefaultTrailPool = new VFXPool(apsTrailObj, "", Trail.aps, 100, apsTrailRoot.transform, KillType.trail);
             UnityEngine.Object.Destroy(apsTrailObj);
+            AssetRegistry.UpdateConfigs();
         }
 
-        private Dictionary<T, VFXPool> InitPool<T>(Transform root, int count) where T : Enum
+        private static Dictionary<T, VFXPool> InitPools<T>(Transform root, int count) where T : Enum
         {
             Dictionary<T, VFXPool> pool = new Dictionary<T, VFXPool>();
-            foreach (T type in Enum.GetValues(typeof(T)))
+            foreach (T val in Enum.GetValues(typeof(T)))
             {
-                if (type.ToString() == "none") continue;
+                if (val.ToString() == "none") continue;
 
-                if (AssetRegistry.TryGetAsset(type.ToString(), Utils.GetAssetTypeFromEnum(type), out GameObject obj, out string modName))
+                if (AssetRegistry.TryGetAsset(val.ToString(), val, out GameObject obj, out string modName) && obj != null)
                 {
-                    pool[type] = new VFXPool(obj, modName, type, count, root);
+                    pool[val] = new VFXPool(obj, modName, val, count, root);
                 }
-                else Utils.LogError<VFXManager>($"Asset not found: {type}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
+                else if (Utils.GetConfig().DEBUG_MODE) Utils.LogError($"Asset not found: {val}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
+                else Utils.LogError($"Asset not found: {val}");
             }
             return pool;
         }
 
-        private VFXPool InitPool(Enum type, Transform root, int count, GameObject obj = null)
+        private static VFXPool InitPool(Enum type, Transform root, int count, GameObject obj = null)
         {
             if (obj == null)
             {
-                if (AssetRegistry.TryGetAsset(type.ToString(), Utils.GetAssetTypeFromEnum(type), out obj, out string modName))
+                if (AssetRegistry.TryGetAsset(type.ToString(), type, out obj, out string modName) && obj != null)
                 {
                     return new VFXPool(obj, modName, type, count, root);
                 }
-                else
+                else if (Utils.GetConfig().DEBUG_MODE) Utils.LogError($"Asset not found: {type}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
+                else Utils.LogError($"Asset not found: {type}");
+            }
+            return null;
+        }
+
+        private static IDictionary GetPoolsFromEnum<T>() where T : Enum
+        {
+            if (typeof(T) == typeof(MuzzleFlash))
+                return _muzzleFlashPools;
+            else if (typeof(T) == typeof(Railgun))
+                return _railgunPools;
+            else if (typeof(T) == typeof(Explosion))
+                return _explosionPools;
+            else if (typeof(T) == typeof(Beam))
+                return _beamPools;
+            else return null;
+        }
+
+        private static VFXPool GetPoolFromEnumType(Enum type)
+        {
+            SettingsConfig config = Utils.GetConfig();
+            if (type.GetType() == typeof(MuzzleFlash)) return _muzzleFlashPools[(MuzzleFlash)type];
+            if (type.GetType() == typeof(Railgun)) return _railgunPools[(Railgun)type];
+            if (type.GetType() == typeof(Explosion)) return _explosionPools[(Explosion)type];
+            if (type.GetType() == typeof(PlasmaMuzzle)) return _plasmaMuzzlePools[(PlasmaMuzzle)type];
+            if (type.GetType() == typeof(Beam)) return _beamPools[(Beam)type];
+            if (type.GetType() == typeof(Trail))
+            {
+                if ((Trail)type == Trail.aps) return apsDefaultTrailPool;
+            }
+            return null;
+        }
+
+        public static void OnConfigUpdatePool<T>() where T : Enum
+        {
+            Init();
+            IDictionary poolDict = GetPoolsFromEnum<T>();
+
+            if (poolDict != null)
+            {
+                foreach (DictionaryEntry entry in poolDict)
                 {
-                    Utils.LogError<VFXManager>($"Asset not found: {type}", BrilliantSkies.Core.Logger.LogOptions.PopupDev);
-                    return null;
+                    ((VFXPool)entry.Value).OnConfigUpdate();
                 }
             }
-            else
-            {
-                return new VFXPool(obj, "", type, count, root);
-            }
         }
 
-        public void OnConfigUpdatePool<T>() where T : Enum
+        public static void OnConfigUpdatePool(Enum type)
         {
-            if (!_initialized) Init();
+            Init();
 
-            IDictionary poolDict;
-            if (typeof(T) == typeof(MuzzleFlashType))
-                poolDict = _muzzleFlashPools;
-            else if (typeof(T) == typeof(RailgunMuzzleType))
-                poolDict = _railgunPools;
-            else if (typeof(T) == typeof(ExplosionType))
-                poolDict = _explosionPools;
-            else if (typeof(T) == typeof(BeamName))
-                poolDict = _beamPools;
-            else return;
-
-            foreach (DictionaryEntry entry in poolDict)
-            {
-                ((VFXPool)entry.Value).OnConfigUpdate();
-            }
-        }
-
-        public void OnConfigUpdatePool(Enum type)
-        {
-            if (!_initialized) Init();
-
-            VFXPool pool;
-
-            if (type.GetType() == typeof(MuzzleFlashType) && (MuzzleFlashType)type != MuzzleFlashType.none)
-                pool = _muzzleFlashPools[(MuzzleFlashType)type];
-            else if (type.GetType() == typeof(RailgunMuzzleType) && (RailgunMuzzleType)type != RailgunMuzzleType.none)
-                pool = _railgunPools[(RailgunMuzzleType)type];
-            else if (type.GetType() == typeof(ExplosionType) && (ExplosionType)type != ExplosionType.none)
-                pool = _explosionPools[(ExplosionType)type];
-            else if (type.GetType() == typeof(BeamName) && (BeamName)type != BeamName.none)
-                pool = _beamPools[(BeamName)type];
-            else return;
-
+            VFXPool pool = GetPoolFromEnumType(type);
+            if (pool == null) return;
             pool.OnConfigUpdate();
         }
 
-        public void OnConfigUpdateAllPool()
+        public static void OnConfigUpdateAllPool()
         {
-            List<IDictionary> all = new List<IDictionary>() { _muzzleFlashPools, _railgunPools, _explosionPools, _beamPools };
+            List<IDictionary> all = new List<IDictionary>() { _muzzleFlashPools, _railgunPools, _explosionPools, _beamPools, _plasmaMuzzlePools };
             foreach (var dict in all)
             {
                 foreach (DictionaryEntry entry in dict)
                 {
                     ((VFXPool)entry.Value).OnConfigUpdate();
                 }
+            }
+        }
+
+        public static void SwapPoolMod(string modName, Enum type)
+        {
+            Init();
+
+            if (type.GetType() == typeof(Beam))
+            {
+                if (_beamPools.TryGetValue((Beam)type, out VFXPool pool) && pool != null)
+                {
+                    pool.Clear();
+                    pool = InitPool(type, _roots[typeof(Beam)].transform, GetCount(type));
+                }
+                else
+                {
+                    _beamPools[(Beam)type] = InitPool(type, _roots[typeof(Beam)].transform, GetCount(type));
+                }
+            }
+            else
+            {
+            }
+        }
+
+        public static void SwapPoolMod<T>(string modName) where T : Enum
+        {
+            IDictionary poolDict = null;
+            if (typeof(T) == typeof(MuzzleFlash)) poolDict = _muzzleFlashPools;
+            if (typeof(T) == typeof(Railgun)) poolDict = _railgunPools;
+            if (typeof(T) == typeof(Explosion)) poolDict = _explosionPools;
+            //if (typeof(T) == typeof(PlasmaMuzzle)) poolDict = _plasmaMuzzlePools;
+            if (poolDict != null)
+            {
+                foreach (DictionaryEntry entry in poolDict)
+                {
+                    ((VFXPool)entry.Value).Clear();
+                }
+                poolDict.Clear();
+                SettingsConfig config = Utils.GetConfig();
+                poolDict = InitPools<T>(_roots[typeof(T)].transform, GetCount<T>());
             }
         }
 
@@ -183,52 +224,44 @@ namespace MTMTVFX.Core
         /// <returns></returns>
         public static GameObject Create(Enum type, Vector3 pos, Vector3 forward)
         {
-            Instance.Init();
-            if (type.GetType() == typeof(TrailType))
+            Init();
+
+            // Trail special-case
+            if (type.GetType() == typeof(Trail))
             {
-                VFXPool pool;
-                if ((TrailType)type == TrailType.aps)
-                    pool = apsDefaultTrailPool;
-                else return null;
-
-                pool.TryGet(pos, forward, out GameObject obj);
-                Utils.LogInfo<VFXManager>($"Effect {type} got from _pool!");
-                return obj;
+                Trail trail = (Trail)type;
+                if (trail == Trail.aps)
+                {
+                    VFXPool pool = apsDefaultTrailPool;
+                    pool.TryGet(pos, forward, out GameObject obj);
+                    Utils.LogInfo($"Effect {type} got from _pool!");
+                    return obj;
+                }
             }
-            else
-            {
-                IDictionary pool;
 
-                if (type.GetType() == typeof(MuzzleFlashType) && (MuzzleFlashType)type != MuzzleFlashType.none)
-                    pool = _muzzleFlashPools;
-                else if (type.GetType() == typeof(RailgunMuzzleType) && (RailgunMuzzleType)type != RailgunMuzzleType.none)
-                    pool = _railgunPools;
-                else if (type.GetType() == typeof(ExplosionType) && (ExplosionType)type != ExplosionType.none)
-                    pool = _explosionPools;
-                else if (type.GetType() == typeof(BeamName) && (BeamName)type != BeamName.none)
-                    pool = _beamPools;
-                else return null;
-
-                ((VFXPool)pool[type]).TryGet(pos, forward, out GameObject obj);
-                Utils.LogInfo<VFXManager>($"Effect {type} got from _pool!");
-                return obj;
-            }
+            VFXPool p = GetPoolFromEnumType(type);
+            if (p == null) return null;
+            p.TryGet(pos, forward, out GameObject result);
+            Utils.LogInfo($"Effect {type} got from _pool!");
+            return result;
         }
 
         public static GameObject InstantiateCopy(Enum type, Vector3 pos, Vector3 forward)
         {
-            Instance.Init();
+            Init();
             string assetName = type.ToString();
-            string modName = Utils.GetModNameFromAssetType(Utils.GetAssetTypeFromEnum(type));
-            AssetRegistry.assetList.TryGetValue(new AssetDetail(assetName, modName), out GameObject prefab);
+            string modName = GetModName(type);
+            if (AssetRegistry.AssetList.TryGetValue(new AssetDetail(assetName, modName), out GameObject prefab))
+            {
+                GameObject obj = UnityEngine.Object.Instantiate(prefab);
+                obj.transform.localPosition = pos;
+                obj.transform.forward = forward;
+                Utils.AddScript(obj, type, modName);
 
-            GameObject obj = UnityEngine.Object.Instantiate(prefab);
-            obj.transform.localPosition = pos;
-            obj.transform.forward = forward;
-            Utils.AddScript(obj, type, modName);
-
-            Utils.LogInfo<VFXManager>($"Effect {type} instantiated!");
-            return obj;
+                Utils.LogInfo($"Effect {type} instantiated!");
+                return obj;
+            }
+            return null;
         }
     }
 }

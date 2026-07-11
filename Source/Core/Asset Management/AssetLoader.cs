@@ -27,7 +27,7 @@ namespace MTMTVFX.Core.AssetManagement
         /// <param name="modName">The mod providing the assets</param>
         /// <param name="guid">The guid of the bundle</param>
         /// <returns>A dictionary of prefabs keyed by their names</returns>
-        public static Dictionary<string, GameObject> LoadAllAssetsFromBundle(string modName, Guid guid)
+        public static Dictionary<string, GameObject> LoadAllAssetsFromBundle(Guid guid)
         {
             AssetBundleDefinition? bundle = Configured.i.AssetBundles.Find(guid);
 

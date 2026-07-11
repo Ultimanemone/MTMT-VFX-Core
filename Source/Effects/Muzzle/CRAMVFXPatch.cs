@@ -44,11 +44,11 @@ namespace MTMTVFX.Effects.Muzzle
                 else
                 {
                     float num = Mathf.Pow(__instance.Node.Stats.FlashEffect * packedPayload / 500f, 0.35f);
-                    MuzzleFlashType muzzleType = MuzzleFlashType.none;
-                    if (num > 2.3f) muzzleType = MuzzleFlashType.muzzleflash_gigant;
-                    else if (num > 1.3f) muzzleType = MuzzleFlashType.muzzleflash_huge;
-                    else if (num > 0.5f) muzzleType = MuzzleFlashType.muzzleflash_biggest;
-                    else if (num > 0f) muzzleType = MuzzleFlashType.muzzleflash_bigger;
+                    AssetType.MuzzleFlash muzzleType = AssetType.MuzzleFlash.none;
+                    if (num > 2.3f) muzzleType = AssetType.MuzzleFlash.muzzleflash_gigant;
+                    else if (num > 1.3f) muzzleType = AssetType.MuzzleFlash.muzzleflash_huge;
+                    else if (num > 0.5f) muzzleType = AssetType.MuzzleFlash.muzzleflash_biggest;
+                    else if (num > 0f) muzzleType = AssetType.MuzzleFlash.muzzleflash_bigger;
                     MainThreadDispatcher.Enqueue(() =>
                     {
                         GameObject obj = VFXManager.Create(muzzleType, __instance.GetFirePoint(0f), __instance.GetFireDirection());

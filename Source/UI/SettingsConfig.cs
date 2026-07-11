@@ -1,6 +1,7 @@
 ﻿using BrilliantSkies.Effects.Regulation;
 using BrilliantSkies.PlayerProfiles;
 using MTMTVFX.Core;
+using static MTMTVFX.Core.AssetType;
 using MTMTVFX.Effects;
 using MTMTVFX.Effects.Muzzle;
 using MTMTVFX.Effects.Trail;
@@ -63,6 +64,7 @@ namespace MTMTVFX.UI
             // APS Trail
             public APSTrailMode APS_TRAIL_MODE { get; set; } = APSTrailMode.Default;
             public string APS_TRAIL_MOD { get; set; } = "";
+            public string APS_RAILGUN_MOD { get; set; } = "";
 
             // APS Model
             public bool E_APS_MODEL { get; set; } = false;
@@ -114,11 +116,7 @@ namespace MTMTVFX.UI
         public bool E_MUZZLE
         {
             get { return Internal.E_MUZZLE; }
-            set
-            {
-                Internal.E_MUZZLE = value;
-                VFXManager.Instance.OnConfigUpdateAllPool();
-            }
+            set { Internal.E_MUZZLE = value; }
         }
 
         public int COUNT_MUZZLE
@@ -127,13 +125,18 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_MUZZLE = value;
-                VFXManager.Instance.OnConfigUpdatePool<MuzzleFlashType>();
+                VFXManager.OnConfigUpdatePool<MuzzleFlash>();
             }
         }
+
         public string MUZZLE_MOD
         {
-            get { return Internal.EXPL_MOD; }
-            set { Internal.EXPL_MOD = value; }
+            get { return Internal.MUZZLE_MOD; }
+            set
+            {
+                if (Internal.MUZZLE_MOD != value) VFXManager.SwapPoolMod<MuzzleFlash>(value);
+                Internal.MUZZLE_MOD = value;
+            }
         }
 
 
@@ -149,14 +152,18 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_RAILGUN = value;
-                VFXManager.Instance.OnConfigUpdatePool<RailgunMuzzleType>();
+                VFXManager.OnConfigUpdatePool<Railgun>();
             }
         }
 
         public string RAILGUN_MOD
         {
-            get { return Internal.EXPL_MOD; }
-            set { Internal.EXPL_MOD = value; }
+            get { return Internal.RAILGUN_MOD; }
+            set
+            {
+                if (Internal.RAILGUN_MOD != value) VFXManager.SwapPoolMod<Railgun>(value);
+                Internal.RAILGUN_MOD = value;
+            }
         }
 
         public bool E_EXPL
@@ -171,14 +178,18 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_EXPL = value;
-                VFXManager.Instance.OnConfigUpdatePool<ExplosionType>();
+                VFXManager.OnConfigUpdatePool<Explosion>();
             }
         }
 
         public string EXPL_MOD
         {
             get { return Internal.EXPL_MOD; }
-            set { Internal.EXPL_MOD = value; }
+            set
+            {
+                if (Internal.EXPL_MOD != value) VFXManager.SwapPoolMod<Explosion>(value);
+                Internal.EXPL_MOD = value;
+            }
         }
 
         public bool E_PULSE
@@ -193,14 +204,18 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_PULSE = value;
-                VFXManager.Instance.OnConfigUpdatePool(BeamName.laser_pulse);
+                VFXManager.OnConfigUpdatePool(Beam.laser_pulse);
             }
         }
 
         public string PULSE_MOD
         {
             get { return Internal.PULSE_MOD; }
-            set { Internal.PULSE_MOD = value; }
+            set
+            {
+                if (Internal.PULSE_MOD != value) VFXManager.SwapPoolMod(value, Beam.laser_pulse);
+                Internal.PULSE_MOD = value;
+            }
         }
 
         public bool E_PAC
@@ -215,14 +230,18 @@ namespace MTMTVFX.UI
             set
             {
                 Internal.COUNT_PAC = value;
-                VFXManager.Instance.OnConfigUpdatePool(BeamName.pac_beam);
+                VFXManager.OnConfigUpdatePool(Beam.pac_beam);
             }
         }
 
         public string PAC_MOD
         {
             get { return Internal.PAC_MOD; }
-            set { Internal.PAC_MOD = value; }
+            set
+            {
+                if (Internal.PAC_MOD != value) VFXManager.SwapPoolMod(value, Beam.pac_beam);
+                Internal.PAC_MOD = value;
+            }
         }
 
         public bool E_PLASMA
@@ -244,7 +263,11 @@ namespace MTMTVFX.UI
         public string PLASMA_MOD
         {
             get { return Internal.PLASMA_MOD; }
-            set { Internal.PLASMA_MOD = value; }
+            set
+            {
+                if (Internal.PLASMA_MOD != value) VFXManager.SwapPoolMod<PlasmaMuzzle>(value);
+                Internal.PLASMA_MOD = value;
+            }
         }
 
         public bool E_FLAMER
@@ -266,7 +289,11 @@ namespace MTMTVFX.UI
         public string FLAMER_MOD
         {
             get { return Internal.FLAMER_MOD; }
-            set { Internal.FLAMER_MOD = value; }
+            set
+            {
+                if (Internal.FLAMER_MOD != value) VFXManager.SwapPoolMod<Emitter>(value);
+                Internal.FLAMER_MOD = value;
+            }
         }
 
         public APSTrailMode APS_TRAIL_MODE
@@ -278,7 +305,10 @@ namespace MTMTVFX.UI
         public string APS_TRAIL_MOD
         {
             get { return Internal.APS_TRAIL_MOD; }
-            set { Internal.APS_TRAIL_MOD = value; }
+            set
+            {
+                Internal.APS_TRAIL_MOD = value;
+            }
         }
 
         public bool E_APS_MODEL
@@ -290,7 +320,19 @@ namespace MTMTVFX.UI
         public string APS_MODEL_MOD
         {
             get { return Internal.APS_MODEL_MOD; }
-            set { Internal.APS_MODEL_MOD = value; }
+            set
+            {
+                Internal.APS_MODEL_MOD = value;
+            }
+        }
+
+        public string RAILGUN_TRAIL_MOD
+        {
+            get { return Internal.APS_RAILGUN_MOD; }
+            set
+            {
+                Internal.APS_RAILGUN_MOD = value;
+            }
         }
 
         public bool E_CRAM_TRAIL
@@ -302,7 +344,10 @@ namespace MTMTVFX.UI
         public string CRAM_TRAIL_MOD
         {
             get { return Internal.CRAM_TRAIL_MOD; }
-            set { Internal.CRAM_TRAIL_MOD = value; }
+            set
+            {
+                Internal.CRAM_TRAIL_MOD = value;
+            }
         }
 
         public bool E_CRAM_MODEL
@@ -314,7 +359,10 @@ namespace MTMTVFX.UI
         public string CRAM_MODEL_MOD
         {
             get { return Internal.CRAM_MODEL_MOD; }
-            set { Internal.CRAM_MODEL_MOD = value; }
+            set
+            {
+                Internal.CRAM_MODEL_MOD = value;
+            }
         }
 
         public bool E_PLASMA_TRAIL
@@ -326,7 +374,10 @@ namespace MTMTVFX.UI
         public string PLASMA_TRAIL_MOD
         {
             get { return Internal.PLASMA_TRAIL_MOD; }
-            set { Internal.PLASMA_TRAIL_MOD = value; }
+            set
+            {
+                Internal.PLASMA_TRAIL_MOD = value;
+            }
         }
 
         public bool E_PLASMA_MODEL
@@ -338,7 +389,10 @@ namespace MTMTVFX.UI
         public string PLASMA_MODEL_MOD
         {
             get { return Internal.PLASMA_MODEL_MOD; }
-            set { Internal.PLASMA_MODEL_MOD = value; }
+            set
+            {
+                Internal.PLASMA_MODEL_MOD = value;
+            }
         }
 
         public bool E_MISSILE_TRAIL
@@ -350,7 +404,10 @@ namespace MTMTVFX.UI
         public string MISSILE_TRAIL_MOD
         {
             get { return Internal.MISSILE_TRAIL_MOD; }
-            set { Internal.MISSILE_TRAIL_MOD = value; }
+            set
+            {
+                Internal.MISSILE_TRAIL_MOD = value;
+            }
         }
 
         public bool E_MISSILE_MODEL
@@ -362,7 +419,10 @@ namespace MTMTVFX.UI
         public string MISSILE_MODEL_MOD
         {
             get { return Internal.MISSILE_MODEL_MOD; }
-            set { Internal.MISSILE_MODEL_MOD = value; }
+            set
+            {
+                Internal.MISSILE_MODEL_MOD = value;
+            }
         }
 
         public bool E_CONTINUOUS
@@ -374,7 +434,11 @@ namespace MTMTVFX.UI
         public string CONTINUOUS_MOD
         {
             get { return Internal.CONTINUOUS_MOD; }
-            set { Internal.CONTINUOUS_MOD = value; }
+            set
+            {
+                if (Internal.CONTINUOUS_MOD != value) VFXManager.SwapPoolMod<Emitter>(value);
+                Internal.CONTINUOUS_MOD = value;
+            }
         }
 
         public bool E_IN_DEGRADED

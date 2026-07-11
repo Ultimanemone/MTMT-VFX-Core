@@ -1,4 +1,5 @@
-﻿using BrilliantSkies.Modding;
+﻿using BrilliantSkies.Core.Timing;
+using BrilliantSkies.Modding;
 using HarmonyLib;
 using System;
 
@@ -13,6 +14,13 @@ namespace MTMTVFX.Core
         {
             ModInfo.CheckVersion();
             new Harmony("MTMT_VFX_CORE").PatchAll();
+            GameEvents.ProfileChange.RegWithEvent(OnStart);
+        }
+
+        public void OnStart()
+        {
+            GameEvents.ProfileChange.UnregWithEvent(OnStart);
+            VFXManager.Init();
         }
 
         public void OnSave() { }

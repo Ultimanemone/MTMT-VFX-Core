@@ -1,14 +1,17 @@
-﻿using BrilliantSkies.PlayerProfiles;
+﻿using BrilliantSkies.Core.Timing.Internal;
+using BrilliantSkies.PlayerProfiles;
 using MTMTVFX.Core;
 using MTMTVFX.Effects;
 using MTMTVFX.Effects.Muzzle;
 using MTMTVFX.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MainThreadDispatcher : MonoBehaviour
 {
+    public static MainThreadDispatcher Instance => _instance;
     private static MainThreadDispatcher _instance;
     private static readonly Queue<Action> _actions = new Queue<Action>();
     private static readonly object _lock = new object();
@@ -51,5 +54,12 @@ public class MainThreadDispatcher : MonoBehaviour
     private void OnFixedUpdate()
     {
         if (Utils.GetConfig().E_CONTINUOUS) LaserVFXPatchContinuous.UpdateContBeams();
+    }
+
+    private IEnumerator CR(float delay, Action action)
+    {
+        yield return new WaitForSeconds(delay);
+        action.Invoke();
+        yield break;
     }
 }

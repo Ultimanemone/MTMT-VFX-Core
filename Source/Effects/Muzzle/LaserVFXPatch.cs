@@ -5,21 +5,19 @@ using BrilliantSkies.Ftd.Avatar.Respawning;
 using BrilliantSkies.PlayerProfiles;
 using HarmonyLib;
 using MTMTVFX.Core;
+using MTMTVFX.Mono_Scripts;
 using MTMTVFX.UI;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using static MTMTVFX.Core.AssetType;
 
 namespace MTMTVFX.Effects.Muzzle
 {
     [HarmonyPatch(typeof(ConventionalLaser))]
     public class LaserVFXPatchContinuous
     {
-        /// <summary>
-        /// Occurs when a beam is drawn, providing the start point, end point, direction, width, color, and associated GameObject.
-        /// </summary>
-        public static event Action<Vector3, Vector3, Vector3, float, Color, GameObject> OnBeamDrawn;
         public static readonly Dictionary<ConventionalLaser, GameObject> laserBeams = new Dictionary<ConventionalLaser, GameObject>();
         private static readonly List<ConventionalLaser> keysToRemove = new List<ConventionalLaser>();
 
@@ -39,8 +37,8 @@ namespace MTMTVFX.Effects.Muzzle
         private static void MakeBeam(ConventionalLaser __instance)
         {
             // always make a laser, doesnt matter if we dont use
-            GameObject obj = VFXManager.InstantiateCopy(SpecialName.laser_cont, Vector3.zero, Vector3.zero);
-            laserBeams.Add(__instance, obj);
+            GameObject obj = VFXManager.InstantiateCopy(Emitter.laser_cont, Vector3.zero, Vector3.zero);
+            if (obj != null) laserBeams.Add(__instance, obj);
         }
 
         [HarmonyPatch("FixedUpdate_Fire")]
@@ -109,7 +107,7 @@ namespace MTMTVFX.Effects.Muzzle
             if (getWidth != null)
             {
                 float width = (float)getWidth.Invoke(__instance, new object[] { });
-                OnBeamDrawn?.Invoke(exitPoint, hitPoint, direction, width, ____continuousColor, laserBeams[__instance]);
+                if (laserBeams[__instance].TryGetComponent(out PulseBeamUpdater c)) c.Fire(____continuousColor, exitPoint, hitPoint, width);
             }
         }
     }
@@ -117,11 +115,6 @@ namespace MTMTVFX.Effects.Muzzle
     [HarmonyPatch(typeof(LaserPulsePool), "ActivateHere")]
     public class LaserVFXPatchPulse
     {
-        /// <summary>
-        /// Occurs when a pulse beam is created, providing the specifications and associated GameObject.
-        /// </summary>
-        public static event Action<LaserPulseSpecification, GameObject> OnPulseBeam;
-
         private static bool Prefix(LaserPulsePool __instance, LaserPulseSpecification spec, ref LaserPulseRender __result, PoolIndex ___Indexor)
         {
             SettingsConfig config = Utils.GetConfig();
@@ -130,8 +123,8 @@ namespace MTMTVFX.Effects.Muzzle
             __result = __instance.PoolArray[___Indexor.CycleIndex()];
             MainThreadDispatcher.Enqueue(() =>
             {
-                GameObject obj = VFXManager.Create(BeamName.laser_pulse, spec.StartPosition, spec.StartPosition - spec.EndPosition);
-                OnPulseBeam?.Invoke(spec, obj);
+                GameObject obj = VFXManager.Create(Beam.laser_pulse, spec.StartPosition, spec.StartPosition - spec.EndPosition);
+                if (obj.TryGetComponent(out PulseBeamUpdater c)) c.Fire(spec.Color, spec.StartPosition, spec.EndPosition, spec.StartingWidth);
             });
 
             return false;

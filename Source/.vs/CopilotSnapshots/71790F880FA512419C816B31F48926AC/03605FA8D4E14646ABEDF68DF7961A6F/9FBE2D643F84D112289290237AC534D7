@@ -1,0 +1,130 @@
+﻿using BrilliantSkies.Core.Networking;
+using BrilliantSkies.PlayerProfiles;
+using MTMTVFX.MonoScripts;
+using MTMTVFX.UI;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace MTMTVFX.Core.Pooling
+{
+    public enum KillType
+    {
+        auto,
+        manual,
+        trail
+    }
+
+    public class VFXPool
+    {
+        public readonly string modName;
+        public readonly string name;
+        public readonly Enum type;
+        private readonly GameObject _prefab;
+        private readonly Transform _parent;
+        private readonly Queue<GameObject> _reserve = new Queue<GameObject>();
+        private readonly Queue<GameObject> _rendered = new Queue<GameObject>();
+        private readonly bool dynamicOverride;
+        private int _preferredSize;
+
+        public VFXPool(GameObject prefab, string modName, Enum type, int initialSize = 10, Transform parent = null, KillType killType = KillType.auto)
+        {
+            this.modName = modName;
+            name = prefab.name;
+            this.type = type;
+            _prefab = prefab;
+            _parent = parent;
+            _preferredSize = initialSize;
+
+            for (int i = 0; i < initialSize; i++) InstantiateNewInReserve(killType);
+        }
+
+        private GameObject InstantiateNewInReserve(KillType killType = KillType.auto)
+        {
+            GameObject obj = UnityEngine.Object.Instantiate(_prefab, _parent);
+            PooledObj comp;
+
+            if (killType == KillType.auto) comp = obj.AddComponent<EffectAutokill>();
+            else if (killType == KillType.manual) comp = obj.AddComponent<EffectManualKill>();
+            else if (killType == KillType.trail) comp = obj.AddComponent<TrailCloneFadeout>();
+            else return null;
+
+            comp.SetPool(this);
+            Utils.AddScript(obj, type, modName);
+
+            Return(obj);
+            return obj;
+        }
+        public bool TryGet(Vector3 position, Vector3 forward, out GameObject obj)
+        {
+            obj = null;
+
+            // no objects in reserve or rendered objects exceed the preferred _pool size
+            if (_reserve.Count < 1 || _rendered.Count >= _preferredSize)
+            {
+                // make a new one if the size is dynamic
+                if (Utils.GetConfig().ISDYNAMIC)
+                {
+                    obj = InstantiateNewInReserve();
+                }
+                // otherwise dequeue and use the oldest rendered object
+                else
+                {
+                    obj = _rendered.Dequeue();
+                    Return(obj);
+                }
+            }
+
+            if (_reserve.Count > 0)
+            {
+                obj = _reserve.Dequeue();
+                _rendered.Enqueue(obj);
+            }
+
+            obj.transform.position = position;
+            obj.transform.forward = forward;
+            obj.SetActive(true);
+            return true;
+        }
+
+        public virtual void Return(GameObject obj)
+        {
+            obj.SetActive(false);
+            _reserve.Enqueue(obj);
+        }
+
+        public void OnConfigUpdate()
+        {
+            if (Utils.GetConfig().ISDYNAMIC) return;
+
+            int newSize = Types.GetCount(type);
+            int currentSize = _reserve.Count + _rendered.Count;
+
+            if (newSize > currentSize)
+            {
+                int temp = newSize - currentSize;
+                for (int i = 0; i < temp; ++i)
+                {
+                    InstantiateNewInReserve();
+                }
+            }
+
+            _preferredSize = newSize;
+        }
+
+        public void Clear()
+        {
+            foreach (GameObject obj in _reserve)
+            {
+                UnityEngine.Object.Destroy(obj);
+            }
+            _reserve.Clear();
+
+            foreach (GameObject obj in _rendered)
+            {
+                UnityEngine.Object.Destroy(obj);
+            }
+            _rendered.Clear();
+        }
+    }
+}

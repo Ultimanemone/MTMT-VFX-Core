@@ -10,11 +10,16 @@ using BrilliantSkies.Ui.Consoles.Styles;
 using BrilliantSkies.Ui.Examples.OptionsMenu;
 using BrilliantSkies.Ui.Layouts.DropDowns;
 using BrilliantSkies.Ui.Tips;
+using HarmonyLib;
+using MTMTVFX.Core.AssetManagement;
 using MTMTVFX.Effects.Trail;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 namespace MTMTVFX.UI
 {
@@ -22,6 +27,27 @@ namespace MTMTVFX.UI
     {
         public static class UIHelper
         {
+            public static DropDownMenuAlt<string> MakeModDropdown(List<string> options)
+            {
+                if (options.Count() > 0)
+                {
+                    DropDownMenuAlt<string> dropdown = new DropDownMenuAlt<string>();
+                    List<DropDownMenuAltItem<string>> items = new List<DropDownMenuAltItem<string>>();
+                    foreach (string option in options)
+                    {
+                        items.Add(new DropDownMenuAltItem<string>()
+                        {
+                            Name = option,
+                            ObjectForAction = option,
+                            ToolTip = option
+                        });
+                    }
+                    dropdown.SetItems(items.OrderBy(x => x.Name).ToArray());
+                    return dropdown;
+                }
+                return null;
+            }
+
             public static SubjectiveToggle<T> Bool<T>
                 (
                 T focus,
@@ -88,7 +114,7 @@ namespace MTMTVFX.UI
         private void VFXToggles()
         {
             int col = 5;
-            int row = 8;
+            int row = 7;
             ++row;
             ScreenSegmentTable screenSegmentTable = CreateTableSegment(col, row);
             screenSegmentTable.SqueezeTable = false;
@@ -103,35 +129,25 @@ namespace MTMTVFX.UI
                 screenSegmentTable.AddInterpretter(new Empty(), i, col - 1);
             }
 
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 0, 1);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick("Maximum number of VFX to use <color=#F00>(lag when changed!)</color>"), 0, 2).Justify = new TextAnchor?(TextAnchor.MiddleLeft);
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: APS Gunpowder", "Enable or disable APS gunpowder VFX", I => I.E_MUZZLE), 0, 1);
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: APS Railgun", "Enable or disable APS railgun VFX", I => I.E_RAILGUN), 1, 1);
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Explosions", "Enable or disable explosion VFX", I => I.E_EXPL), 2, 1);
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: 0Q Laser", "Enable or disable 0Q laser VFX", I => I.E_CONTINUOUS), 3, 1);
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Pulse Laser", "Enable or disable pulse laser VFX", I => I.E_PULSE), 4, 1);
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: PAC", "Enable or disable PAC VFX", I => I.E_PAC), 5, 1);
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Plasma", "NOT IMPLEMENTED YET", I => I.E_PLASMA), 6, 1);
+            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Flamer", "NOT IMPLEMENTED YET", I => I.E_FLAMER), 7, 1);
 
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: APS Gunpowder", "Enable or disable APS gunpowder VFX", I => I.E_MUZZLE), 1, 1);
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: APS Railgun", "Enable or disable APS railgun VFX", I => I.E_RAILGUN), 2, 1);
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Explosions", "Enable or disable explosion VFX", I => I.E_EXPL), 3, 1);
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: 0Q Laser", "Enable or disable 0Q laser VFX", I => I.E_CONTINUOUS), 4, 1);
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Pulse Laser", "Enable or disable pulse laser VFX", I => I.E_PULSE), 5, 1);
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: PAC", "Enable or disable PAC VFX", I => I.E_PAC), 6, 1);
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Plasma", "NOT IMPLEMENTED YET", I => I.E_PLASMA), 7, 1);
-            screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Flamer", "NOT IMPLEMENTED YET", I => I.E_FLAMER), 8, 1);
+            ModNameSubsection(screenSegmentTable);
 
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 1, 3);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 2, 3);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 3, 3);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 4, 3);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 5, 3);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 6, 3);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 7, 3);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 8, 3);
-
-            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_MUZZLE, "Set the maxmimum number of APS gunpowder VFX"), 1, 2);
-            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_RAILGUN, "Set the maxmimum number of APS gunpowder VFX"), 2, 2);
-            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_EXPL, "Set the maxmimum number of APS gunpowder VFX"), 3, 2);
-            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 4, 2);
-            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PULSE, "Set the maxmimum number of APS gunpowder VFX"), 5, 2);
-            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PAC, "Set the maxmimum number of APS gunpowder VFX"), 6, 2);
-            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PLASMA, "Set the maxmimum number of APS gunpowder VFX"), 7, 2);
-            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_FLAMER, "Set the maxmimum number of APS gunpowder VFX"), 8, 2);
+            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_MUZZLE, "Set the maxmimum number of APS gunpowder VFX"), 0, 2);
+            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_RAILGUN, "Set the maxmimum number of APS gunpowder VFX"), 1, 2);
+            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_EXPL, "Set the maxmimum number of APS gunpowder VFX"), 2, 2);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 3, 2);
+            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PULSE, "Set the maxmimum number of APS gunpowder VFX"), 4, 2);
+            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PAC, "Set the maxmimum number of APS gunpowder VFX"), 5, 2);
+            screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PLASMA, "Set the maxmimum number of APS gunpowder VFX"), 6, 2);
+            screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 7, 2);
 
             //screenSegmentTable.AddInterpretter(StringDisplay.Quick(""));
             //screenSegmentTable.AddInterpretter(StringDisplay.Quick("Maximum number of VFX to use <color=#F00>(lag when changed!)</color>")).Justify = new TextAnchor?(TextAnchor.MiddleLeft);
@@ -152,6 +168,121 @@ namespace MTMTVFX.UI
             //screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_PLASMA, "Set the maxmimum number of APS gunpowder VFX"));
             //screenSegmentTable.AddInterpretter(UIHelper.Bool(_focus, "VFX: Flamer", "NOT IMPLEMENTED YET", I => I.E_FLAMER));
             //screenSegmentTable.AddInterpretter(UIHelper.FloatClampedWithBarFromMiddle(_focus, 5, 500, 1, 100, "Maximum count", I => I.COUNT_FLAMER, "Set the maxmimum number of APS gunpowder VFX"));
+        }
+
+        private void ModNameSubsection(ScreenSegmentTable screenSegmentTable)
+        {
+            if (AssetRegistry.LoadedMods.TryGetValue("muzzleflash_medium", out HashSet<string> APSHashSet) && APSHashSet.Count > 0)
+            {
+                List<string> APSMods = APSHashSet.ToList();
+                DropDownMenuAlt<string> APSDropdown = UIHelper.MakeModDropdown(APSMods);
+                screenSegmentTable.AddInterpretter(
+                    new DropDown<SettingsConfig, string>(
+                        _focus,
+                        APSDropdown,
+                        (Instance, current) => Instance.MUZZLE_MOD == current,
+                        (Instance, current) => Instance.MUZZLE_MOD = current
+                    ), 0, 3);
+            }
+            else screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 0, 3);
+
+            if (AssetRegistry.LoadedMods.TryGetValue("muzzlerail_medium", out HashSet<string> RailgunHashSet) && RailgunHashSet.Count > 0)
+            {
+                List<string> RailgunMods = RailgunHashSet.ToList();
+                DropDownMenuAlt<string> RailgunDropdown = UIHelper.MakeModDropdown(RailgunMods);
+                screenSegmentTable.AddInterpretter(
+                    new DropDown<SettingsConfig, string>(
+                        _focus,
+                        RailgunDropdown,
+                        (Instance, current) => Instance.RAILGUN_MOD == current,
+                        (Instance, current) => Instance.RAILGUN_MOD = current
+                    ), 1, 3);
+            }
+            else screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 1, 3);
+
+            if (AssetRegistry.LoadedMods.TryGetValue("expl_medium", out HashSet<string> ExplosionHashSet) && ExplosionHashSet.Count > 0)
+            {
+                List<string> explosionMods = ExplosionHashSet.ToList();
+                DropDownMenuAlt<string> explosionDropdown = UIHelper.MakeModDropdown(explosionMods);
+                screenSegmentTable.AddInterpretter(
+                    new DropDown<SettingsConfig, string>(
+                        _focus,
+                        explosionDropdown,
+                        (Instance, current) => Instance.EXPL_MOD == current,
+                        (Instance, current) => Instance.EXPL_MOD = current
+                    ), 2, 3);
+            }
+            else screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 2, 3);
+
+            if (AssetRegistry.LoadedMods.TryGetValue("laser_cont", out HashSet<string> ContLaserHashSet) && ContLaserHashSet.Count > 0)
+            {
+                List<string> contLaserMods = ContLaserHashSet.ToList();
+                DropDownMenuAlt<string> contLaserDropdown = UIHelper.MakeModDropdown(contLaserMods);
+                screenSegmentTable.AddInterpretter(
+                    new DropDown<SettingsConfig, string>(
+                        _focus,
+                        contLaserDropdown,
+                        (Instance, current) => Instance.CONTINUOUS_MOD == current,
+                        (Instance, current) => Instance.CONTINUOUS_MOD = current
+                    ), 3, 3);
+            }
+            else screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 3, 3);
+
+            if (AssetRegistry.LoadedMods.TryGetValue("laser_pulse", out HashSet<string> PulseLaserHashSet) && PulseLaserHashSet.Count > 0)
+            {
+                List<string> pulseLaserMods = PulseLaserHashSet.ToList();
+                DropDownMenuAlt<string> pulseLaserDropdown = UIHelper.MakeModDropdown(pulseLaserMods);
+                screenSegmentTable.AddInterpretter(
+                    new DropDown<SettingsConfig, string>(
+                        _focus,
+                        pulseLaserDropdown,
+                        (Instance, current) => Instance.PULSE_MOD == current,
+                        (Instance, current) => Instance.PULSE_MOD = current
+                    ), 4, 3);
+            }
+            else screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 4, 3);
+
+            if (AssetRegistry.LoadedMods.TryGetValue("pac_beam", out HashSet<string> PACHashSet) && PACHashSet.Count > 0)
+            {
+                List<string> PACMods = PACHashSet.ToList();
+                DropDownMenuAlt<string> PACDropdown = UIHelper.MakeModDropdown(PACMods);
+                screenSegmentTable.AddInterpretter(
+                    new DropDown<SettingsConfig, string>(
+                        _focus,
+                        PACDropdown,
+                        (Instance, current) => Instance.PAC_MOD == current,
+                        (Instance, current) => Instance.PAC_MOD = current
+                    ), 5, 3);
+            }
+            else screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 5, 3);
+
+            if (AssetRegistry.LoadedMods.TryGetValue("plasma_medium", out HashSet<string> PlasmaHashSet) && PlasmaHashSet.Count > 0)
+            {
+                List<string> plasmaMods = PlasmaHashSet.ToList();
+                DropDownMenuAlt<string> plasmaDropdown = UIHelper.MakeModDropdown(plasmaMods);
+                screenSegmentTable.AddInterpretter(
+                    new DropDown<SettingsConfig, string>(
+                        _focus,
+                        plasmaDropdown,
+                        (Instance, current) => Instance.PLASMA_MOD == current,
+                        (Instance, current) => Instance.PLASMA_MOD = current
+                    ), 6, 3);
+            }
+            else screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 6, 3);
+
+            if (AssetRegistry.LoadedMods.TryGetValue("flame", out HashSet<string> FlamerHashSet) && FlamerHashSet.Count > 0)
+            {
+                List<string> flamerMods = FlamerHashSet.ToList();
+                DropDownMenuAlt<string> flamerDropdown = UIHelper.MakeModDropdown(flamerMods);
+                screenSegmentTable.AddInterpretter(
+                    new DropDown<SettingsConfig, string>(
+                        _focus,
+                        flamerDropdown,
+                        (Instance, current) => Instance.FLAMER_MOD == current,
+                        (Instance, current) => Instance.FLAMER_MOD = current
+                    ), 7, 3);
+            }
+            else screenSegmentTable.AddInterpretter(StringDisplay.Quick(""), 7, 3);
         }
 
         private void TrailSection()
@@ -196,11 +327,11 @@ namespace MTMTVFX.UI
                 new DropDown<SettingsConfig, APSTrailMode>(
                     _focus,
                     modeDropdown,
-                    (I, e) =>
-                        I.APS_TRAIL_MODE == e,
-                    (I, e) =>
+                    (Instance, current) =>
+                        Instance.APS_TRAIL_MODE == current,
+                    (Instance, current) =>
                     {
-                        I.APS_TRAIL_MODE = e;
+                        Instance.APS_TRAIL_MODE = current;
                     }
                 ));
         }

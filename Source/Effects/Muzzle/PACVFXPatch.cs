@@ -49,7 +49,7 @@ namespace MTMTVFX.Effects.Muzzle
             }
             worldPositions[indexOfTermination - 1] = gameWorldPosition;
 
-            GameObject obj = VFXManager.Create(BeamName.pac_beam, worldPositions[0], __instance.transform.forward);
+            GameObject obj = VFXManager.Create(AssetType.Beam.pac_beam, worldPositions[0], __instance.transform.forward);
             PacPatchMod.PacMethod(worldPositions, obj, __instance.Range0Damage, __instance.ParticleType, __instance.m_BaseColor);
             pacFXTable.Add(__instance, obj);
         }
@@ -65,7 +65,7 @@ namespace MTMTVFX.Effects.Muzzle
             if (!pacFXTable.TryGetValue(__instance, out GameObject _))
             {
                 // doesnt matter if it hits, if its not terminatedd and rendered we gotta render it
-                GameObject obj = VFXManager.Create(BeamName.pac_beam, worldPositions[0], __instance.transform.forward);
+                GameObject obj = VFXManager.Create(AssetType.Beam.pac_beam, worldPositions[0], __instance.transform.forward);
                 PacPatchMod.PacMethod(worldPositions, obj, __instance.Range0Damage, __instance.ParticleType, __instance.m_BaseColor);
             }
         }

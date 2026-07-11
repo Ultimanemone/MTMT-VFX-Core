@@ -56,7 +56,7 @@ namespace MTMTVFX.Effects.Trail
                 Utils.LogInfo<APSTrailPatch>("cloning trail");
 
                 // Create a new GameObject with a LineRenderer instead of TrailRenderer
-                GameObject cloneObj = VFXManager.Create(TrailType.aps, Vector3.zero, Vector3.zero);
+                GameObject cloneObj = VFXManager.Create(AssetType.Trail.aps, Vector3.zero, Vector3.zero);
                 LineRenderer lineRenderer = cloneObj.GetComponent<LineRenderer>();
 
                 // Copy properties to LineRenderer

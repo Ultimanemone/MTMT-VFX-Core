@@ -1,0 +1,253 @@
+﻿using BrilliantSkies.Core.Logger;
+using BrilliantSkies.Effects.Regulation;
+using BrilliantSkies.FromTheDepths.Game;
+using HarmonyLib;
+using Newtonsoft.Json.Linq;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using UnityEngine;
+using MTMTVFX.UI;
+using MTMTVFX.Core.AssetManagement;
+using BrilliantSkies.PlayerProfiles;
+
+namespace MTMTVFX.Core
+{
+    public static class Utils
+    {
+        /// <summary>
+        /// Calls AdvLogger.LogInfo with generated file path and member info
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        /// <param name="option">The logging option</param>
+        /// <param name="file">Leave this empty</param>
+        /// <param name="member">Leave this empty</param>
+        /// <param name="line">Leave this empty</param>
+        public static void LogInfo<T>(
+            string message,
+            LogOptions option = LogOptions.None,
+            [CallerFilePath] string file = "",
+            [CallerMemberName] string member = "",
+            [CallerLineNumber] int line = 0)
+        {
+            if (!Utils.GetConfig().DEBUG_MODE) return;
+            string ns = typeof(T).Namespace ?? "";
+            AdvLogger.LogInfo($"[{ns}.{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+        }
+
+        /// <summary>
+        /// Calls AdvLogger.LogInfo with generated file path and member info
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        /// <param name="option">The logging option</param>
+        /// <param name="file">Leave this empty</param>
+        /// <param name="member">Leave this empty</param>
+        /// <param name="line">Leave this empty</param>
+        public static void LogInfo(
+            string message,
+            LogOptions option = LogOptions.None,
+            [CallerFilePath] string file = "",
+            [CallerMemberName] string member = "",
+            [CallerLineNumber] int line = 0)
+        {
+            if (!Utils.GetConfig().DEBUG_MODE) return;
+            AdvLogger.LogInfo($"[{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+        }
+
+        /// <summary>
+        /// Calls AdvLogger.LogError with generated file path and member info
+        /// </summary>
+        /// <param name="message">The error to log</param>
+        /// <param name="option">The logging option</param>
+        /// <param name="file">Leave this empty</param>
+        /// <param name="member">Leave this empty</param>
+        /// <param name="line">Leave this empty</param>
+        public static void LogError<T>(
+            string message,
+            LogOptions option = LogOptions.None,
+            [CallerFilePath] string file = "",
+            [CallerMemberName] string member = "",
+            [CallerLineNumber] int line = 0)
+        {
+            string ns = typeof(T).Namespace ?? "";
+            AdvLogger.LogError($"[{ns}.{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+        }
+
+        /// <summary>
+        /// Calls AdvLogger.LogError with generated file path and member info
+        /// </summary>
+        /// <param name="message">The error to log</param>
+        /// <param name="option">The logging option</param>
+        /// <param name="file">Leave this empty</param>
+        /// <param name="member">Leave this empty</param>
+        /// <param name="line">Leave this empty</param>
+        public static void LogError(
+            string message,
+            LogOptions option = LogOptions.None,
+            [CallerFilePath] string file = "",
+            [CallerMemberName] string member = "",
+            [CallerLineNumber] int line = 0)
+        {
+            AdvLogger.LogError($"[{Path.GetFileName(file)}:{line} in {member}]\n\t{message}", option);
+        }
+
+        /// <summary>
+        /// Find the sourceModName's assetbundle GUID by file name
+        /// </summary>
+        /// <param name="filename">Name of the assetbundle json file, usually "name_*.assetbundle"</param>
+        /// <returns></returns>
+        public static string GetAssetbundleGUID(string filename)
+        {
+            string dllDir = Assembly.GetExecutingAssembly().Location;
+            string modFolder = Path.Combine(Path.GetDirectoryName(dllDir), "Asset Bundles");
+            string[] files = Directory.GetFiles(modFolder, filename);
+            string json = File.ReadAllText(files[0]);
+            var obj = JObject.Parse(json);
+            return (string)obj["ComponentId"]["Guid"];
+        }
+
+        /// <summary>
+        /// Dummy method, patch this to add or run custom scripts on the object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="type"></param>
+        /// <param name="modName"></param>
+        public static void AddScript(GameObject obj, Enum type, string modName) { }
+
+        public static SettingsConfig GetConfig()
+        {
+            return ProfileManager.Instance.GetModule<SettingsConfig>();
+        }
+
+        public static string GetModNameFromAssetType(AssetType type)
+        {
+            SettingsConfig config = GetConfig();
+            if (config == null) return "";
+
+            switch (type)
+            {
+                case AssetType.muzzle:
+                    return config.MUZZLE_MOD;
+                case AssetType.railgun:
+                    return config.RAILGUN_MOD;
+                case AssetType.explosion:
+                    return config.EXPL_MOD;
+                case AssetType.pulse_laser:
+                    return config.PULSE_MOD;
+                case AssetType.pac:
+                    return config.PAC_MOD;
+                case AssetType.plasma:
+                    return config.PLASMA_MOD;
+                case AssetType.flamer:
+                    return config.FLAMER_MOD;
+                case AssetType.cont_laser:
+                    return config.CONTINUOUS_MOD;
+
+                case AssetType.aps_trail:
+                    return config.APS_TRAIL_MOD;
+                case AssetType.cram_trail:
+                    return config.CRAM_TRAIL_MOD;
+                case AssetType.plasma_trail:
+                    return config.PLASMA_TRAIL_MOD;
+                case AssetType.missile_trail:
+                    return config.MISSILE_TRAIL_MOD;
+
+                case AssetType.aps_model:
+                    return config.APS_MODEL_MOD;
+                case AssetType.cram_model:
+                    return config.CRAM_MODEL_MOD;
+                case AssetType.plasma_model:
+                    return config.PLASMA_MODEL_MOD;
+                case AssetType.missile_model:
+                    return config.MISSILE_MODEL_MOD;
+
+                default:
+                    return "";
+            }
+        }
+
+        public static int GetCountFromAssetType(AssetType type)
+        {
+            SettingsConfig config = GetConfig();
+            if (config == null) return 0;
+
+            switch (type)
+            {
+                case AssetType.muzzle:
+                    return config.COUNT_MUZZLE;
+                case AssetType.railgun:
+                    return config.COUNT_RAILGUN;
+                case AssetType.explosion:
+                    return config.COUNT_EXPL;
+                case AssetType.pulse_laser:
+                    return config.COUNT_PULSE;
+                case AssetType.pac:
+                    return config.COUNT_PAC;
+                case AssetType.plasma:
+                    return config.COUNT_PLASMA;
+                case AssetType.flamer:
+                    return config.COUNT_FLAMER;
+
+                default:
+                    return 0;
+            }
+        }
+
+        public static AssetType GetAssetTypeFromEnum(Enum value)
+        {
+            if (value == null)
+                return AssetType.none;
+
+            Type enumType = value.GetType();
+
+            // Map older top-level enums to new nested ones
+            if (enumType == typeof(Core.Enums.MuzzleFlashType) || enumType == typeof(AssetType.MuzzleFlashType))
+                return AssetType.muzzle;
+            else if (enumType == typeof(Core.Enums.RailgunMuzzleType) || enumType == typeof(AssetType.RailgunType))
+                return AssetType.railgun;
+            else if (enumType == typeof(Core.Enums.ExplosionType) || enumType == typeof(AssetType.ExplosionType))
+                return AssetType.explosion;
+            else if (enumType == typeof(Core.Enums.BeamName) || enumType == typeof(AssetType.PulseLaserType) || enumType == typeof(AssetType.PacType))
+            {
+                // decide based on underlying value string
+                string s = value.ToString();
+                if (s == "laser_pulse") return AssetType.pulse_laser;
+                if (s == "pac_beam") return AssetType.pac;
+                return AssetType.none;
+            }
+            else if (enumType == typeof(Core.Enums.TrailType) || enumType == typeof(AssetType.TrailType))
+            {
+                string s = value.ToString();
+                return s switch
+                {
+                    "aps" => AssetType.aps_trail,
+                    "cram" => AssetType.cram_trail,
+                    "plasma" => AssetType.plasma_trail,
+                    "missile" => AssetType.missile_trail,
+                    _ => AssetType.none,
+                };
+            }
+            else if (enumType == typeof(Core.Enums.SpecialName) || enumType == typeof(AssetType.ContLaserType))
+            {
+                if (value.ToString() == "laser_cont") return AssetType.cont_laser;
+                return AssetType.none;
+            }
+
+            return AssetType.none;
+        }
+    }
+
+    [HarmonyPatch(typeof(AutoBattle), "Start")]
+    public class Loader
+    {
+        private static void Postfix()
+        {
+            MainThreadDispatcher.Enqueue(() =>
+            {
+                VFXManager.Instance.Init();
+            });
+        }
+    }
+}

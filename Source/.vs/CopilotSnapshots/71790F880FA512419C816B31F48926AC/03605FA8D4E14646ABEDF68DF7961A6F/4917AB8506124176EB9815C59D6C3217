@@ -1,0 +1,160 @@
+﻿using BrilliantSkies.Blocks.Lasers.Weaponry;
+using BrilliantSkies.Core.Pooling;
+using BrilliantSkies.Effects.Pools.Lasers;
+using BrilliantSkies.Ftd.Avatar.Respawning;
+using BrilliantSkies.PlayerProfiles;
+using HarmonyLib;
+using MTMTVFX.Core;
+using MTMTVFX.UI;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
+
+namespace MTMTVFX.Effects.Muzzle
+{
+    [HarmonyPatch(typeof(ConventionalLaser))]
+    public class LaserVFXPatchContinuous
+    {
+        /// <summary>
+        /// Occurs when a beam is drawn, providing the start point, end point, direction, width, color, and associated GameObject.
+        /// </summary>
+        public static event Action<Vector3, Vector3, Vector3, float, Color, GameObject> OnBeamDrawn;
+        public static readonly Dictionary<ConventionalLaser, GameObject> laserBeams = new Dictionary<ConventionalLaser, GameObject>();
+        private static readonly List<ConventionalLaser> keysToRemove = new List<ConventionalLaser>();
+
+        [HarmonyPatch("EnableOrDisableEffects")]
+        [HarmonyPrefix]
+        private static bool CancelBaseBeam(ConventionalLaser __instance, bool newState)
+        {
+            SettingsConfig config = Utils.GetConfig();
+            if (!config.E_CONTINUOUS || config.IS_DEGRADED) return true;
+
+            if (newState) return false;
+            return true;
+        }
+
+        [HarmonyPatch("WeaponStart")]
+        [HarmonyPostfix]
+        private static void MakeBeam(ConventionalLaser __instance)
+        {
+            // always make a laser, doesnt matter if we dont use
+            GameObject obj = VFXManager.InstantiateCopy((Enum)AssetType.ContLaserType.laser_cont, Vector3.zero, Vector3.zero);
+            if (obj != null) laserBeams.Add(__instance, obj);
+        }
+
+        [HarmonyPatch("FixedUpdate_Fire")]
+        [HarmonyTranspiler]
+        private static IEnumerable<CodeInstruction> CancelBasePulseBeam(IEnumerable<CodeInstruction> instructions)
+        {
+            SettingsConfig config = Utils.GetConfig();
+            if (!config.E_PULSE || config.IS_DEGRADED) return instructions;
+
+            var codes = new List<CodeInstruction>(instructions);
+
+            var emitMethod = AccessTools.Method(
+                typeof(ParticleSystem),
+                "Emit",
+                new[] { typeof(ParticleSystem.EmitParams), typeof(int) }
+            );
+
+            for (int i = 0; i < codes.Count; i++)
+            {
+                // Match the Emit call
+                if (codes[i].Calls(emitMethod))
+                {
+                    // Remove:
+                    //  ldarg.0
+                    //  ldfld pulseFirePS
+                    //  ldloc.s V_26
+                    //  ldc.i4.1
+                    //  callvirt Emit
+                    codes.RemoveRange(i - 4, 5);
+                    i -= 5;
+                }
+            }
+
+            return codes;
+        }
+
+        public static void UpdateContBeams()
+        {
+            if (laserBeams.Count == 0) { return; }
+
+            keysToRemove.Clear();
+
+            foreach (KeyValuePair<ConventionalLaser, GameObject> kvp in laserBeams)
+            {
+                if (kvp.Key == null || kvp.Key.IsDeleted)
+                {
+                    if (kvp.Value != null) UnityEngine.Object.Destroy(kvp.Value);
+
+                    keysToRemove.Add(kvp.Key);
+                }
+            }
+
+            foreach (var key in keysToRemove)
+            {
+                laserBeams.Remove(key);
+            }
+        }
+
+        public static void InvokeBeamDraw(ConventionalLaser __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
+        {
+            SettingsConfig config = Utils.GetConfig();
+            if (!config.E_CONTINUOUS || config.IS_DEGRADED) return;
+
+            MethodInfo getWidth = AccessTools.Method(typeof(ConventionalLaser), "GetWidth");
+
+            if (getWidth != null)
+            {
+                float width = (float)getWidth.Invoke(__instance, new object[] { });
+                OnBeamDrawn?.Invoke(exitPoint, hitPoint, direction, width, ____continuousColor, laserBeams[__instance]);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(LaserPulsePool), "ActivateHere")]
+    public class LaserVFXPatchPulse
+    {
+        /// <summary>
+        /// Occurs when a pulse beam is created, providing the specifications and associated GameObject.
+        /// </summary>
+        public static event Action<LaserPulseSpecification, GameObject> OnPulseBeam;
+
+        private static bool Prefix(LaserPulsePool __instance, LaserPulseSpecification spec, ref LaserPulseRender __result, PoolIndex ___Indexor)
+        {
+            SettingsConfig config = Utils.GetConfig();
+            if (!config.E_PULSE || config.IS_DEGRADED) return true;
+
+            __result = __instance.PoolArray[___Indexor.CycleIndex()];
+            MainThreadDispatcher.Enqueue(() =>
+            {
+                GameObject obj = VFXManager.Create((Enum)AssetType.PulseLaser.laser_pulse, spec.StartPosition, spec.StartPosition - spec.EndPosition);
+                OnPulseBeam?.Invoke(spec, obj);
+            });
+
+            return false;
+        }
+    }
+
+
+    [HarmonyPatch(typeof(LaserCombiner), "DrawBeam")]
+    public class CombinerPatch
+    {
+        private static void Prefix(LaserCombiner __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
+        {
+            LaserVFXPatchContinuous.InvokeBeamDraw(__instance, exitPoint, direction, hitPoint, ____continuousColor);
+        }
+    }
+
+    [HarmonyPatch(typeof(ShortRangeLaser), "DrawBeam")]
+    public class SRCombinerPatch
+    {
+        private static void Prefix(ShortRangeLaser __instance, Vector3 exitPoint, Vector3 direction, Vector3 hitPoint, Color ____continuousColor)
+        {
+            LaserVFXPatchContinuous.InvokeBeamDraw(__instance, exitPoint, direction, hitPoint, ____continuousColor);
+        }
+    }
+}
+

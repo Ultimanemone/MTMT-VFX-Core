@@ -1,0 +1,222 @@
+﻿using BrilliantSkies.PlayerProfiles;
+using MTMTVFX.UI;
+using System;
+
+namespace MTMTVFX.Core
+{
+    public static class AssetType
+    {
+        public static Type MuzzleFlashType => typeof(MuzzleFlash);
+        public static Type RailgunType => typeof(Railgun);
+        public static Type ExplosionType => typeof(Explosion);
+        public static Type BeamType => typeof(Beam);
+        public static Type PlasmaType => typeof(PlasmaMuzzle);
+        public static Type EmitterType => typeof(MuzzleFlash);
+        public static Type TrailType => typeof(Trail);
+        public static Type ModelType => typeof(Model);
+
+        public static string GetModName(Enum type)
+        {
+            SettingsConfig config = Utils.GetConfig();
+            if (type.GetType() == MuzzleFlashType) return config.MUZZLE_MOD;
+            if (type.GetType() == RailgunType) return config.RAILGUN_MOD;
+            if (type.GetType() == ExplosionType) return config.EXPL_MOD;
+            if (type.GetType() == PlasmaType) return config.PLASMA_MOD;
+            if (type.GetType() == BeamType)
+            {
+                Beam beam = (Beam)type;
+                if (beam == Beam.laser_pulse) return config.PULSE_MOD;
+                if (beam == Beam.pac_beam) return config.PAC_MOD;
+            }
+            if (type.GetType() == EmitterType) return config.FLAMER_MOD;
+            if (type.GetType() == TrailType)
+            {
+                Trail trail = (Trail)type;
+                if (trail == Trail.aps) return config.APS_TRAIL_MOD;
+                if (trail == Trail.railgun) return config.RAILGUN_TRAIL_MOD;
+                if (trail == Trail.cram) return config.CRAM_TRAIL_MOD;
+                if (trail == Trail.missile) return config.MISSILE_TRAIL_MOD;
+                if (trail == Trail.plasma) return config.PLASMA_TRAIL_MOD;
+            }
+            if (type.GetType() == ModelType)
+            {
+                Model model = (Model)type;
+                if (model == Model.aps) return config.APS_MODEL_MOD;
+                if (model == Model.cram) return config.CRAM_MODEL_MOD;
+                if (model == Model.missile) return config.MISSILE_MODEL_MOD;
+                if (model == Model.plasma) return config.PLASMA_MODEL_MOD;
+            }
+
+            return "";
+        }
+
+        public static string GetModNameAlt(Enum type)
+        {
+            TempReader.LoadJson();
+            if (type.GetType() == MuzzleFlashType) return TempReader.Read("MUZZLE_MOD");
+            if (type.GetType() == RailgunType) return config.RAILGUN_MOD;
+            if (type.GetType() == ExplosionType) return config.EXPL_MOD;
+            if (type.GetType() == PlasmaType) return config.PLASMA_MOD;
+            if (type.GetType() == BeamType)
+            {
+                Beam beam = (Beam)type;
+                if (beam == Beam.laser_pulse) return config.PULSE_MOD;
+                if (beam == Beam.pac_beam) return config.PAC_MOD;
+            }
+            if (type.GetType() == EmitterType) return config.FLAMER_MOD;
+            if (type.GetType() == TrailType)
+            {
+                Trail trail = (Trail)type;
+                if (trail == Trail.aps) return config.APS_TRAIL_MOD;
+                if (trail == Trail.railgun) return config.RAILGUN_TRAIL_MOD;
+                if (trail == Trail.cram) return config.CRAM_TRAIL_MOD;
+                if (trail == Trail.missile) return config.MISSILE_TRAIL_MOD;
+                if (trail == Trail.plasma) return config.PLASMA_TRAIL_MOD;
+            }
+            if (type.GetType() == ModelType)
+            {
+                Model model = (Model)type;
+                if (model == Model.aps) return config.APS_MODEL_MOD;
+                if (model == Model.cram) return config.CRAM_MODEL_MOD;
+                if (model == Model.missile) return config.MISSILE_MODEL_MOD;
+                if (model == Model.plasma) return config.PLASMA_MODEL_MOD;
+            }
+
+            return "";
+        }
+
+        public static int GetCount(Enum type)
+        {
+            SettingsConfig config = Utils.GetConfig();
+            if (type.GetType() == MuzzleFlashType) return config.COUNT_MUZZLE;
+            if (type.GetType() == RailgunType) return config.COUNT_RAILGUN;
+            if (type.GetType() == ExplosionType) return config.COUNT_EXPL;
+            if (type.GetType() == PlasmaType) return config.COUNT_PLASMA;
+            if (type.GetType() == BeamType)
+            {
+                if ((Beam)type == Beam.laser_pulse) return config.COUNT_PULSE;
+                if ((Beam)type == Beam.pac_beam) return config.COUNT_PAC;
+            }
+
+            return -1;
+        }
+
+        public static int GetCount<T>() where T : Enum
+        {
+            SettingsConfig config = Utils.GetConfig();
+            if (typeof(T) == MuzzleFlashType) return config.COUNT_MUZZLE;
+            if (typeof(T) == RailgunType) return config.COUNT_RAILGUN;
+            if (typeof(T) == ExplosionType) return config.COUNT_EXPL;
+            if (typeof(T) == PlasmaType) return config.COUNT_PLASMA;
+
+            return -1;
+        }
+        public static MuzzleFlash GetMuzzleEnum(float gauge)
+        {
+            if (gauge <= 0.05f)
+            {
+                return MuzzleFlash.muzzleflash_tiny;
+            }
+            else if (gauge <= 0.127f)
+            {
+                return MuzzleFlash.muzzleflash_small;
+            }
+            else if (gauge <= 0.225f)
+            {
+                return MuzzleFlash.muzzleflash_medium;
+            }
+            else if (gauge <= 0.305f)
+            {
+                return MuzzleFlash.muzzleflash_big;
+            }
+            else if (gauge <= 0.406f)
+            {
+                return MuzzleFlash.muzzleflash_bigger;
+            }
+            else if (gauge <= 0.5f)
+            {
+                return MuzzleFlash.muzzleflash_biggest;
+            }
+            else
+            {
+                return MuzzleFlash.none;
+            }
+        }
+
+        public enum MuzzleFlash
+        {
+            none,
+            muzzleflash_tiny,
+            muzzleflash_small,
+            muzzleflash_medium,
+            muzzleflash_big,
+            muzzleflash_bigger,
+            muzzleflash_biggest,
+            muzzleflash_huge,
+            muzzleflash_gigant
+        }
+
+        public enum Railgun
+        {
+            none,
+            muzzlerail_small,
+            muzzlerail_medium,
+            muzzlerail_big,
+        }
+
+        public enum Explosion
+        {
+            none,
+            expl_tiny = 4,
+            expl_small = 8,
+            expl_medium = 16,
+            expl_big = 30,
+            expl_huge = 31,
+            //expl_nuclear,
+            //tinysplash,
+            //largesplash,
+            //hugesplash,
+            //largesplash_pure,
+            //splashbase,
+            //distshockwave,
+        }
+
+        public enum Beam
+        {
+            laser_pulse,
+            pac_beam
+        }
+
+        public enum PlasmaMuzzle
+        {
+            plasma_tiny,
+            plasma_small,
+            plasma_medium,
+            plasma_big,
+            plasma_huge
+        }
+
+        public enum Emitter
+        {
+            flame,
+            laser_cont
+        }
+
+        public enum Trail
+        {
+            aps,
+            railgun,
+            cram,
+            missile,
+            plasma
+        }
+
+        public enum Model
+        {
+            aps,
+            cram,
+            plasma,
+            missile
+        }
+    }
+}

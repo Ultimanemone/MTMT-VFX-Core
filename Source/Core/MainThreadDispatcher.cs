@@ -49,6 +49,8 @@ public class MainThreadDispatcher : MonoBehaviour
         }
 
         OnFixedUpdate();
+
+        Vector3 cameraPos = Camera.main.transform.position;
     }
 
     private void OnFixedUpdate()

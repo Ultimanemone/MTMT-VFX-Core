@@ -134,8 +134,12 @@ namespace MTMTVFX.UI
             get { return Internal.MUZZLE_MOD; }
             set
             {
-                if (Internal.MUZZLE_MOD != value) VFXManager.SwapPoolMod<MuzzleFlash>(value);
-                Internal.MUZZLE_MOD = value;
+                if (Internal.MUZZLE_MOD != value)
+                {
+                    Internal.MUZZLE_MOD = value;
+                    VFXManager.SwapPoolMod<MuzzleFlash>();
+                }
+                else Internal.MUZZLE_MOD = value;
             }
         }
 
@@ -161,8 +165,12 @@ namespace MTMTVFX.UI
             get { return Internal.RAILGUN_MOD; }
             set
             {
-                if (Internal.RAILGUN_MOD != value) VFXManager.SwapPoolMod<Railgun>(value);
-                Internal.RAILGUN_MOD = value;
+                if (Internal.RAILGUN_MOD != value)
+                {
+                    Internal.RAILGUN_MOD = value;
+                    VFXManager.SwapPoolMod<Railgun>();
+                }
+                else Internal.RAILGUN_MOD = value;
             }
         }
 
@@ -187,8 +195,12 @@ namespace MTMTVFX.UI
             get { return Internal.EXPL_MOD; }
             set
             {
-                if (Internal.EXPL_MOD != value) VFXManager.SwapPoolMod<Explosion>(value);
-                Internal.EXPL_MOD = value;
+                if (Internal.EXPL_MOD != value)
+                {
+                    Internal.EXPL_MOD = value;
+                    VFXManager.SwapPoolMod<Explosion>();
+                }
+                else Internal.EXPL_MOD = value;
             }
         }
 
@@ -213,8 +225,12 @@ namespace MTMTVFX.UI
             get { return Internal.PULSE_MOD; }
             set
             {
-                if (Internal.PULSE_MOD != value) VFXManager.SwapPoolMod(value, Beam.laser_pulse);
-                Internal.PULSE_MOD = value;
+                if (Internal.PULSE_MOD != value)
+                {
+                    Internal.PULSE_MOD = value;
+                    VFXManager.SwapPoolMod(Beam.laser_pulse);
+                }
+                else Internal.PULSE_MOD = value;
             }
         }
 
@@ -239,8 +255,12 @@ namespace MTMTVFX.UI
             get { return Internal.PAC_MOD; }
             set
             {
-                if (Internal.PAC_MOD != value) VFXManager.SwapPoolMod(value, Beam.pac_beam);
-                Internal.PAC_MOD = value;
+                if (Internal.PAC_MOD != value)
+                {
+                    Internal.PAC_MOD = value;
+                    VFXManager.SwapPoolMod(Beam.pac_beam);
+                }
+                else Internal.PAC_MOD = value;
             }
         }
 
@@ -265,8 +285,12 @@ namespace MTMTVFX.UI
             get { return Internal.PLASMA_MOD; }
             set
             {
-                if (Internal.PLASMA_MOD != value) VFXManager.SwapPoolMod<PlasmaMuzzle>(value);
-                Internal.PLASMA_MOD = value;
+                if (Internal.PLASMA_MOD != value)
+                {
+                    Internal.PLASMA_MOD = value;
+                    VFXManager.SwapPoolMod<PlasmaMuzzle>();
+                }
+                else Internal.PLASMA_MOD = value;
             }
         }
 
@@ -291,8 +315,12 @@ namespace MTMTVFX.UI
             get { return Internal.FLAMER_MOD; }
             set
             {
-                if (Internal.FLAMER_MOD != value) VFXManager.SwapPoolMod<Emitter>(value);
-                Internal.FLAMER_MOD = value;
+                if (Internal.FLAMER_MOD != value)
+                {
+                    Internal.FLAMER_MOD = value;
+                    VFXManager.SwapPoolMod(Emitter.flame);
+                }
+                else Internal.FLAMER_MOD = value;
             }
         }
 
@@ -436,8 +464,12 @@ namespace MTMTVFX.UI
             get { return Internal.CONTINUOUS_MOD; }
             set
             {
-                if (Internal.CONTINUOUS_MOD != value) VFXManager.SwapPoolMod<Emitter>(value);
-                Internal.CONTINUOUS_MOD = value;
+                if (Internal.CONTINUOUS_MOD != value)
+                {
+                    Internal.CONTINUOUS_MOD = value;
+                    VFXManager.SwapPoolMod(Emitter.laser_cont);
+                }
+                else Internal.CONTINUOUS_MOD = value;
             }
         }
 

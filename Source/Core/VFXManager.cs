@@ -16,6 +16,7 @@ namespace MTMTVFX.Core
     {
         private static bool _initialized = false;
 
+        private static readonly Dictionary<Type, IDictionary> _poolDicts = new Dictionary<Type, IDictionary>(); 
         private static Dictionary<MuzzleFlash, VFXPool> _muzzleFlashPools;
         private static Dictionary<Railgun, VFXPool> _railgunPools;
         private static Dictionary<Explosion, VFXPool> _explosionPools;
@@ -68,6 +69,12 @@ namespace MTMTVFX.Core
             if (pulsePool != null) _beamPools[Beam.laser_pulse] = pulsePool;
             VFXPool pacPool = InitPool(Beam.pac_beam, beamRoot.transform, config.COUNT_PAC);
             if (pacPool != null) _beamPools[Beam.pac_beam] = pacPool;
+
+            _poolDicts.Add(typeof(MuzzleFlash), _muzzleFlashPools);
+            _poolDicts.Add(typeof(Railgun), _railgunPools);
+            _poolDicts.Add(typeof(Explosion), _explosionPools);
+            //_poolDicts.Add(typeof(Beam), _beamPools);
+            //_poolDicts.Add(typeof(Emitter), );
 
             // not worth pooling ts
             laserBeams = new Dictionary<ConventionalLaser, GameObject>();
@@ -174,10 +181,8 @@ namespace MTMTVFX.Core
             }
         }
 
-        public static void SwapPoolMod(string modName, Enum type)
+        public static void SwapPoolMod(Enum type)
         {
-            Init();
-
             if (type.GetType() == typeof(Beam))
             {
                 if (_beamPools.TryGetValue((Beam)type, out VFXPool pool) && pool != null)
@@ -195,12 +200,9 @@ namespace MTMTVFX.Core
             }
         }
 
-        public static void SwapPoolMod<T>(string modName) where T : Enum
+        public static void SwapPoolMod<T>() where T : Enum
         {
-            IDictionary poolDict = null;
-            if (typeof(T) == typeof(MuzzleFlash)) poolDict = _muzzleFlashPools;
-            if (typeof(T) == typeof(Railgun)) poolDict = _railgunPools;
-            if (typeof(T) == typeof(Explosion)) poolDict = _explosionPools;
+            _poolDicts.TryGetValue(typeof(T), out IDictionary poolDict);
             //if (typeof(T) == typeof(PlasmaMuzzle)) poolDict = _plasmaMuzzlePools;
             if (poolDict != null)
             {
@@ -210,7 +212,7 @@ namespace MTMTVFX.Core
                 }
                 poolDict.Clear();
                 SettingsConfig config = Utils.GetConfig();
-                poolDict = InitPools<T>(_roots[typeof(T)].transform, GetCount<T>());
+                _poolDicts[typeof(T)] = InitPools<T>(_roots[typeof(T)].transform, GetCount<T>());
             }
         }
 

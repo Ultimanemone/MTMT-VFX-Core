@@ -144,7 +144,7 @@ namespace MTMTVFX.Core.AssetManagement
         /// <returns></returns>
         public static bool TryGetAsset(string assetName, Enum type, out GameObject prefab, out string modName)
         {
-            modName = GetModNameAlt(type);
+            modName = GetModName(type);
             return _registry.TryGetValue(new AssetDetail(assetName, modName), out prefab);
         }
 
